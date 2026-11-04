@@ -4462,7 +4462,7 @@ const CRATE_EXTRA = {
 /* ==========================================================================
    Shop catalog. p = silver price, g = gold price, free when neither.
    ========================================================================== */
-const APP_VERSION = '1.0.6';
+const APP_VERSION = '1.0.7';
 const RARITY = { common: 'Common', rare: 'Rare', epic: 'Epic', legendary: 'Legendary', mythic: 'Mythic' };
 const SHOP_TABS = [
   ['card', 'Card Skins'], ['table', 'Tables'], ['avatar', 'Avatars'], ['frame', 'Frames'], ['tag', 'Name Tags'], ['font', 'Fonts'],
@@ -5738,6 +5738,7 @@ function gameEv(S, t, a, b, c) { ev(S, t, a, b, c); }
            to the page (an Editor invited from outside the owner's account).
    dual    both at once, so room viewers and database viewers share tables.
    p2p     PeerJS WebRTC, for the standalone copy hosted on any website.
+   relay   the game's Firebase, for when two phones can't reach each other directly.
    bc      BroadcastChannel between tabs of one browser (local testing).
    A channel: set(obj) publishes my state, onPeers(fn) hears everyone's.
    ========================================================================== */
@@ -5773,7 +5774,7 @@ const Net = {
     if (this.kind === 'db') return dbChannel(this.db, 'mm-' + code.toLowerCase());
     if (this.kind === 'dual') return dualChannel(claudeChannel(this.room, 'mm-' + code.toLowerCase()), dbChannel(this.db, 'mm-' + code.toLowerCase()));
     if (this.kind === 'bc') return Promise.resolve(bcChannel('t-' + code));
-    if (this.kind === 'p2p') return p2pChannel(code, asHost);
+    if (this.kind === 'p2p') return asHost ? hostTable(code) : guestTable(code);
     return Promise.reject(new Error(this.err || 'Online play is not available here.'));
   },
   lobby() {
@@ -5928,18 +5929,20 @@ function loadScript(src) {
   });
 }
 /* Star topology: the host relays every peer's state to everyone. */
-async function p2pChannel(code, asHost) {
+const PEER_OPTS = { config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }, { urls: 'stun:stun.cloudflare.com:3478' }] } };
+async function p2pChannel(code, asHost, wait) {
   await loadScript('https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js');
   const hostId = 'meowmayhem-v1-' + code.toLowerCase();
   const others = new Map();
   let mine = {}, cb = null, myId = null;
   const emit = () => { if (cb) cb([{ peer: myId, me: true, p: mine }, ...[...others].map(([k, p]) => ({ peer: k, me: false, p }))]); };
   if (asHost) {
-    const peer = new window.Peer(hostId);
+    const peer = new window.Peer(hostId, PEER_OPTS);
     myId = hostId;
     await new Promise((res, rej) => {
-      peer.once('open', res);
-      peer.once('error', e => rej(new Error(e && e.type === 'unavailable-id' ? 'code-taken' : 'Could not open the table. Check your internet.')));
+      const to = setTimeout(() => { try { peer.destroy(); } catch (e) { /* gone */ } rej(new Error('Could not open the table. Check your internet.')); }, 8000);
+      peer.once('open', () => { clearTimeout(to); res(); });
+      peer.once('error', e => { clearTimeout(to); rej(new Error(e && e.type === 'unavailable-id' ? 'code-taken' : 'Could not open the table. Check your internet.')); });
     });
     const conns = new Map();
     let bt = null;
@@ -5961,7 +5964,7 @@ async function p2pChannel(code, asHost) {
     peer.on('disconnected', () => { try { peer.reconnect(); } catch (e) { /* destroyed */ } });
     return { kind: 'p2p', set(o) { mine = o; emit(); broadcast(); }, onPeers(f) { cb = f; emit(); }, leave() { try { peer.destroy(); } catch (e) { /* gone */ } }, connected: () => !peer.disconnected };
   }
-  const peer = new window.Peer();
+  const peer = new window.Peer(PEER_OPTS);
   await new Promise((res, rej) => { peer.once('open', res); peer.once('error', () => rej(new Error('Could not connect. Check your internet.'))); });
   myId = peer.id;
   let conn = null, alive = true, failJoin = null;
@@ -5970,14 +5973,15 @@ async function p2pChannel(code, asHost) {
   const connect = () => new Promise((res, rej) => {
     failJoin = rej;
     conn = peer.connect(hostId, { reliable: true });
-    const to = setTimeout(() => rej(new Error('No table with that code.')), 12000);
+    const to = setTimeout(() => rej(new Error('No table with that code.')), wait || 12000);
     conn.on('open', () => { clearTimeout(to); failJoin = null; conn.send({ t: 'p', p: mine }); res(); });
     conn.on('data', m => {
       if (m && m.t === 'all') { others.clear(); for (const k in m.all) if (k !== myId) others.set(k, m.all[k]); emit(); }
     });
     conn.on('close', () => { others.clear(); emit(); if (alive) setTimeout(() => { if (alive) connect().catch(() => {}); }, 2500); });
   });
-  await connect();
+  try { await connect(); }
+  catch (e) { alive = false; try { peer.destroy(); } catch (err) { /* gone */ } throw e; }
   return {
     kind: 'p2p',
     set(o) { mine = o; if (conn && conn.open) { try { conn.send({ t: 'p', p: o }); } catch (e) { /* closing */ } } emit(); },
@@ -5985,6 +5989,127 @@ async function p2pChannel(code, asHost) {
     leave() { alive = false; try { peer.destroy(); } catch (e) { /* gone */ } },
     connected: () => !!(conn && conn.open)
   };
+}
+
+/* Direct connections fail between many networks, mobile data above all, so every table
+   also runs through the game's Firebase. A guest tries direct first and falls back here.
+     live/rh_<code>       the host's state
+     live/rg_<id>         one guest's state
+     mail/rt_<code>/box   guests announcing themselves to the host
+   It's polling rather than a live link, so a move takes about a second to arrive. */
+const RELAY_STALE = 30000;
+async function relayPut(path, p) {
+  const r = await Cloud.req(path, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { j: { stringValue: JSON.stringify(p) }, at: { integerValue: String(Date.now()) } } }) });
+  if (!r.ok) throw new Error(r.err || 'relay');
+}
+function relayRead(doc) {
+  try { return { p: JSON.parse(doc.j), at: doc.at || 0 }; } catch (e) { return null; }
+}
+/* Sends my state: quickly after a change, and on a slow heartbeat so others know I'm here. */
+function relayWriter(path, gapMs, needed) {
+  let mine = {}, busy = false, dirty = false, last = 0, alive = true;
+  const flush = async () => {
+    if (!alive) return;
+    if (busy) { dirty = true; return; }
+    busy = true; dirty = false;
+    const wait = gapMs - (Date.now() - last);
+    if (wait > 0) await sleep(wait);
+    last = Date.now();
+    await relayPut(path, mine).catch(() => sleep(1500));
+    busy = false;
+    if (dirty) flush();
+  };
+  const beat = setInterval(flush, 8000);
+  return {
+    set(o) { mine = o; if (needed()) flush(); },
+    first() { last = Date.now(); return relayPut(path, mine); },
+    flush,
+    stop(final) { alive = false; clearInterval(beat); relayPut(path, final).catch(() => {}); }
+  };
+}
+async function relayHost(code) {
+  const key = code.toLowerCase(), guests = new Map(), opened = Date.now();
+  let cb = null, mine = {}, alive = true, changed = Date.now();
+  const w = relayWriter('live/rh_' + key, 300, () => guests.size > 0);
+  await w.first();
+  const emit = () => { if (cb) cb([{ peer: 'relay-host', me: true, p: mine }, ...[...guests].filter(([, g]) => g.p).map(([k, g]) => ({ peer: k, me: false, p: g.p }))]); };
+  const lookForGuests = async () => {
+    if (!alive) return;
+    for (const m of await Cloud.mailList('rt_' + key)) {
+      Cloud.mailDelete('rt_' + key, m.mid);
+      if (m.g && !guests.has(m.g)) { guests.set(m.g, { p: null, at: 0, seen: Date.now() }); changed = Date.now(); w.flush(); }
+    }
+    if (alive) setTimeout(lookForGuests, Date.now() - opened < 600000 ? 1500 : 4000);
+  };
+  const readGuests = async () => {
+    if (!alive) return;
+    if (guests.size) {
+      const docs = await Cloud.docs([...guests.keys()].map(id => 'live/rg_' + id));
+      if (docs) {
+        let dirty = false;
+        for (const [id, g] of guests) {
+          const d = docs['rg_' + id] && relayRead(docs['rg_' + id]);
+          if (d && d.at !== g.at) { g.at = d.at; g.seen = Date.now(); g.p = d.p; dirty = true; }
+          if ((d && d.p.gone) || Date.now() - g.seen > RELAY_STALE) { guests.delete(id); dirty = true; }
+        }
+        if (dirty) { changed = Date.now(); emit(); }
+      }
+    }
+    if (alive) setTimeout(readGuests, Date.now() - changed < 30000 ? 700 : 1500);
+  };
+  lookForGuests();
+  readGuests();
+  return {
+    kind: 'relay',
+    set(o) { mine = o; w.set(o); },
+    onPeers(f) { cb = f; emit(); },
+    leave() { alive = false; w.stop({ gone: 1 }); },
+    connected: () => true
+  };
+}
+async function relayGuest(code) {
+  const key = code.toLowerCase(), id = rid(10);
+  const found = await Cloud.docs(['live/rh_' + key]);
+  const d = found && found['rh_' + key] && relayRead(found['rh_' + key]);
+  if (!d || d.p.gone || Date.now() - d.at > RELAY_STALE + 10000) throw new Error('Couldn’t find that table. Check the code, and that the host still has it open.');
+  let cb = null, mine = {}, alive = true, host = d, seen = Date.now(), changed = Date.now();
+  const w = relayWriter('live/rg_' + id, 120, () => true);
+  await w.first();
+  await Cloud.mailSend('rt_' + key, { g: id });
+  const emit = () => { if (cb) cb([{ peer: id, me: true, p: mine }, ...(host && !host.p.gone && Date.now() - seen < RELAY_STALE ? [{ peer: 'relay-host', me: false, p: host.p }] : [])]); };
+  const readHost = async () => {
+    if (!alive) return;
+    const docs = await Cloud.docs(['live/rh_' + key]);
+    const n = docs && docs['rh_' + key] && relayRead(docs['rh_' + key]);
+    if (n && n.at !== host.at) { host = n; seen = Date.now(); changed = Date.now(); emit(); }
+    else if (Date.now() - seen >= RELAY_STALE) emit();
+    if (alive) setTimeout(readHost, Date.now() - changed < 30000 ? 700 : 1500);
+  };
+  readHost();
+  return {
+    kind: 'relay',
+    set(o) { mine = o; w.set(o); },
+    onPeers(f) { cb = f; emit(); },
+    leave() { alive = false; w.stop({ gone: 1 }); },
+    connected: () => true
+  };
+}
+/* A table opens on both paths, so a guest can reach it whichever way works for them. */
+async function hostTable(code) {
+  const [p, r] = await Promise.all([p2pChannel(code, true).catch(e => e), Cloud.ready() ? relayHost(code).catch(() => null) : null]);
+  if (p instanceof Error) {
+    if (p.message === 'code-taken') { if (r) r.leave(); throw p; }
+    if (!r) throw p;
+    return r;
+  }
+  return r ? dualChannel(Promise.resolve(p), Promise.resolve(r)) : p;
+}
+async function guestTable(code) {
+  try { return await p2pChannel(code, false, 5000); }
+  catch (e) {
+    if (!Cloud.ready()) throw e;
+    return relayGuest(code);
+  }
 }
 
 /* An online guest: reads the host's state, sends actions through presence. */
@@ -6350,17 +6475,18 @@ const Cloud = {
     const S = s => ({ stringValue: String(s) });
     this.req('live/' + k, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { n: S(o.n), id: S(o.id), a: S(o.a), st: S(o.st), at: { integerValue: String(Date.now()) } } }) }).catch(() => {});
   },
-  /* Everyone's last-seen time in one request. */
-  async liveGet(keys) {
-    const base = `projects/${CLOUD.projectId}/databases/(default)/documents/live/`;
+  /* Several documents in one request, keyed by their last path segment. */
+  async docs(paths) {
+    const base = `projects/${CLOUD.projectId}/databases/(default)/documents/`;
     try {
-      const r = await withTimeout(fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(CLOUD.projectId)}/databases/(default)/documents:batchGet?key=${encodeURIComponent(CLOUD.apiKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ documents: keys.map(k => base + k) }) }), 10000);
+      const r = await withTimeout(fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(CLOUD.projectId)}/databases/(default)/documents:batchGet?key=${encodeURIComponent(CLOUD.apiKey)}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ documents: paths.map(p => base + p) }) }), 10000);
       if (!r.ok) return null;
       const out = {};
       for (const x of await r.json()) if (x.found) out[x.found.name.split('/').pop()] = this.parseDoc(x.found);
       return out;
     } catch (e) { return null; }
   },
+  liveGet(keys) { return this.docs(keys.map(k => 'live/' + k)); },
   mailSend(k, o) {
     return this.req(`mail/${k}/box/${rid(12)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { j: { stringValue: JSON.stringify(o) } } }) }).catch(() => null);
   },
@@ -9279,7 +9405,7 @@ async function joinTable(raw) {
     app.joinWait = setTimeout(() => {
       if (app.code === code && !app.T) {
         const t = Tour.active(), resuming = t && t.code === code;
-        toast(resuming ? `${esc(t.opp)} hasn’t reopened the tournament yet.` : `No table found with code ${code}.`, 'bad');
+        toast(resuming ? `${esc(t.opp)} hasn’t reopened the tournament yet.` : `Couldn’t reach table ${code}. Check the code, and that the host still has it open.`, 'bad');
         leaveTable(); go(resuming || app.joinTour ? 'tour' : 'online');
       }
     }, 12000);
