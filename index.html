@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#17122b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Lilita+One&family=Nunito:wght@600;700;800;900&family=Press+Start+2P&family=Playfair+Display:ital,wght@1,900&family=Baloo+2:wght@800&family=Cabin+Sketch:wght@700&family=Tilt+Neon&family=Bangers&family=Permanent+Marker&family=Chakra+Petch:wght@700&family=Audiowide&family=Cinzel:wght@900&family=Orbitron:wght@800&family=Monoton&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Lilita+One&family=Nunito:wght@600;700;800;900&family=Press+Start+2P&family=Playfair+Display:ital,wght@1,900&family=Baloo+2:wght@800&family=Cabin+Sketch:wght@700&family=Tilt+Neon&family=Bangers&family=Permanent+Marker&family=Chakra+Petch:wght@700&family=Audiowide&family=Cinzel:wght@900&family=Orbitron:wght@800&family=Monoton&family=Pirata+One&family=Rye&family=Share+Tech+Mono&family=Rubik+Glitch&display=swap">
 <style>
 [hidden]{display:none!important}
 /* Layout: a single phone-width column for menus; the table fills the screen. One dark "cat cafe at midnight" look. */
@@ -235,7 +235,7 @@ input:focus { border-color: var(--tabby); outline: none; }
 .pv-table .mini .card { --cw: 38px; }
 .pv-av .av { width: 86px; height: 86px; }
 .subtabs { display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--deep); }
-.subtabs button { flex: 1; border: 0; border-radius: 9px; padding: 8px 10px; min-height: 36px; background: transparent; color: var(--mute); font: 800 14px var(--f-body); }
+.subtabs button { white-space: nowrap; flex: 1; border: 0; border-radius: 9px; padding: 8px 10px; min-height: 36px; background: transparent; color: var(--mute); font: 800 14px var(--f-body); }
 .subtabs button.on { background: var(--ink4); color: var(--cream); }
 .toon { display: block; width: 100%; height: 100%; border-radius: 22%; background-size: cover; background-position: center; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.14); animation: toonbob 3.6s var(--cd, 0s) ease-in-out infinite; }
 .game .av .toon { border-radius: 50%; }
@@ -2545,6 +2545,184 @@ em.r-rare, span.r-rare { color: #5cc8ff; } em.r-epic, span.r-epic { color: #b98c
 .coinprize { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .coinprize .coin { width: 118px; height: 118px; filter: drop-shadow(0 0 22px rgba(255,209,102,.6)); }
 .coinprize b { font: 800 34px var(--f-display); text-shadow: 0 2px 0 rgba(0,0,0,.5); }
+/* ==========================================================================
+   v1.0.5: player card, owned filter, odds dropdown, new crates and cosmetics.
+   ========================================================================== */
+/* ---------- shop tools ---------- */
+.shoptools { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.shoptools .exbtn { align-self: center; margin: 0; flex: 0 1 auto; min-width: 0; }
+.ownedbtn { flex: none; min-height: 40px; padding: 8px 18px; border: 0; border-radius: 999px; background: var(--deep); color: var(--mute); font: 800 14px var(--f-body); box-shadow: inset 0 0 0 1.5px var(--line); transition: color .2s, box-shadow .2s, background-color .2s; }
+.ownedbtn.on { color: #d6fbff; background: #062b36; box-shadow: inset 0 0 0 1.5px #22e6ff, 0 0 10px #22e6ff, 0 0 24px rgba(34,230,255,.55); text-shadow: 0 0 8px #22e6ff; animation: ownedglow 1.8s ease-in-out infinite alternate; }
+@keyframes ownedglow { to { box-shadow: inset 0 0 0 1.5px #7df1ff, 0 0 14px #22e6ff, 0 0 34px rgba(34,230,255,.7); } }
+
+/* ---------- odds dropdown ---------- */
+.oddshead { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0; border: 0; background: none; min-height: 28px; text-align: left; }
+.chev { width: 10px; height: 10px; margin-right: 4px; border-right: 2.5px solid var(--mute); border-bottom: 2.5px solid var(--mute); transform: rotate(45deg) translate(-2px,-2px); transition: transform .26s cubic-bezier(.2,.8,.3,1); }
+.oddsdrop.open .chev { transform: rotate(-135deg) translate(-2px,-2px); }
+.oddsbody { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s cubic-bezier(.2,.8,.3,1); margin-top: -12px; }
+.oddsdrop.open .oddsbody { grid-template-rows: 1fr; margin-top: 0; }
+.oddsbody > div { overflow: hidden; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+
+/* ---------- settings ---------- */
+.volrow { display: flex; flex-direction: column; gap: 2px; }
+.volrow b { color: var(--sun); }
+.volrow .tslider { accent-color: var(--tabby); }
+.pcopen { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0; border: 0; background: none; transition: transform .14s cubic-bezier(.2,.8,.3,1); }
+.pcopen:active { transform: scale(.97); }
+.pcopen small { color: var(--mute); font-weight: 800; }
+
+/* ---------- player card ---------- */
+.pcard-layer { position: fixed; inset: 0; z-index: 66; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.pc-scrim { position: absolute; inset: 0; border: 0; padding: 0; background: rgba(5,3,14,.84); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); opacity: 0; transition: opacity .3s ease; }
+.pcard-layer.in .pc-scrim { opacity: 1; }
+.pc-x { position: absolute; z-index: 3; right: 12px; top: calc(var(--sat) + 4px); width: 38px; height: 38px; }
+.pc-persp { position: relative; z-index: 2; perspective: 1100px; margin-top: 6px; }
+.pc-card { position: relative; transform-style: preserve-3d; transform: rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); touch-action: none; -webkit-user-select: none; user-select: none; --mx: 50%; --my: 50%; --ho: .6; }
+.pc-flip { position: absolute; inset: 0; transform-style: preserve-3d; transition: transform .62s cubic-bezier(.3,.9,.3,1); }
+.pc-flip.over { transform: rotateY(180deg); }
+.pc-face { position: absolute; inset: 0; overflow: hidden; isolation: isolate; border-radius: 26px; -webkit-backface-visibility: hidden; backface-visibility: hidden; box-shadow: 0 26px 60px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.2); background: linear-gradient(135deg, #e9edf5, #9aa6b8 22%, #f6f8fc 46%, #8f9bb0 68%, #dfe4ee); padding: 11px; box-sizing: border-box; }
+.pc-back { transform: rotateY(180deg); }
+.pc-gold .pc-face { background: linear-gradient(135deg, #fff3c4, #c9942a 24%, #fff8d6 46%, #b67f1c 70%, #ffe9a8); }
+.pc-in { position: relative; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: calc(var(--pw) * .022); padding: calc(var(--pw) * .03); border-radius: 17px; overflow: hidden; color: #231a33; background: linear-gradient(165deg, #fff7dd, #f5e7c6 45%, #ecd9b4); }
+.pc-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.pc-stage { flex: none; padding: 2px 9px; border-radius: 999px; background: linear-gradient(#fff, #cfd6e4); box-shadow: inset 0 0 0 1px rgba(0,0,0,.2); font: 800 calc(var(--pw) * .03) var(--f-body); font-style: italic; }
+.pc-top .nt { flex: 1; min-width: 0; font-size: calc(var(--pw) * .07); }
+.pc-top .nt-plain { color: #231a33; }
+.pc-hp { flex: none; display: flex; align-items: baseline; gap: 3px; }
+.pc-hp small { font: 800 calc(var(--pw) * .028) var(--f-body); }
+.pc-hp b { font: 800 calc(var(--pw) * .075)/1 var(--f-display); }
+.pc-hp i { align-self: center; display: grid; place-items: center; width: calc(var(--pw) * .07); height: calc(var(--pw) * .07); padding: 2px; box-sizing: border-box; border-radius: 50%; background: #ffc933; box-shadow: inset 0 0 0 1.5px #a56b09; color: #7a4a0a; }
+.pc-hp i svg, .pc-move i svg, .pc-paw svg { width: 100%; height: 100%; }
+.pc-art { position: relative; isolation: isolate; flex: 1; min-height: 0; display: grid; place-items: center; overflow: hidden; border-radius: 8px; box-shadow: 0 0 0 calc(var(--pw) * .008) #c9b98a, 0 2px 6px rgba(0,0,0,.35); background: linear-gradient(135deg, #3b2f69, #1d1636); }
+.pc-art .bnfx { z-index: 0; }
+.pc-art .bnfx::after { background: none; }
+.pc-art .av { position: relative; z-index: 1; width: 66%; height: auto; aspect-ratio: 1; }
+.pc-art .toon { animation: none; }
+/* The foil: a rainbow that slides with the tilt, plus sparkle and a moving glare. */
+.pc-foil { position: absolute; inset: 0; z-index: 2; pointer-events: none; mix-blend-mode: color-dodge; opacity: calc(var(--ho) * .7); background: repeating-linear-gradient(115deg, #ff4d6d 0%, #ffd23f 9%, #2bf0a0 18%, #3fb4ff 27%, #b98cff 36%, #ff4d6d 45%), radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.6), transparent 55%); background-size: 320% 320%, 100% 100%; background-position: var(--mx) var(--my), 0 0; background-blend-mode: overlay; }
+.pc-spark { position: absolute; inset: -20%; z-index: 3; pointer-events: none; mix-blend-mode: overlay; opacity: var(--ho); background: radial-gradient(1.4px 1.4px at 12% 18%, #fff, transparent), radial-gradient(1.2px 1.2px at 32% 64%, #fff, transparent), radial-gradient(1.6px 1.6px at 58% 28%, #fff, transparent), radial-gradient(1.2px 1.2px at 74% 72%, #fff, transparent), radial-gradient(1.5px 1.5px at 88% 40%, #fff, transparent); background-size: 74px 74px; transform: translate(calc((var(--mx) - 50%) * -.12), calc((var(--my) - 50%) * -.12)); }
+.pc-rim { position: absolute; inset: 0; z-index: 4; pointer-events: none; border-radius: inherit; padding: 11px; mix-blend-mode: color-dodge; opacity: calc(var(--ho) * .75); background: repeating-linear-gradient(115deg, #ff4d6d 0%, #ffd23f 10%, #2bf0a0 20%, #3fb4ff 30%, #b98cff 40%, #ff4d6d 50%); background-size: 300% 300%; background-position: var(--mx) var(--my); -webkit-mask: linear-gradient(#000, #000) content-box exclude, linear-gradient(#000, #000); mask: linear-gradient(#000, #000) content-box exclude, linear-gradient(#000, #000); -webkit-mask-composite: xor; mask-composite: exclude; }
+.pc-glare { position: absolute; inset: 0; z-index: 5; pointer-events: none; mix-blend-mode: soft-light; background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.85), rgba(255,255,255,.12) 38%, rgba(0,0,0,.28) 90%); }
+.pc-title { margin: 0; text-align: center; font: 800 calc(var(--pw) * .047) var(--f-display); color: #5c3a0a; }
+.pc-moves { display: flex; flex-direction: column; gap: 2px; }
+.pc-move { display: flex; align-items: center; gap: 8px; padding: calc(var(--pw) * .012) 2px; border-bottom: 1px solid rgba(92,58,10,.22); }
+.pc-move i { flex: none; width: calc(var(--pw) * .06); height: calc(var(--pw) * .06); padding: 2px; box-sizing: border-box; border-radius: 50%; background: #fff; box-shadow: inset 0 0 0 1.5px #231a33; color: #231a33; }
+.pc-move b { flex: 1; font: 800 calc(var(--pw) * .05) var(--f-display); }
+.pc-move em { font: 800 calc(var(--pw) * .06) var(--f-display); font-style: normal; }
+.pc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.pc-stats div { display: flex; flex-direction: column; align-items: center; padding: 3px 2px; border-radius: 999px; background: linear-gradient(#fff, #d4dbe8); box-shadow: inset 0 0 0 1px rgba(0,0,0,.14); }
+.pc-stats small { font: 800 calc(var(--pw) * .024) var(--f-body); color: #5a5470; }
+.pc-stats b { font: 800 calc(var(--pw) * .04)/1 var(--f-display); }
+.pc-foot { display: flex; align-items: center; gap: 8px; font: 800 calc(var(--pw) * .025) var(--f-body); color: #5a4a33; }
+.pc-foot span { flex: 1; min-width: 0; }
+.pc-stamp { flex: none; width: calc(var(--pw) * .115); height: calc(var(--pw) * .09); display: grid; place-items: center; border-radius: 6px; font: 800 calc(var(--pw) * .05) var(--f-display); font-style: normal; color: #1d2f7a; background: linear-gradient(135deg, #fff3c4, #e8b23a 50%, #fff3c4); box-shadow: inset 0 0 0 1.5px #1d2f7a; }
+.pc-backin { align-items: center; gap: calc(var(--pw) * .03); color: var(--cream); background: repeating-linear-gradient(45deg, rgba(255,255,255,.035) 0 8px, transparent 8px 16px), radial-gradient(circle at 50% 42%, #3b2f69, #140f28 72%); }
+.pc-tab { padding: 8px 26px; border-radius: 999px; font: 800 calc(var(--pw) * .06) var(--f-display); color: #2a1200; background: linear-gradient(#ffd98a, #ffad3b); box-shadow: 0 3px 0 #a8650c; }
+.pc-list { position: relative; z-index: 1; width: 100%; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: space-evenly; }
+.pc-list div { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 3px 4px; border-bottom: 1px solid rgba(255,255,255,.1); }
+.pc-list span { flex: none; color: var(--mute); font-weight: 800; font-size: calc(var(--pw) * .04); }
+.pc-list b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 800 calc(var(--pw) * .044) var(--f-display); }
+.pc-paw { position: absolute; left: 50%; top: 50%; width: 46%; transform: translate(-50%,-50%); opacity: .07; color: #fff; }
+.pc-hint { position: absolute; z-index: 2; left: 0; right: 0; bottom: calc(var(--sab) + 6px); margin: 0; text-align: center; font-weight: 800; font-size: 13px; color: rgba(255,255,255,.72); pointer-events: none; }
+
+/* ---------- crates: new themes ---------- */
+.stage.onepiece { --accent: #ffcf5c; --accent2: #ffb03b; --bg1: #0f3f5e; --fx: #ffd166; }
+.stage.cyber { --accent: #22e6ff; --accent2: #ff2bd6; --bg1: #12264f; --fx: #22e6ff; }
+.particles .p-cyan { width: var(--sz); height: var(--sz); background: linear-gradient(135deg, #7df1ff, #ff2bd6); box-shadow: 0 0 8px rgba(34,230,255,.7); }
+.crate .mask { position: absolute; left: 50%; top: 56px; width: 138px; height: 138px; transform: translateX(-50%); z-index: 6; filter: drop-shadow(0 12px 14px rgba(0,0,0,.6)); --eye: 8px; }
+.crate .mask svg { width: 100%; height: 100%; display: block; }
+.crate .mask .eye { filter: drop-shadow(0 0 var(--eye) var(--eyec, #22e6ff)); }
+.onepiece .front { background: linear-gradient(90deg, transparent 0 14%, #2b2118 14% 17%, transparent 17% 83%, #2b2118 83% 86%, transparent 86%), repeating-linear-gradient(0deg, #7d4c25 0 38px, #5d3517 38px 40px, #8a5630 40px 78px, #5d3517 78px 80px); box-shadow: inset 0 0 0 5px #c9942a, inset 0 0 0 9px #3b2412, inset 0 0 34px rgba(0,0,0,.5); }
+.onepiece .lid .top { border-radius: 26px 26px 6px 6px; background: repeating-linear-gradient(90deg, #8a5630 0 30px, #5d3517 30px 32px); border: 4px solid #c9942a; box-shadow: inset 0 0 0 2px #3b2412, inset 0 0 18px rgba(0,0,0,.45); }
+.onepiece .lid .lip { background: linear-gradient(180deg, #ffe9a8, #c9942a 45%, #7a5216); border-top: 1px solid #fff3cf; }
+.onepiece .tag { background: #f3e2b8; color: #5c3a0a; box-shadow: 0 0 0 1px #7a5216; }
+.onepiece .poster { position: absolute; right: 22px; bottom: 16px; width: 58px; height: 76px; padding: 4px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; gap: 2px; background: #efdcae; color: #3b2412; transform: rotate(5deg); box-shadow: 0 3px 6px rgba(0,0,0,.45); }
+.onepiece .poster b { font: 400 11px/1 "Rye", var(--f-card); }
+.onepiece .poster i { flex: 1; width: 100%; background: radial-gradient(circle at 50% 42%, #7a5216 0 26%, #d9c28c 28%); }
+.onepiece .poster small { font: 800 5px/1 var(--f-body); }
+.onepiece .rope { position: absolute; left: -6px; right: -6px; bottom: 52px; height: 10px; z-index: 4; transform: rotate(-2deg); background: repeating-linear-gradient(115deg, #d9b679 0 6px, #8a6a34 6px 9px); box-shadow: 0 2px 4px rgba(0,0,0,.4); }
+.onepiece .lock .shackle { border-color: #c9942a; }
+.onepiece .lock .body2 { background: linear-gradient(180deg, #ffe9a8, #c9942a 45%, #7a5216); }
+.onepiece .lock .key { background: #3b2412; }
+.cyber .front { background: linear-gradient(transparent 49.6%, rgba(255,43,214,.5) 50%, transparent 50.4%), repeating-linear-gradient(0deg, transparent 0 22px, rgba(34,230,255,.16) 22px 23px), repeating-linear-gradient(90deg, transparent 0 22px, rgba(34,230,255,.16) 22px 23px), linear-gradient(160deg, #0d1426, #05070f 72%); box-shadow: inset 0 0 0 4px #22e6ff, inset 0 0 0 9px #05070f, inset 0 0 0 10px rgba(255,43,214,.7), inset 0 0 40px rgba(34,230,255,.28); }
+.cyber .lid .top { background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,43,214,.32) 18px 20px), linear-gradient(160deg, #111a30, #05070f); border: 4px solid #22e6ff; box-shadow: inset 0 0 0 2px #05070f, inset 0 0 18px rgba(34,230,255,.4); }
+.cyber .lid .lip { background: linear-gradient(180deg, #7df1ff, #0f8aa8 45%, #063a4a); border-top: 1px solid #c8fbff; }
+.cyber .tag { background: #ff2bd6; color: #14021a; box-shadow: 0 0 0 1px #ffc2f2, 0 0 10px #ff2bd6; }
+.cyber .mask { --eyec: #22e6ff; }
+.cyber .rope { position: absolute; left: -6px; right: -6px; bottom: 52px; height: 7px; z-index: 4; background: linear-gradient(90deg, #22e6ff, #ff2bd6, #22e6ff); box-shadow: 0 0 10px #22e6ff; }
+.cyber .lock .shackle { border-color: #22e6ff; }
+.cyber .lock .body2 { background: linear-gradient(180deg, #16233f, #05070f); border: 1px solid #22e6ff; }
+.cyber .lock .key { background: #ff2bd6; box-shadow: 0 0 6px #ff2bd6; }
+.reveal-item { padding: 0; background: rgba(12,10,24,.9); border-radius: 16px; box-shadow: 0 0 0 2px var(--accent), 0 0 26px var(--accent); overflow: hidden; }
+.reveal-item .pv { margin: 0; min-height: 190px; width: 100%; display: flex; align-items: center; justify-content: center; }
+.odt { display: grid; place-items: center; width: 54px; height: 30px; border-radius: 6px; background: var(--ink4); font: 800 9.5px/1.05 var(--f-body); font-style: normal; text-align: center; color: var(--cream); }
+
+/* ---------- crate fonts ---------- */
+.nf-piratescript { font-family: "Pirata One", var(--f-display); font-weight: 400; font-size: 1.12em; letter-spacing: .02em; }
+.nf-wantedtype { font-family: "Rye", var(--f-display); font-weight: 400; font-size: .92em; }
+.nf-monoterm { font-family: "Share Tech Mono", monospace; font-weight: 400; }
+.nf-staticfont { font-family: "Rubik Glitch", var(--f-display); font-weight: 400; }
+
+/* ---------- crate name tags ---------- */
+.nt-seafoam, .nt-bounty, .nt-captain, .nt-hotwire { -webkit-background-clip: text; background-clip: text; color: transparent; }
+.nt-seafoam { background-image: linear-gradient(90deg, #d7fff4, #5fd3c4, #bdf6ff, #d7fff4); background-size: 300% 100%; animation: ntflow 7s linear infinite; }
+.nt-bounty { background-image: linear-gradient(100deg, #a8751a, #ffe9a8, #e8b23a, #a8751a); background-size: 300% 100%; animation: ntflow 4.6s linear infinite; filter: drop-shadow(0 1px 0 rgba(0,0,0,.5)); }
+.nt-captain { background-image: linear-gradient(90deg, #ff8a7a, #e5484d, #ffd166, #e5484d, #ff8a7a); background-size: 300% 100%; animation: ntflow 5s linear infinite; filter: drop-shadow(0 0 3px rgba(229,72,77,.7)); }
+.nt-terminal { color: #5dff9b; text-shadow: 0 0 6px #22ff88; }
+.nt-glitched { color: #fff; text-shadow: 1.5px 0 #ff2bd6, -1.5px 0 #22e6ff; animation: ntglitch 2.6s steps(1) infinite; }
+@keyframes ntglitch { 0%, 88%, 100% { text-shadow: 1.5px 0 #ff2bd6, -1.5px 0 #22e6ff; } 90% { text-shadow: -3px 0 #ff2bd6, 3px 0 #22e6ff; } 94% { text-shadow: 3px 1px #ff2bd6, -3px -1px #22e6ff; } }
+.nt-hotwire { background-image: linear-gradient(90deg, #ff2bd6, #ffb3f0, #22e6ff, #ff2bd6); background-size: 300% 100%; animation: ntflow 2.8s linear infinite; filter: drop-shadow(0 0 4px #ff2bd6); }
+
+/* ---------- crate frames ---------- */
+.fr-ropering::after { background: repeating-conic-gradient(#d9b679 0 9deg, #8a6a34 9deg 14deg); }
+.fr-strawbrim::after { inset: -11%; background: conic-gradient(#f2d27f, #d9b04f, #f2d27f, #c99a3a, #f2d27f); -webkit-mask: radial-gradient(closest-side, transparent 80%, #000 82%); mask: radial-gradient(closest-side, transparent 80%, #000 82%); }
+.fr-strawbrim::before { content: ""; position: absolute; inset: -3%; z-index: 2; border-radius: 50%; border: 3px solid #d7263d; pointer-events: none; }
+.fr-compass::before { content: ""; position: absolute; inset: -13%; z-index: 2; border-radius: 50%; pointer-events: none; background: repeating-conic-gradient(#ffe9a8 0 3deg, transparent 3deg 30deg); -webkit-mask: radial-gradient(closest-side, transparent 88%, #000 90%); mask: radial-gradient(closest-side, transparent 88%, #000 90%); animation: frspin 14s linear infinite; }
+.fr-compass::after { background: conic-gradient(#a8751a, #ffe9a8, #c9942a, #fff3c4, #a8751a); }
+.fr-glitchring { --fg: #ff2bd6; } .fr-glitchring::after { background: conic-gradient(#22e6ff 0 40%, #ff2bd6 0 62%, #22e6ff 0); animation: frjit 2.2s steps(1) infinite; }
+@keyframes frjit { 0%, 84%, 100% { transform: none; } 86% { transform: translate(2px,-1px) rotate(30deg); } 92% { transform: translate(-2px,1px) rotate(-20deg); } }
+.fr-reticle::after { background: conic-gradient(#ff3b5c 0 8%, transparent 0 17%, #ff3b5c 0 33%, transparent 0 42%, #ff3b5c 0 58%, transparent 0 67%, #ff3b5c 0 83%, transparent 0 92%, #ff3b5c 0); animation: frspin 7s linear infinite; }
+.fr-synapse { --fg: #22e6ff; } .fr-synapse::after { background: conic-gradient(transparent 0 30%, #22e6ff 45%, transparent 50% 78%, #ff2bd6 92%, transparent); animation: frspin 2.2s linear infinite, frbreathe 1.4s ease-in-out infinite alternate; }
+
+/* ---------- crate banners ---------- */
+.bn-sailcloth .bnfx { background: repeating-linear-gradient(90deg, rgba(120,90,50,.18) 0 2px, transparent 2px 24px), linear-gradient(120deg, #e9dcc0, #c9b58d); }
+.bn-wantedbn .bnfx { background: radial-gradient(ellipse at 20% 20%, rgba(90,50,10,.32), transparent 45%), radial-gradient(ellipse at 90% 90%, rgba(90,50,10,.4), transparent 50%), linear-gradient(120deg, #e4cd96, #bf9d5e); }
+.bn-seachart .bnfx { background: repeating-linear-gradient(30deg, transparent 0 34px, rgba(255,255,255,.14) 34px 35px), repeating-linear-gradient(-30deg, transparent 0 34px, rgba(255,255,255,.14) 34px 35px), linear-gradient(120deg, #0f4a6e, #083049); }
+.bn-hexnet .bnfx { background: radial-gradient(circle at 12px 12px, transparent 8px, rgba(34,230,255,.35) 8.5px 9.5px, transparent 10px) 0 0/24px 24px, linear-gradient(120deg, #07101f, #0d1a33); }
+.bn-rainglass .bnfx { background: repeating-linear-gradient(100deg, rgba(255,255,255,.1) 0 1px, transparent 1px 13px), radial-gradient(circle at 20% 60%, #ff2bd688, transparent 40%), radial-gradient(circle at 80% 30%, #22e6ff88, transparent 42%), #0a0d1e; background-size: 100% 60px, auto, auto, auto; animation: bnrain 1.6s linear infinite; }
+@keyframes bnrain { to { background-position: 0 60px, 0 0, 0 0, 0 0; } }
+.bn-billboard .bnfx { background: linear-gradient(90deg, #ff2bd6, #22e6ff, #fff200, #ff2bd6); background-size: 300% 100%; animation: ntflow 4s linear infinite; }
+
+/* ---------- crate tables ---------- */
+.tbl-shipdeck { background: radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(0,0,0,.4)), repeating-linear-gradient(90deg, #9c7344 0 62px, #5e3f20 62px 64px, #a97e4e 64px 126px, #5e3f20 126px 128px); }
+.tbl-opensea { background: radial-gradient(circle at 78% 10%, #fff3c4 0 5%, #ffd16655 9%, transparent 22%), repeating-linear-gradient(170deg, transparent 0 30px, rgba(255,255,255,.07) 30px 34px), linear-gradient(#37a7d8, #0f5f92 45%, #063a60); }
+.tbl-treasurecove { background: radial-gradient(ellipse at 50% 112%, #ffc93399, #b7791f55 30%, transparent 58%), radial-gradient(ellipse at 50% 40%, #2c2130, #0c0810 72%); }
+.tbl-neonalley { background: radial-gradient(ellipse at 14% 14%, #ff2bd677, transparent 38%), radial-gradient(ellipse at 88% 24%, #22e6ff66, transparent 40%), linear-gradient(transparent 62%, rgba(255,43,214,.16)), linear-gradient(#0b0f22, #05060f); }
+.tbl-datacore { background: repeating-linear-gradient(90deg, transparent 0 40px, rgba(34,230,255,.12) 40px 41px), repeating-linear-gradient(0deg, transparent 0 40px, rgba(34,230,255,.12) 40px 41px), radial-gradient(circle at 50% 44%, #0f6a86, #06202e 42%, #02080e 80%); }
+.tbl-skyline { background: linear-gradient(transparent 58%, #05060f 58.2%), repeating-linear-gradient(90deg, #0b0f22 0 26px, #161c38 26px 44px, #0b0f22 44px 58px), radial-gradient(circle at 74% 20%, #ff6ad5 0 7%, transparent 9%), linear-gradient(#2b0f55, #ff2bd655 58%); background-size: auto, 100% 58%, auto, auto; background-repeat: no-repeat; background-position: 0 0, 0 100%, 0 0, 0 0; }
+
+/* ---------- crate card skins ---------- */
+.sk-grandvoyage.c-r { --cc: #c23b2e; } .sk-grandvoyage.c-y { --cc: #c98a12; } .sk-grandvoyage.c-g { --cc: #2c7d5c; } .sk-grandvoyage.c-b { --cc: #1f5f8f; } .sk-grandvoyage.c-w { --cc: #5a3a8a; }
+.sk-grandvoyage .cf { background: repeating-linear-gradient(30deg, transparent 0 calc(var(--cw) * .2), rgba(90,50,10,.12) calc(var(--cw) * .2) calc(var(--cw) * .205)), radial-gradient(ellipse at 30% 20%, #fbeecb, #e3c98e 70%, #c9a765); box-shadow: 0 calc(var(--cw) * .03) calc(var(--cw) * .1) rgba(0,0,0,.45), inset 0 0 0 calc(var(--cw) * .03) #6b3f1d, inset 0 0 0 calc(var(--cw) * .045) #e8b23a; }
+.sk-grandvoyage .cush { border-radius: 50%; width: 64%; transform: none; background: radial-gradient(circle, var(--cc), color-mix(in srgb, var(--cc) 62%, #000)); box-shadow: 0 0 0 calc(var(--cw) * .025) #e8b23a, 0 0 0 calc(var(--cw) * .04) #6b3f1d; color: #fff; }
+.sk-grandvoyage .cnum { color: #fff3c4; transform: none; font-family: "Pirata One", var(--f-display); font-weight: 400; font-size: calc(var(--cw) * .46); text-shadow: 0 2px 0 rgba(0,0,0,.45); -webkit-text-stroke: 0; }
+.sk-grandvoyage .ico { color: #fff3c4; transform: none; }
+.sk-grandvoyage :is(.ci, .lbl) { font-family: "Pirata One", var(--f-display); font-weight: 400; color: #4a2c10; }
+.sk-grandvoyage .st { color: var(--cc); }
+.sk-grandvoyage.c-w .cush { background: conic-gradient(from 45deg, #c23b2e 0 25%, #c98a12 0 50%, #2c7d5c 0 75%, #1f5f8f 0); }
+.sk-grandvoyage.back .cb { background: repeating-linear-gradient(90deg, #7d4c25 0 calc(var(--cw) * .2), #5d3517 calc(var(--cw) * .2) calc(var(--cw) * .215)); box-shadow: inset 0 0 0 calc(var(--cw) * .04) #e8b23a; }
+.sk-grandvoyage.back .bm, .sk-grandvoyage.back .bw { color: #ffe9a8; }
+.sk-neurallink.c-r { --cc: #ff2b6d; } .sk-neurallink.c-y { --cc: #fff200; } .sk-neurallink.c-g { --cc: #2bffa6; } .sk-neurallink.c-b { --cc: #22e6ff; } .sk-neurallink.c-w { --cc: #ff2bd6; }
+.sk-neurallink .cf { background: linear-gradient(135deg, transparent 47%, color-mix(in srgb, var(--cc) 40%, transparent) 50%, transparent 53%), repeating-linear-gradient(0deg, transparent 0 calc(var(--cw) * .06), rgba(255,255,255,.04) calc(var(--cw) * .06) calc(var(--cw) * .065)), linear-gradient(160deg, #0d1426, #04050c); background-size: 240% 240%, auto, auto; animation: nlflow 5s linear infinite; box-shadow: 0 calc(var(--cw) * .03) calc(var(--cw) * .1) rgba(0,0,0,.5), inset 0 0 0 calc(var(--cw) * .022) var(--cc), inset 0 0 calc(var(--cw) * .16) color-mix(in srgb, var(--cc) 50%, transparent); }
+@keyframes nlflow { from { background-position: 100% 100%, 0 0, 0 0; } to { background-position: 0 0, 0 0, 0 0; } }
+.sk-neurallink .cush { transform: none; border-radius: 12%; background: rgba(0,0,0,.65); box-shadow: inset 0 0 0 calc(var(--cw) * .018) var(--cc), 0 0 calc(var(--cw) * .14) color-mix(in srgb, var(--cc) 60%, transparent); color: #fff; clip-path: polygon(14% 0, 100% 0, 100% 86%, 86% 100%, 0 100%, 0 14%); }
+.sk-neurallink .cnum { font-family: "Chakra Petch", var(--f-display); font-weight: 700; color: #fff; transform: none; font-size: calc(var(--cw) * .42); -webkit-text-stroke: 0; text-shadow: 2px 0 #ff2bd6, -2px 0 #22e6ff; }
+.sk-neurallink .ico { color: #fff; transform: none; filter: drop-shadow(1.5px 0 #ff2bd6) drop-shadow(-1.5px 0 #22e6ff); }
+.sk-neurallink :is(.ci, .lbl) { font-family: "Chakra Petch", var(--f-display); font-weight: 700; color: var(--cc); text-shadow: 0 0 calc(var(--cw) * .05) var(--cc); }
+.sk-neurallink.c-w .cush { background: conic-gradient(from 45deg, #ff2b6d 0 25%, #fff200 0 50%, #2bffa6 0 75%, #22e6ff 0); }
+.sk-neurallink.back .cb { background: radial-gradient(circle at 50% 50%, rgba(34,230,255,.28), transparent 62%), #05070f; box-shadow: inset 0 0 0 calc(var(--cw) * .025) #22e6ff, inset 0 0 0 calc(var(--cw) * .04) #05070f, inset 0 0 0 calc(var(--cw) * .048) #ff2bd6; }
+.sk-neurallink.back .bm { color: #22e6ff; filter: drop-shadow(0 0 5px #22e6ff); }
+.sk-neurallink.back .bw { font-family: "Chakra Petch", var(--f-display); color: #ff2bd6; }
 </style>
 </head>
 <body>
@@ -2806,10 +2984,62 @@ const EMOTE_FACE = {"agg": "agg", "jnde": "jnde", "dekhi": "walkie", "thanedar":
 /* The 40 crate-only card skins: The Alley Collection and The Outer Ring. */
 const CRATE_SKINS = [ { "id": "cardboard", "name": "Cardboard Kingdom", "r": "common", "desc": "Corrugated kraft, packing tape, and a FRAGILE stamp. The box was always the best toy.", "grp": "alley", "crate": "chess" }, { "id": "sakura", "name": "Sakura Stationery", "r": "rare", "desc": "Washi paper, falling petals, and a gold-foil corner. Soft, but the +4 still stings.", "grp": "alley", "crate": "chess" }, { "id": "matcha", "name": "Matcha Latte", "r": "common", "desc": "Cream paper and a matcha swirl. Best served with a tiny biscuit.", "grp": "alley", "crate": "chess" }, { "id": "ramen", "name": "Ramen Rush", "r": "rare", "desc": "Nori-black card, noodle lines, and an egg-yolk center. Do not play hungry.", "grp": "alley", "crate": "chess" }, { "id": "tiger", "name": "Tiger Tape", "r": "rare", "desc": "Hazard stripes and a caution label. The table has been warned.", "grp": "alley", "crate": "chess" }, { "id": "tarot", "name": "Midnight Tarot", "r": "epic", "desc": "Indigo, gold, and a moon arcana. The cards know something you don't.", "grp": "alley", "crate": "chess" }, { "id": "glass", "name": "Stained Glass", "r": "epic", "desc": "Leaded jewel panes and a rose window. Every hand looks like a cathedral.", "grp": "alley", "crate": "chess" }, { "id": "blueprint", "name": "Blueprint", "r": "rare", "desc": "Graph paper, cyan ink, and a cat schematic. The deck is still in review.", "grp": "alley", "crate": "chess" }, { "id": "riso", "name": "Risograph", "r": "rare", "desc": "Fluorescent ink, halftone dots, and a happy misregistration.", "grp": "alley", "crate": "chess" }, { "id": "sticker", "name": "Bubblegum Sticker", "r": "common", "desc": "Die-cut gloss, sprinkles, and a thick white border. Peel it, stick it, play it.", "grp": "alley", "crate": "chess" }, { "id": "frost", "name": "Frosted Glass", "r": "epic", "desc": "Icy glass, condensation, and frost ferns. Cold hands, warm heart.", "grp": "alley", "crate": "chess" }, { "id": "marble", "name": "Marble & Rose Gold", "r": "legendary", "desc": "White marble and rose-gold veins. Quietly the most expensive thing on the table.", "grp": "alley", "crate": "chess" }, { "id": "herb", "name": "Herbarium Press", "r": "rare", "desc": "Pressed leaves, aged paper, and a handwritten label. A deck from a very tidy witch.", "grp": "alley", "crate": "chess" }, { "id": "denim", "name": "Denim Patch", "r": "common", "desc": "Indigo twill, orange stitching, and a frayed edge. The patch is load-bearing.", "grp": "alley", "crate": "chess" }, { "id": "candy", "name": "Candy Wrapper", "r": "common", "desc": "Crinkled foil, rainbow dots, and a sugar rush. The loudest deck in the bag.", "grp": "alley", "crate": "chess" }, { "id": "ink", "name": "Ink Wash", "r": "epic", "desc": "Rice paper, a single black brush sweep, and a red hanko. Less is more.", "grp": "alley", "crate": "chess" }, { "id": "cloud", "name": "Cloud Nine", "r": "epic", "desc": "Soft sky, fluffy clouds, and a sunbeam. No thoughts, just cards.", "grp": "alley", "crate": "chess" }, { "id": "laser", "name": "Laser Chase", "r": "legendary", "desc": "Black grid, a red dot, and a beam. The cat has already spotted it.", "grp": "alley", "crate": "chess" }, { "id": "yarn", "name": "Yarn Tangle", "r": "common", "desc": "Cream paper, looping yarn, and a loose thread. Good luck not pulling it.", "grp": "alley", "crate": "chess" }, { "id": "popup", "name": "Pop-Up Book", "r": "epic", "desc": "Layered paper cutouts, fold lines, and a little castle. Storytime is competitive.", "grp": "alley", "crate": "chess" }, { "id": "akatsuki", "name": "Akatsuki", "r": "legendary", "desc": "Black cloak, crimson clouds, red moon. The organization has a new deck.", "grp": "outer", "crate": "akatsuki" }, { "id": "sushi", "name": "Sushi Set", "r": "rare", "desc": "Rice, nori, salmon and a tiny soy dish. Do not play hungry.", "grp": "outer", "crate": "akatsuki" }, { "id": "bubbletea", "name": "Bubble Tea", "r": "common", "desc": "Milk tea, tapioca pearls, and a straw. The table's comfort pick.", "grp": "outer", "crate": "akatsuki" }, { "id": "origami", "name": "Origami Fortune", "r": "rare", "desc": "Folded paper, a crane, and a fortune you shouldn't read.", "grp": "outer", "crate": "akatsuki" }, { "id": "wanted", "name": "Wanted Poster", "r": "rare", "desc": "Aged paper, a cat mugshot, and a reward no one can collect.", "grp": "outer", "crate": "akatsuki" }, { "id": "velvet", "name": "Velvet Rope", "r": "epic", "desc": "Red velvet, a gold rope, and a VIP plaque. The deck has a guest list.", "grp": "outer", "crate": "akatsuki" }, { "id": "honeycomb", "name": "Honeycomb", "r": "rare", "desc": "Amber hexagons, honey drip, and one very busy bee.", "grp": "outer", "crate": "akatsuki" }, { "id": "fishmarket", "name": "Fish Market", "r": "common", "desc": "Newsprint, a fresh fish, and a lemon. Today's catch.", "grp": "outer", "crate": "akatsuki" }, { "id": "map", "name": "Vintage Map", "r": "epic", "desc": "Parchment, a compass rose, and a coastline that keeps moving.", "grp": "outer", "crate": "akatsuki" }, { "id": "tattoo", "name": "Tattoo Flash", "r": "epic", "desc": "Bold lines, a rose, and a banner that says TRUE TILL DEATH.", "grp": "outer", "crate": "akatsuki" }, { "id": "maneki", "name": "Maneki-neko", "r": "common", "desc": "A lucky cat, a gold coin, and a paw that never gets tired.", "grp": "outer", "crate": "akatsuki" }, { "id": "bento", "name": "Bento Box", "r": "common", "desc": "Rice, egg, pickles, and a compartment for dessert.", "grp": "outer", "crate": "akatsuki" }, { "id": "soda", "name": "Soda Pop", "r": "common", "desc": "Cold can, condensation, and a pull tab. Pop.", "grp": "outer", "crate": "akatsuki" }, { "id": "popcorn", "name": "Popcorn", "r": "rare", "desc": "Red stripes, butter, and a ticket stub. Now showing.", "grp": "outer", "crate": "akatsuki" }, { "id": "bonsai", "name": "Bonsai", "r": "epic", "desc": "A small tree, a big stone, and a very patient gardener.", "grp": "outer", "crate": "akatsuki" }, { "id": "postage", "name": "Postage Stamp", "r": "rare", "desc": "Perforated edges, a cat stamp, and a postmark from nowhere.", "grp": "outer", "crate": "akatsuki" }, { "id": "lava", "name": "Lava Lamp", "r": "epic", "desc": "Purple glass, slow blobs, and a 1970s glow.", "grp": "outer", "crate": "akatsuki" }, { "id": "koi", "name": "Koi Pond", "r": "epic", "desc": "Ripples, lily pads, and two koi going nowhere fast.", "grp": "outer", "crate": "akatsuki" }, { "id": "chess", "name": "Chessboard", "r": "common", "desc": "Black and white squares, a gold knight, and no takebacks.", "grp": "outer", "crate": "chess" }, { "id": "oni", "name": "Oni Mask", "r": "legendary", "desc": "Red mask, gold eyes, and a grin with too many teeth.", "grp": "outer", "crate": "akatsuki" } ];
 
+/* Cosmetics from the One Piece and Cyberpunk crates. Crate-only, like the card skins. */
+const CRATE_EXTRA = {
+  card: [
+    { id: 'grandvoyage', name: 'Grand Voyage', r: 'legendary', crate: 'onepiece', grp: 'voyage', desc: 'Sea-worn parchment, a gold compass and a course nobody charted.' },
+    { id: 'neurallink', name: 'Neural Link', r: 'legendary', crate: 'cyber', grp: 'voyage', desc: 'Your hand, wired straight into the table.' }
+  ],
+  table: [
+    { id: 'shipdeck', name: 'Ship Deck', r: 'rare', crate: 'onepiece', desc: 'Salt-bleached planks and a coil of rope.' },
+    { id: 'opensea', name: 'Open Sea', r: 'epic', crate: 'onepiece', desc: 'Nothing but blue water and a noon sun.' },
+    { id: 'treasurecove', name: 'Treasure Cove', r: 'legendary', crate: 'onepiece', desc: 'A hidden cave, knee deep in gold.' },
+    { id: 'neonalley', name: 'Neon Alley', r: 'rare', crate: 'cyber', desc: 'Wet asphalt under a thousand signs.' },
+    { id: 'datacore', name: 'Data Core', r: 'epic', crate: 'cyber', desc: 'The inside of a server that never sleeps.' },
+    { id: 'skyline', name: 'Skyline 2099', r: 'legendary', crate: 'cyber', desc: 'The top floor of a city with no ground.' }
+  ],
+  frame: [
+    { id: 'ropering', name: 'Rope Ring', r: 'common', crate: 'onepiece', desc: 'Hemp rope, tied by someone who knows knots.' },
+    { id: 'strawbrim', name: 'Straw Brim', r: 'rare', crate: 'onepiece', desc: 'A woven brim with a red band.' },
+    { id: 'compass', name: 'Compass Ring', r: 'epic', crate: 'onepiece', desc: 'A brass bezel that never stops hunting north.' },
+    { id: 'glitchring', name: 'Glitch Ring', r: 'common', crate: 'cyber', desc: 'A ring that can’t quite hold its signal.' },
+    { id: 'reticle', name: 'Target Lock', r: 'rare', crate: 'cyber', desc: 'Everyone at the table is in your sights.' },
+    { id: 'synapse', name: 'Synapse Halo', r: 'epic', crate: 'cyber', desc: 'Neon impulses firing around your head.' }
+  ],
+  tag: [
+    { id: 'seafoam', name: 'Sea Foam', r: 'common', crate: 'onepiece', desc: 'Pale water sliding through your name.' },
+    { id: 'bounty', name: 'Bounty Gold', r: 'rare', crate: 'onepiece', desc: 'Worth a fortune, dead or alive.' },
+    { id: 'captain', name: 'Captain Red', r: 'epic', crate: 'onepiece', desc: 'Red as the coat on the quarterdeck.' },
+    { id: 'terminal', name: 'Terminal Green', r: 'common', crate: 'cyber', desc: 'Phosphor letters on a black screen.' },
+    { id: 'glitched', name: 'Glitched', r: 'rare', crate: 'cyber', desc: 'Your name, slipping between channels.' },
+    { id: 'hotwire', name: 'Hot Wire', r: 'epic', crate: 'cyber', desc: 'Magenta current running end to end.' }
+  ],
+  font: [
+    { id: 'wantedtype', name: 'Wanted Type', r: 'common', crate: 'onepiece', desc: 'Nailed to every harbor wall.' },
+    { id: 'piratescript', name: 'Pirate Script', r: 'rare', crate: 'onepiece', desc: 'Inked in a captain’s log.' },
+    { id: 'monoterm', name: 'Terminal Mono', r: 'common', crate: 'cyber', desc: 'One character at a time.' },
+    { id: 'staticfont', name: 'Static', r: 'rare', crate: 'cyber', desc: 'Letters torn up by interference.' }
+  ],
+  banner: [
+    { id: 'sailcloth', name: 'Sail Cloth', r: 'common', crate: 'onepiece', desc: 'Patched canvas full of wind.' },
+    { id: 'wantedbn', name: 'Wanted Poster', r: 'rare', crate: 'onepiece', desc: 'Aged paper with your price on it.' },
+    { id: 'seachart', name: 'Sea Chart', r: 'epic', crate: 'onepiece', desc: 'Rhumb lines across uncharted water.' },
+    { id: 'hexnet', name: 'Hex Net', r: 'common', crate: 'cyber', desc: 'A honeycomb of cold light.' },
+    { id: 'rainglass', name: 'Rain Glass', r: 'rare', crate: 'cyber', desc: 'City lights through a wet window.' },
+    { id: 'billboard', name: 'Holo Billboard', r: 'epic', crate: 'cyber', desc: 'Ten stories of scrolling neon.' }
+  ],
+  fx: [
+    { id: 'treasure', name: 'Treasure Rain', r: 'epic', crate: 'onepiece', desc: 'The chest is open and it’s all yours.' },
+    { id: 'cannon', name: 'Cannon Salute', r: 'legendary', crate: 'onepiece', desc: 'A full broadside in your honor.' },
+    { id: 'breach', name: 'System Breach', r: 'epic', crate: 'cyber', desc: 'Green code pours down the screen.' },
+    { id: 'overdrive', name: 'Overdrive', r: 'legendary', crate: 'cyber', desc: 'Neon lines tear across at top speed.' }
+  ]
+};
+
 /* ==========================================================================
    Shop catalog. p = silver price, g = gold price, free when neither.
    ========================================================================== */
-const APP_VERSION = '1.0.4';
+const APP_VERSION = '1.0.5';
 const RARITY = { common: 'Common', rare: 'Rare', epic: 'Epic', legendary: 'Legendary', mythic: 'Mythic' };
 const SHOP_TABS = [
   ['card', 'Card Skins'], ['table', 'Tables'], ['avatar', 'Avatars'], ['frame', 'Frames'], ['tag', 'Name Tags'], ['font', 'Fonts'],
@@ -2997,6 +3227,7 @@ const PASS_ITEMS = {
 };
 for (const tab of Object.keys(PASS_ITEMS)) CATALOG[tab].push(...PASS_ITEMS[tab]);
 CATALOG.card.push(...CRATE_SKINS);
+for (const tab of Object.keys(CRATE_EXTRA)) CATALOG[tab].push(...CRATE_EXTRA[tab]);
 for (const tab of Object.keys(CATALOG)) for (const it of CATALOG[tab]) { it.cat = tab; it.key = tab + ':' + it.id; }
 const ITEM = Object.fromEntries(Object.values(CATALOG).flat().map(it => [it.key, it]));
 const FREE_CATS = CATS.filter(c => !c.premium).map(c => c.id);
@@ -4378,7 +4609,7 @@ const Prof = {
     p.owned = Array.isArray(p.owned) ? p.owned : [];
     p.eq = Object.assign({}, DEFAULT_EQ, p.eq || {});
     p.stats = Object.assign({ played: 0, wins: 0, streak: 0, best: 0, silverWon: 0, goldWon: 0, potsWon: 0, spins: 0, tours: 0 }, p.stats || {});
-    p.settings = Object.assign({ sound: 1, quick: 0, vib: 1, sort: 1 }, p.settings || {});
+    p.settings = Object.assign({ sound: 1, quick: 0, vib: 1, sort: 1, emoVol: 90 }, p.settings || {});
     p.settled = Array.isArray(p.settled) ? p.settled.slice(-30) : [];
     p.silver = Math.max(0, p.silver | 0); p.gold = Math.max(0, p.gold | 0);
     if (!CAT_BY_ID[p.avatar]) p.avatar = 'mochi';
@@ -4908,6 +5139,20 @@ const FX = {
       else if (k === 'fireworks') {
         this.add({ x: rnd(w * 0.15, w * 0.85), y: h + 6, vx: rnd(-40, 40), vy: rnd(-h * 1.25, -h * 0.95), g: h * 0.9, s: 3, life: 1.2, c: '#fff6d5', sh: 'rocket', hue: rnd(0, 360) });
         this.next = t + rnd(280, 520);
+      } else if (k === 'breach') {
+        for (let i = 0; i < 4; i++) this.add({ x: Math.round(rnd(0, w) / 14) * 14, y: -10, vy: rnd(420, 900), s: rnd(4, 9), life: 2.4, c: pick(['#22ff88', '#7dffb0', '#0fbf5f']), sh: 'pix' });
+        this.next = t + 26;
+      } else if (k === 'overdrive') {
+        const y = rnd(0, h), c = pick(['#22e6ff', '#ff2bd6', '#fff200']);
+        this.add({ sh: 'bolt', pts: [[-20, y], [w * 0.4, y + rnd(-14, 14)], [w + 20, y + rnd(-26, 26)]], life: 0.3, c });
+        this.add({ x: 0, y, vx: rnd(900, 1500), s: 3, life: 0.9, c, sh: 'spark' });
+        this.next = t + rnd(50, 110);
+      } else if (k === 'cannon') {
+        const x = rnd(w * 0.12, w * 0.88), y = rnd(h * 0.12, h * 0.6);
+        this.flash = 0.18;
+        this.add({ x, y, s: 6, life: 1, sh: 'ring', grow: w * 0.34, hue: 30 });
+        for (let i = 0; i < 26; i++) { const a = rnd(0, 6.3), v = rnd(120, 520); this.add({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: 420, drag: 0.8, s: rnd(2, 4.5), life: rnd(0.7, 1.5), c: pick(['#ffd166', '#ff8a3d', '#fff', '#cfcfcf']), sh: 'spark' }); }
+        this.next = t + rnd(320, 560);
       } else if (k === 'glitch') {
         const c = pick(['#ff2a6d', '#05ffa1', '#01c8ee', '#fcee0a', '#ffffff']);
         for (let i = 0; i < 3; i++) this.add({ x: rnd(0, w), y: rnd(0, h), vx: rnd(-500, 500), s: Math.round(rnd(2, 9)) * 4, life: rnd(0.18, 0.5), c, sh: 'pix' });
@@ -4916,8 +5161,8 @@ const FX = {
         this.add({ x: w / 2, y: h * 0.42, s: 8, life: 2.2, sh: 'ring', grow: Math.max(w, h) * 0.7, hue: 28 + (el * 40) % 40 });
         for (let i = 0; i < 26; i++) { const a = rnd(0, 6.3), v = rnd(160, 760); this.add({ x: w / 2, y: h * 0.42, vx: Math.cos(a) * v, vy: Math.sin(a) * v, drag: 0.5, s: rnd(2, 4.5), life: rnd(0.9, 2), c: pick(['#fff', '#ffd166', '#ff8a3d', '#c77dff']), sh: 'spark' }); }
         this.next = t + 620;
-      } else if (k === 'catrain' || k === 'fish' || k === 'hearts' || k === 'lanterns') {
-        const set = { lanterns: ['\u{1F3EE}'], catrain: ['\u{1F431}', '\u{1F63A}', '\u{1F638}', '\u{1F63B}', '\u{1F408}'], fish: ['\u{1F41F}', '\u{1F420}', '\u{1F421}', '\u{1F990}'], hearts: ['\u{1F496}', '\u{1F497}', '\u{1F49C}', '\u{1F49B}', '\u{1F499}'] }[k];
+      } else if (k === 'catrain' || k === 'fish' || k === 'hearts' || k === 'lanterns' || k === 'treasure') {
+        const set = { lanterns: ['\u{1F3EE}'], treasure: ['\u{1FA99}', '\u{1F4B0}', '\u{1F48E}', '\u{1F451}'], catrain: ['\u{1F431}', '\u{1F63A}', '\u{1F638}', '\u{1F63B}', '\u{1F408}'], fish: ['\u{1F41F}', '\u{1F420}', '\u{1F421}', '\u{1F990}'], hearts: ['\u{1F496}', '\u{1F497}', '\u{1F49C}', '\u{1F49B}', '\u{1F499}'] }[k];
         const up = k === 'hearts' || k === 'lanterns';
         this.add({ x: rnd(0, w), y: up ? h + 30 : -30, vx: rnd(-30, 30), vy: up ? rnd(-180, -100) : rnd(160, 300), g: up ? -10 : 220, r: rnd(-0.5, 0.5), vr: rnd(-2, 2), s: rnd(26, 44), life: 4.5, sh: 'txt', txt: pick(set), sway: up ? rnd(1, 3) : 0, ph: rnd(0, 6) });
         this.next = t + (up ? 70 : 85);
@@ -5054,7 +5299,15 @@ const Sound = {
         const d = this.nbuf.getChannelData(0);
         for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
       }
-      if (this.ac.state === 'suspended') this.ac.resume();
+      /* iPhones can leave audio suspended or interrupted; a silent sound played during the tap wakes it. */
+      if (this.ac.state !== 'running') {
+        this.ac.resume();
+        const s = this.ac.createBufferSource();
+        s.buffer = this.ac.createBuffer(1, 1, 22050);
+        s.connect(this.ac.destination);
+        s.start(0);
+      }
+      this.warm();
     } catch (e) { this.ac = null; }
   },
   on() { return !!(Prof.P && Prof.P.settings.sound && this.ac); },
@@ -5085,22 +5338,43 @@ const Sound = {
     o.start(t); o.stop(t + dur + 0.05);
   },
   /* Emote sound clips play at full voice, one at a time. */
-  clips: {}, cur: null,
-  async clip(id) {
-    if (!this.on() || !EMOTE_SND[id]) return;
+  clips: {}, cur: null, warming: false,
+  async decode(id) {
+    if (this.clips[id]) return this.clips[id];
+    const bin = atob(EMOTE_SND[id].split(',')[1]);
+    const b = await this.ac.decodeAudioData(Uint8Array.from(bin, c => c.charCodeAt(0)).buffer);
+    this.clips[id] = b;
+    return b;
+  },
+  /* Clips are ready before anyone taps, so a tap can start one straight away. */
+  warm() {
+    if (this.warming || !this.ac) return;
+    this.warming = true;
+    setTimeout(async () => { for (const id of Object.keys(EMOTE_SND)) { try { await this.decode(id); } catch (e) { /* tried again on play */ } } }, 400);
+  },
+  emoVol() { return clamp(((Prof.P && Prof.P.settings.emoVol) != null ? Prof.P.settings.emoVol : 90) / 100, 0, 1); },
+  /* A preview plays whether or not you own the emote, and even with game sounds off. */
+  async clip(id, preview) {
+    if (!EMOTE_SND[id] || !Prof.P) return;
+    if (!preview && !Prof.P.settings.sound) return;
+    const vol = this.emoVol();
+    if (!vol) return;
     try {
-      let b = this.clips[id];
-      if (!b) {
-        const bin = atob(EMOTE_SND[id].split(',')[1]);
-        b = this.clips[id] = await this.ac.decodeAudioData(Uint8Array.from(bin, c => c.charCodeAt(0)).buffer);
-      }
+      if (preview && navigator.audioSession) navigator.audioSession.type = 'playback';
+      if (!this.ac) throw new Error('no context');
+      if (this.ac.state !== 'running') await withTimeout(this.ac.resume(), 500);
+      const b = await this.decode(id);
+      if (this.ac.state !== 'running') throw new Error('not running');
       if (this.cur) { try { this.cur.stop(); } catch (e) { /* already ended */ } }
       const s = this.ac.createBufferSource(), g = this.ac.createGain();
-      s.buffer = b; g.gain.value = 0.9;
+      s.buffer = b; g.gain.value = vol;
       s.connect(g); g.connect(this.ac.destination);
       s.start();
       this.cur = s;
-    } catch (e) { /* audio unavailable */ }
+    } catch (e) {
+      /* Web Audio refused: a plain audio element still works from a tap. */
+      try { const a = new Audio(EMOTE_SND[id]); a.volume = vol; a.play().catch(() => {}); } catch (e2) { /* no audio here */ }
+    }
   },
   bell(f, vol, when) { this.tone(f, 0.5, vol, when); this.tone(f * 2.01, 0.22, vol * 0.3, when); },
   play(name, n) {
@@ -5217,17 +5491,23 @@ function spinWheelTo(el, n, k, opts) {
    ========================================================================== */
 const CRATE_KNIGHT = `<svg viewBox="0 0 64 64"><path d="M32 4v8" stroke="#f4efe9" stroke-width="4" stroke-linecap="round"/><path d="M25 10h14" stroke="#f4efe9" stroke-width="4" stroke-linecap="round"/><path d="M26 20h12l-2 9h-8Z" fill="#f4efe9"/><path d="M22 31h20l-3 15H25Z" fill="#f4efe9"/><path d="M18 48h28v9H18Z" fill="#e8c36a"/><path d="M24 55h16" stroke="#8a5a1c" stroke-width="2" opacity=".6"/></svg>`;
 const CRATE_MASK = `<svg viewBox="0 0 120 120">  <circle cx="60" cy="60" r="56" fill="#d96a2a" stroke="#140a08" stroke-width="4"/>  <path d="M60 7C94 15 110 44 103 72C96 100 68 113 44 104C22 96 10 72 18 50C26 30 46 19 64 25C82 31 90 48 84 64C78 80 62 86 50 78C40 71 42 58 52 55" fill="none" stroke="#7a2a10" stroke-width="4" opacity=".85"/>  <path d="M22 18L34 6" stroke="#7a2a10" stroke-width="3" opacity=".5"/>  <path d="M98 96L86 108" stroke="#7a2a10" stroke-width="3" opacity=".5"/>  <circle cx="79" cy="49" r="14" fill="#12080a" stroke="#140a08" stroke-width="3"/>  <g class="eye"><circle cx="79" cy="49" r="9" fill="#d7263d"/><circle cx="79" cy="49" r="3.4" fill="#0a0608"/><g fill="#0a0608"><circle cx="79" cy="43" r="1.7"/><circle cx="73" cy="54" r="1.7"/><circle cx="85" cy="54" r="1.7"/></g></g>  <path d="M44 100C52 92 64 92 72 100" fill="none" stroke="#7a2a10" stroke-width="3" opacity=".6"/></svg>`;
+const CRATE_HAT = `<svg viewBox="0 0 120 120"><ellipse cx="60" cy="74" rx="56" ry="24" fill="#e9c46a" stroke="#7a5216" stroke-width="3"/><path d="M12 74c10-8 86-8 96 0" fill="none" stroke="#b98a2e" stroke-width="2" opacity=".7"/><path d="M28 72C28 30 44 18 60 18s32 12 32 54c-18 8-46 8-64 0Z" fill="#f2d27f" stroke="#7a5216" stroke-width="3"/><path d="M28 62c20 9 44 9 64 0l-1 13c-18 8-44 8-62 0Z" fill="#d7263d" stroke="#7a1420" stroke-width="2"/><g stroke="#b98a2e" stroke-width="1.6" opacity=".55" fill="none"><path d="M40 30c12-5 28-5 40 0"/><path d="M34 44c16-5 36-5 52 0"/><path d="M8 80c12 7 26 10 40 11"/><path d="M112 80c-12 7-26 10-40 11"/></g></svg>`;
+const CRATE_CORE = `<svg viewBox="0 0 120 120"><path d="M60 6 107 33v54L60 114 13 87V33Z" fill="#070b16" stroke="#22e6ff" stroke-width="4"/><path d="M60 22 93 41v38L60 98 27 79V41Z" fill="none" stroke="#ff2bd6" stroke-width="2.4" opacity=".85"/><g class="eye"><circle cx="60" cy="60" r="19" fill="#02131c" stroke="#22e6ff" stroke-width="3"/><circle cx="60" cy="60" r="8" fill="#22e6ff"/><path d="M38 60h44M60 38v44" stroke="#ff2bd6" stroke-width="1.6" opacity=".7"/></g></svg>`;
 const CRATE_LOCK = '<div class="lock"><div class="shackle"></div><div class="body2"></div><div class="key"></div></div>';
 const CRATE_COST = 1000, CRATE_REPEAT = 1000;
 /* Weights are thousandths of a percent, so 100000 is certain. */
 const CRATE_RARITY = { legendary: 500, epic: 1500, rare: 3000, common: 5000 };
 const CRATE_COINS = [['s', 10, 28], ['s', 50, 24], ['s', 100, 14], ['s', 250, 8], ['s', 500, 4.5], ['s', 1000, 2.5], ['s', 2500, 0.9], ['s', 7777, 0.1], ['g', 1, 8.5], ['g', 3, 5], ['g', 5, 2.5], ['g', 10, 1.2], ['g', 20, 0.5], ['g', 40, 0.3]];
 const CRATES = {
-  chess: { id: 'chess', name: 'Chessboard Crate', set: 'The Alley Collection', tag: 'CHESSBOARD', lead: 'chess', accent: '#e8c36a', blurb: 'The Chessboard skin and all 20 of The Alley Collection.', odds: { chess: 7000 } },
-  akatsuki: { id: 'akatsuki', name: 'Akatsuki Crate', set: 'The Outer Ring', tag: 'AKATSUKI', lead: 'akatsuki', accent: '#ff3f55', blurb: 'A shot at the Akatsuki legendary and 18 more from The Outer Ring.', common: 7000, odds: {} }
+  chess: { id: 'chess', name: 'Chessboard Crate', set: 'The Alley Collection', tag: 'CHESSBOARD', accent: '#e8c36a', part: 'p-gold', blurb: 'The Chessboard skin and all 20 of The Alley Collection.', odds: { chess: 7000 } },
+  akatsuki: { id: 'akatsuki', name: 'Akatsuki Crate', set: 'The Outer Ring', tag: 'AKATSUKI', accent: '#ff3f55', part: 'p-red', blurb: 'A shot at the Akatsuki legendary and 18 more from The Outer Ring.', common: 7000, odds: {} },
+  onepiece: { id: 'onepiece', name: 'One Piece Crate', set: 'Grand Voyage', tag: 'ONE PIECE', accent: '#ffcf5c', part: 'p-gold', blurb: 'Pirate tables, frames, name tags, fonts, banners and victory effects.', common: 7000, odds: {} },
+  cyber: { id: 'cyber', name: 'Cyberpunk Crate', set: 'Neon Protocol', tag: 'CYBERPUNK', accent: '#22e6ff', part: 'p-cyan', blurb: 'Neon tables, frames, name tags, fonts, banners and victory effects.', common: 7000, odds: {} }
 };
+const CRATE_ORDER = ['cyber', 'onepiece', 'akatsuki', 'chess'];
+const CRATE_CAT = { card: 'Card skin', table: 'Table', frame: 'Frame', tag: 'Name tag', font: 'Font', banner: 'Banner', fx: 'Victory FX' };
 for (const c of Object.values(CRATES)) {
-  c.skins = CRATE_SKINS.filter(s => s.crate === c.id).map(s => ({ key: 'card:' + s.id, id: s.id, r: s.r, w: c.odds[s.id] || (s.r === 'common' && c.common) || CRATE_RARITY[s.r] }));
+  c.skins = Object.values(ITEM).filter(it => it.crate === c.id).map(it => ({ key: it.key, id: it.id, r: it.r, w: c.odds[it.id] || (it.r === 'common' && c.common) || CRATE_RARITY[it.r] }));
   const left = 100000 - c.skins.reduce((a, s) => a + s.w, 0);
   c.coins = CRATE_COINS.map(([cur, n, u]) => ({ c: cur, n, w: Math.round(left * u / 100) }));
   c.coins[0].w += left - c.coins.reduce((a, x) => a + x.w, 0);
@@ -5241,10 +5521,11 @@ function rollCrate(c) {
   return c.coins[0];
 }
 function crateHTML(c) {
-  const chess = c.id === 'chess';
-  return `<div class="crate ${c.id}"><div class="body"><div class="front">${chess ? `<div class="plate">${CRATE_KNIGHT}</div>` : ''}</div><div class="side"></div></div>
-    <div class="lid"><div class="top"></div><div class="lip"></div>${chess ? '<div class="finial"></div>' : ''}<div class="tag">${c.tag}</div></div>
-    ${chess ? '' : `<div class="mask">${CRATE_MASK}</div><div class="rope"></div>`}${CRATE_LOCK}</div>`;
+  const front = c.id === 'chess' ? `<div class="plate">${CRATE_KNIGHT}</div>` : c.id === 'onepiece' ? '<div class="poster"><b>WANTED</b><i></i><small>DEAD OR ALIVE</small></div>' : '';
+  const face = { akatsuki: CRATE_MASK, onepiece: CRATE_HAT, cyber: CRATE_CORE }[c.id];
+  return `<div class="crate ${c.id}"><div class="body"><div class="front">${front}</div><div class="side"></div></div>
+    <div class="lid"><div class="top"></div><div class="lip"></div>${c.id === 'chess' ? '<div class="finial"></div>' : ''}<div class="tag">${c.tag}</div></div>
+    ${face ? `<div class="mask">${face}</div><div class="rope"></div>` : ''}${CRATE_LOCK}</div>`;
 }
 const thousands = n => n.toLocaleString('en-US');
 const crateOwned = c => c.skins.filter(s => Prof.P.owned.includes(s.key)).length;
@@ -5281,7 +5562,7 @@ const Crate = {
     box.innerHTML = '';
     for (let i = 0; i < 22; i++) {
       const p = document.createElement('i');
-      p.className = id === 'chess' ? 'p-gold' : 'p-red';
+      p.className = CRATES[id].part;
       p.style.setProperty('--sz', (4 + Math.random() * 7).toFixed(1) + 'px');
       box.appendChild(p);
       this.el.parts.push({ p, a: Math.random() * 6.283, r: 80 + Math.random() * 150, d: Math.random() * 0.16 });
@@ -5363,10 +5644,10 @@ const Crate = {
     this.raf = requestAnimationFrame(tick);
   },
   prizeInto(p) {
-    const E = this.el, rar = p.key ? ITEM[p.key].r : 'common', w = Math.round(168 * this.base);
-    E.card.innerHTML = p.key ? `${cardHTML({ c: 'r', k: '7' }, ITEM[p.key].id, { style: `--cw:${w}px` })}${p.repeat ? '<i class="repeat">Repeat</i>' : ''}`
-      : `<div class="coinprize">${coin(p.c)}<b>+${fmt(p.n)}</b></div>`;
-    E.label.innerHTML = `<small>${p.repeat ? 'ALREADY OWNED' : 'CRATE REVEAL'}</small><b>${esc(p.key ? ITEM[p.key].name : `${fmt(p.n)} ${curName(p.c)}`)}</b><span class="r-${rar}">${p.key ? (p.repeat ? `+${thousands(CRATE_REPEAT)} SILVER` : RARITY[rar].toUpperCase()) : 'COINS'}</span>`;
+    const E = this.el, it = p.key && ITEM[p.key], rar = it ? it.r : 'common', w = Math.round(168 * this.base);
+    const art = !it ? '' : it.cat === 'card' ? cardHTML({ c: 'r', k: '7' }, it.id, { style: `--cw:${w}px` }) : `<div class="itemsheet reveal-item" style="width:${Math.round(250 * this.base)}px">${itemPreview(it, true)}</div>`;
+    E.card.innerHTML = it ? `${art}${p.repeat ? '<i class="repeat">Repeat</i>' : ''}` : `<div class="coinprize">${coin(p.c)}<b>+${fmt(p.n)}</b></div>`;
+    E.label.innerHTML = `<small>${p.repeat ? 'ALREADY OWNED' : it ? CRATE_CAT[it.cat].toUpperCase() : 'CRATE REVEAL'}</small><b>${esc(p.key ? ITEM[p.key].name : `${fmt(p.n)} ${curName(p.c)}`)}</b><span class="r-${rar}">${p.key ? (p.repeat ? `+${thousands(CRATE_REPEAT)} SILVER` : RARITY[rar].toUpperCase()) : 'COINS'}</span>`;
   },
   skip() { if (this.busy) { this.t0 = performance.now() - 3200; } },
   finish() {
@@ -5390,23 +5671,23 @@ function viewCrates() {
     return `<section class="crate-shop-card ${c.id === 'akatsuki' ? 'feat' : ''}" style="--ac:${c.accent}">
       <button class="crate-mini" data-a="cratego" data-v="${c.id}" aria-label="Open ${esc(c.name)}"><div class="crate-wrap">${crateHTML(c)}</div></button>
       <div class="crate-info"><small>${esc(c.set)}</small><b>${esc(c.name)}</b><p>${esc(c.blurb)}</p>
-        <div class="crate-prog"><i style="width:${(have / n * 100).toFixed(0)}%"></i></div><p class="crate-have">${have} of ${n} skins collected</p>
+        <div class="crate-prog"><i style="width:${(have / n * 100).toFixed(0)}%"></i></div><p class="crate-have">${have} of ${n} items collected</p>
         <div class="crate-acts"><button class="btn sm ghost" data-a="crateinfo" data-v="${c.id}">What’s inside</button><button class="btn sm primary" data-a="cratego" data-v="${c.id}">${coin('s')}${thousands(CRATE_COST)}</button></div></div>
     </section>`;
   };
   return `<main class="scr crates">${topbar('Lucky Crates', 'shop')}
-    ${Object.values(CRATES).map(row).reverse().join('')}
-    <p class="hint tc">Open a crate for a card skin or coins. A skin you already own turns into ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.</p>
+    ${CRATE_ORDER.map(id => row(CRATES[id])).join('')}
+    <p class="hint tc">Open a crate for a cosmetic or coins. Anything you already own turns into ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.</p>
   </main>`;
 }
 function crateInfo(id) {
   const c = CRATES[id], P = Prof.P;
   const skins = c.skins.slice().sort((a, b) => a.w - b.w || a.id.localeCompare(b.id)).map(s => {
     const it = ITEM[s.key], own = P.owned.includes(s.key);
-    return `<div class="odd ${own ? 'got' : ''}"><span class="odc">${cardHTML({ c: 'r', k: '7' }, s.id, { style: '--cw:30px' })}</span><b>${esc(it.name)}${own ? ` <i>${UI_ICON.check}</i>` : ''}</b><em class="r-${s.r}">${RARITY[s.r]}</em><span>${oddsPct(s.w)}</span></div>`;
+    return `<div class="odd ${own ? 'got' : ''}"><span class="odc">${it.cat === 'card' ? cardHTML({ c: 'r', k: '7' }, s.id, { style: '--cw:30px' }) : `<i class="odt">${CRATE_CAT[it.cat]}</i>`}</span><b>${esc(it.name)}${own ? ` <i>${UI_ICON.check}</i>` : ''}</b><em class="r-${s.r}">${RARITY[s.r]}</em><span>${oddsPct(s.w)}</span></div>`;
   }).join('');
   const coins = c.coins.slice().sort((a, b) => b.w - a.w).map(p => `<div class="odd">${coin(p.c)}<b>${fmt(p.n)} ${curName(p.c)}</b><span>${oddsPct(p.w)}</span></div>`).join('');
-  sheet(`<h3>${esc(c.name)}</h3><p class="hint">These are the real chances for each crate. Repeat skins pay ${thousands(CRATE_REPEAT)} silver.</p><div class="odds">${skins}</div><p class="lbl2">Coins</p><div class="odds">${coins}</div>`);
+  sheet(`<h3>${esc(c.name)}</h3><p class="hint">These are the real chances for each crate. Repeats pay ${thousands(CRATE_REPEAT)} silver.</p><div class="odds">${skins}</div><p class="lbl2">Coins</p><div class="odds">${coins}</div>`);
 }
 function viewCrate() {
   const c = CRATES[app.crate.id];
@@ -5420,9 +5701,9 @@ function cratePanel() {
   if (a.prize && !a.done) return '<p class="hint tc">Tap the crate to skip</p>';
   if (!a.prize) return `<p class="hint tc">${esc(c.blurb)}</p>${go('Open for', 'primary')}<button class="btn ghost" data-a="crateinfo" data-v="${c.id}">What’s inside</button>`;
   const p = a.prize, fresh = p.key && !p.repeat;
-  const msg = p.repeat ? `You already own this skin, so it became ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.` : fresh ? 'New card skin unlocked!' : `${coin(p.c)}<b>${fmt(p.n)}</b> added to your coins.`;
+  const msg = p.repeat ? `You already own this, so it became ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.` : fresh ? 'New item unlocked!' : `${coin(p.c)}<b>${fmt(p.n)}</b> added to your coins.`;
   return `<p class="crate-msg">${msg}</p>
-    ${fresh ? `<button class="btn big primary" data-a="crateequip">Equip this skin</button>${go('Open another', 'ghost')}` : go('Open another', 'primary')}`;
+    ${fresh ? `<button class="btn big primary" data-a="crateequip">Equip it</button>${go('Open another', 'ghost')}` : go('Open another', 'primary')}`;
 }
 
 /* ==========================================================================
@@ -5677,23 +5958,27 @@ function viewTable() {
 function viewShop() {
   const tab = app.tab;
   const sub = app.sub || 'animal', tsub = app.tsub || 'std';
-  const csub = app.csub || 'std';
-  const items = tab === 'card' ? CATALOG.card.filter(it => (it.grp || 'std') === csub) : tab === 'avatar' ? CATALOG.avatar.filter(it => it.grp === sub) : tab === 'title' ? CATALOG.title.filter(it => !!it.world === (tsub === 'world')) : CATALOG[tab];
+  const csub = app.csub || 'std', ownedOnly = !!app.ownedOnly;
+  const inTab = tab === 'card' ? CATALOG.card.filter(it => (it.grp || 'std') === csub) : tab === 'avatar' ? CATALOG.avatar.filter(it => it.grp === sub) : tab === 'title' ? CATALOG.title.filter(it => !!it.world === (tsub === 'world')) : CATALOG[tab];
+  const items = ownedOnly ? inTab.filter(it => (it.cat === 'avatar' ? Prof.ownsCat(it.id) : Prof.owns(it.key))) : inTab;
   return `<main class="scr shop">${topbar('Shop')}
     <div class="shoptop">
       <button class="sptile crate-t" data-a="crates"><span class="st-art"><span class="crate-wrap">${crateHTML(CRATES.akatsuki)}</span></span><b>Lucky Crates</b><small>${coin('s')}${thousands(CRATE_COST)} each</small></button>
       <button class="sptile wheel-t" data-a="lucky"><span class="st-art">${wheelSVG(LUCKY_SLICES)}</span><b>Lucky Wheel</b><small>${coin('s')}${LUCKY_COST} a spin</small></button>
     </div>
-    <button class="exbtn" data-a="exchange">${coin('s')}<span>⇄</span>${coin('g')}<b>Exchange</b><small>100 silver = 1 gold</small></button>
+    <div class="shoptools">
+      <button class="ownedbtn ${ownedOnly ? 'on' : ''}" data-a="ownedtoggle" aria-pressed="${ownedOnly}">Owned</button>
+      <button class="exbtn" data-a="exchange">${coin('s')}<span>⇄</span>${coin('g')}<b>Exchange</b><small>100 silver = 1 gold</small></button>
+    </div>
     <nav class="tabs" role="tablist">${SHOP_TABS.map(([k, l]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" data-a="tab" data-v="${k}">${l}</button>`).join('')}</nav>
-    ${tab === 'card' ? `<nav class="subtabs" role="tablist">${[['std', 'Classic'], ['alley', 'Alley'], ['outer', 'Outer Ring']].map(([k, l]) => `<button role="tab" aria-selected="${k === csub}" class="${k === csub ? 'on' : ''}" data-a="csubtab" data-v="${k}">${l}</button>`).join('')}</nav>` : ''}
+    ${tab === 'card' ? `<nav class="subtabs" role="tablist">${[['std', 'Classic'], ['alley', 'Alley'], ['outer', 'Outer Ring'], ['voyage', 'Crates']].map(([k, l]) => `<button role="tab" aria-selected="${k === csub}" class="${k === csub ? 'on' : ''}" data-a="csubtab" data-v="${k}">${l}</button>`).join('')}</nav>` : ''}
     ${tab === 'card' && csub !== 'std' ? '<p class="hint">These skins only come from Lucky Crates.</p>' : ''}
     ${tab === 'avatar' ? `<nav class="subtabs" role="tablist">${[['animal', 'Animals'], ['jaanwar', 'Jaanwars'], ['legend', 'Legends']].map(([k, l]) => `<button role="tab" aria-selected="${k === sub}" class="${k === sub ? 'on' : ''}" data-a="subtab" data-v="${k}">${l}</button>`).join('')}</nav>` : ''}
     ${tab === 'avatar' && sub === 'legend' ? '<p class="hint">Legends can’t be bought. They only come from the Season 1 Gold Pass.</p>' : ''}
     ${tab === 'title' ? `<nav class="subtabs" role="tablist">${[['std', 'Titles'], ['world', 'World Titles']].map(([k, l]) => `<button role="tab" aria-selected="${k === tsub}" class="${k === tsub ? 'on' : ''}" data-a="tsubtab" data-v="${k}">${l}</button>`).join('')}</nav>` : ''}
     ${tab === 'title' && tsub === 'world' ? `<p class="hint">Only one of each exists in the whole game. Once claimed, they change hands only in tournaments.${Cloud.worldOk === false ? ' Couldn’t check who holds them right now.' : ''}</p>` : ''}
     ${tab === 'emote' ? wheelEditor() : ''}
-    <section class="grid g-${tab}">${items.map(shopCard).join('')}</section>
+    ${items.length ? `<section class="grid g-${tab}">${items.map(shopCard).join('')}</section>` : '<p class="hint tc">You don’t own anything in this section yet.</p>'}
   </main>`;
 }
 /* The emotes tab starts with your wheel: tap one to take it off. */
@@ -5733,7 +6018,7 @@ function viewWheel() {
       <button class="btn big primary" data-a="spinlucky" id="spinbtn"${busy || P.silver < LUCKY_COST ? ' disabled' : ''}>${busy ? 'Spinning…' : `Spin for ${coin('s')}${LUCKY_COST}`}</button>
       ${P.silver < LUCKY_COST && !busy ? `<p class="hint">You need ${LUCKY_COST} silver to spin. Win a match to earn more.</p>` : ''}
     </section>
-    <section class="card-sec"><h3>Odds per spin</h3><div class="odds">${odds}</div><p class="hint">The slices are drawn the same size, but the odds are not equal. These are the real chances.</p></section>
+    <section class="card-sec oddsdrop ${app.wheelOdds ? 'open' : ''}"><button class="oddshead" data-a="oddstoggle" aria-expanded="${!!app.wheelOdds}"><h3>Odds per spin</h3><i class="chev"></i></button><div class="oddsbody"><div><div class="odds">${odds}</div><p class="hint">The slices are drawn the same size, but the odds are not equal. These are the real chances.</p></div></div></section>
   </main>`;
 }
 function shopState(it) {
@@ -5758,7 +6043,7 @@ function itemPreview(it, big) {
     case 'tag': return `<div class="pv pv-tag">${nameTag(P.name, it.id, P.eq.font)}</div>`;
     case 'banner': return `<div class="pv pv-bn">${plate({ name: P.name, av: P.avatar, cos: Object.assign({}, P.eq, { banner: it.id }) }, 'sm')}</div>`;
     case 'title': return `<div class="pv pv-title"><small>title</small><b>${esc(it.name)}</b></div>`;
-    case 'fx': return `<div class="pv pv-fx fx-${it.id}"><span>${({ confetti: '\u{1F389}', hearts: '\u{1F496}', pixels: '\u{1F47E}', fish: '\u{1F41F}', yarn: '\u{1F9F6}', fireworks: '\u{1F386}', lasers: '\u{1F534}', rainbow: '\u{1F308}', catrain: '\u{1F431}', coins: '\u{1FA99}', disco: '\u{1FAA9}', thunder: '⚡', lanterns: '\u{1F3EE}', glitch: '\u{1F4FA}', supernova: '\u{1F4AB}' })[it.id]}</span></div>`;
+    case 'fx': return `<div class="pv pv-fx fx-${it.id}"><span>${({ confetti: '\u{1F389}', hearts: '\u{1F496}', pixels: '\u{1F47E}', fish: '\u{1F41F}', yarn: '\u{1F9F6}', fireworks: '\u{1F386}', lasers: '\u{1F534}', rainbow: '\u{1F308}', catrain: '\u{1F431}', coins: '\u{1FA99}', disco: '\u{1FAA9}', thunder: '⚡', lanterns: '\u{1F3EE}', glitch: '\u{1F4FA}', supernova: '\u{1F4AB}', treasure: '\u{1F4B0}', cannon: '\u{1F4A5}', breach: '\u{1F4BB}', overdrive: '\u{1F300}' })[it.id]}</span></div>`;
     case 'emote': return `<div class="pv pv-emo ${it.snd ? 'snd' : ''}">${emoteIcon(it)}<b>${esc(it.t)}</b></div>`;
   }
   return '';
@@ -5795,7 +6080,7 @@ function openItem(key) {
     <h3>${esc(it.name || it.t)}</h3>
     <p>${esc(it.desc || (it.cat === 'emote' ? 'Send it to the table during a match.' : ''))}</p>
     ${it.cat === 'fx' ? `<button class="btn ghost" data-a="previewfx" data-v="${it.id}">Preview</button>` : ''}
-    ${it.snd ? `<button class="btn ghost" data-a="emoplay" data-v="${it.id}">Play sound</button>` : ''}
+    ${it.snd ? `<button class="btn ghost" data-a="emoplay" data-v="${it.id}">${UI_ICON.sound} Play sound</button>` : ''}
     ${btn}
   </div>`, 'shopsheet');
 }
@@ -5827,7 +6112,7 @@ function viewProfile() {
   const rate = st.played ? Math.round((st.wins / st.played) * 100) : 0;
   const eq = [['card', 'Card skin'], ['table', 'Table'], ['frame', 'Frame'], ['tag', 'Name tag'], ['font', 'Font'], ['banner', 'Banner'], ['title', 'Title'], ['fx', 'Victory FX']];
   return `<main class="scr profile">${topbar('Profile')}
-    <section class="pfhead">${plate(myPlateObj(), 'lg')}<button class="btn sm ghost" data-a="edit">Edit name &amp; cat</button></section>
+    <section class="pfhead"><button class="pcopen" data-a="pcard" aria-label="Open your player card">${plate(myPlateObj(), 'lg')}<small>Tap to view your card</small></button><button class="btn sm ghost" data-a="edit">Edit name &amp; avatar</button></section>
     <section class="stats">
       <div><b>${st.played}</b><small>Matches</small></div><div><b>${st.wins}</b><small>Wins</small></div><div><b>${rate}%</b><small>Win rate</small></div>
       <div><b>${st.best}</b><small>Best streak</small></div><div><b>${fmt(st.silverWon)}</b><small>Silver won</small></div><div><b>${st.potsWon}</b><small>Pots won</small></div>
@@ -5837,7 +6122,8 @@ function viewProfile() {
       <div class="row"><span>Sound</span>${seg('set.sound', [[1, 'On'], [0, 'Off']], P.settings.sound)}</div>
       <div class="row"><span>Vibration</span>${seg('set.vib', [[1, 'On'], [0, 'Off']], P.settings.vib)}</div>
       <div class="row"><span>Play cards with</span>${seg('set.quick', [[0, 'Two taps'], [1, 'One tap']], P.settings.quick)}</div>
-    </div><p class="hint">Two taps: the first tap lifts a card, the second plays it.</p></section>
+    </div><p class="hint">Two taps: the first tap lifts a card, the second plays it.</p>
+      <div class="volrow"><div class="row"><span>Emote sound volume</span><b id="emovolv">${P.settings.emoVol}%</b></div><input class="tslider" type="range" min="0" max="100" step="5" value="${P.settings.emoVol}" id="emovol" aria-label="Emote sound volume"></div></section>
     <section class="card-sec"><h3>Online account</h3>${Cloud.acct
       ? `<p>Logged in as <b>${esc(Cloud.acct.name)}</b>. Your coins and progress save online, so log in with the same username and PIN on any device.</p><button class="btn ghost" data-a="acctlogout">Log out</button>`
       : `<p class="hint">Make a username and 4-digit PIN to save your progress online and pick it up on any device.</p><button class="btn primary" data-a="acctsheet">Log in or create account</button>`}</section>
@@ -5911,7 +6197,7 @@ function spSheet(track, L) {
   const desc = items.length === 1 ? items[0].desc || 'Send it to the table during a match.' : items.length ? 'Eight Legends in one reward.' : 'Coins for your balance.';
   sheet(`<div class="itemsheet r-${rewardRarity(rw)}"><button class="iconbtn close" data-a="closesheet" aria-label="Close">${UI_ICON.x}</button>${art}
     <span class="rar">${track === 'g' ? 'Gold Pass' : 'Silver Pass'} · Level ${L}</span><h3>${esc(rewardName(rw))}</h3><p>${esc(desc)}</p>
-    ${items.length === 1 && items[0].snd ? `<button class="btn ghost" data-a="emoplay" data-v="${items[0].id}">Play sound</button>` : ''}${btn}</div>`, 'shopsheet');
+    ${items.length === 1 && items[0].snd ? `<button class="btn ghost" data-a="emoplay" data-v="${items[0].id}">${UI_ICON.sound} Play sound</button>` : ''}${btn}</div>`, 'shopsheet');
 }
 function spBuySheet() {
   const P = Prof.P, ok = P.gold >= SEASON.price;
@@ -6002,6 +6288,139 @@ function viewTourLobby(T) {
 }
 
 /* ==========================================================================
+   The Player Card: a full-art holofoil card of your profile. It tilts with
+   the phone (or a finger), and a double tap flips it to what you have equipped.
+   ========================================================================== */
+const PlayerCard = {
+  el: null, card: null, raf: 0, flipped: false, from: null,
+  tilt: { x: 0, y: 0 }, goal: { x: 0, y: 0 }, base: null, gyroAt: 0, drag: null, lastTap: 0,
+  front() {
+    const P = Prof.P, st = P.stats, eq = P.eq, rate = st.played ? Math.round(st.wins / st.played * 100) : 0;
+    const row = (l, v) => `<div class="pc-move"><i>${PAW_MARK}</i><b>${l}</b><em>${v}</em></div>`;
+    const stat = (l, v) => `<div><small>${l}</small><b>${v}</b></div>`;
+    const no = String(parseInt(hashStr(Cloud.me() || P.name), 36) % 1000).padStart(3, '0');
+    return `<div class="pc-in">
+      <header class="pc-top"><span class="pc-stage">Player</span>${nameTag(P.name, eq.tag, eq.font)}<span class="pc-hp"><small>WINS</small><b>${fmt(st.wins)}</b><i>${PAW_MARK}</i></span></header>
+      <div class="pc-art bn-${esc(eq.banner)}"><span class="bnfx"></span>${avatar(P.avatar, '', eq.frame)}<i class="pc-foil"></i><i class="pc-spark"></i></div>
+      <p class="pc-title">${esc(titleName(eq.title))}</p>
+      <div class="pc-moves">${row('Matches', st.played)}${row('Win rate', rate + '%')}</div>
+      <div class="pc-stats">${stat('Best streak', st.best)}${stat('Silver won', fmt(st.silverWon))}${stat('Pots won', st.potsWon)}</div>
+      <footer class="pc-foot"><span>Meow Mayhem · Season 1</span><b>${no}/999</b><i class="pc-stamp">S1</i></footer>
+    </div><i class="pc-rim"></i><i class="pc-glare"></i>`;
+  },
+  back() {
+    const P = Prof.P, name = (k, id) => esc((ITEM[k + ':' + id] || {}).name || '');
+    const rows = [['Avatar', esc(CAT_BY_ID[P.avatar].name)], ['Card skin', name('card', P.eq.card)], ['Table', name('table', P.eq.table)], ['Frame', name('frame', P.eq.frame)], ['Name tag', name('tag', P.eq.tag)], ['Font', name('font', P.eq.font)], ['Banner', name('banner', P.eq.banner)], ['Title', name('title', P.eq.title)], ['Victory FX', name('fx', P.eq.fx)], ['Emotes', `${Prof.wheel().length} on your wheel`]];
+    return `<div class="pc-in pc-backin"><span class="pc-tab">Equipped</span><div class="pc-list">${rows.map(([l, v]) => `<div><span>${l}</span><b>${v}</b></div>`).join('')}</div><i class="pc-paw">${PAW_MARK}</i></div><i class="pc-glare"></i>`;
+  },
+  /* 72% of the screen by area, kept inside the width of the phone. */
+  size() {
+    const W = innerWidth, H = innerHeight;
+    const w = Math.min(W * 0.92, Math.sqrt(0.72 * W * H * 0.62));
+    return { w: Math.round(w), h: Math.round(Math.min(0.72 * W * H / w, H * 0.86)) };
+  },
+  open(src) {
+    if (this.el) return;
+    this.askMotion();
+    const { w, h } = this.size();
+    const el = this.el = document.createElement('div');
+    el.className = 'pcard-layer';
+    el.innerHTML = `<button class="pc-scrim" data-a="pcclose" aria-label="Close card"></button>
+      <button class="iconbtn pc-x" data-a="pcclose" aria-label="Close">${UI_ICON.x}</button>
+      <div class="pc-persp"><div class="pc-card ${Cloud.ownsWorld(Prof.P.eq.title) ? 'pc-gold' : ''}" id="pcc" style="width:${w}px;height:${h}px;--pw:${w}px"><div class="pc-flip" id="pcf"><div class="pc-face pc-front">${this.front()}</div><div class="pc-face pc-back">${this.back()}</div></div></div></div>
+      <p class="pc-hint">Double-tap to flip · tilt your phone</p>`;
+    document.body.appendChild(el);
+    this.card = $('#pcc');
+    this.flipped = false; this.tilt = { x: 0, y: 0 }; this.base = null; this.gyroAt = 0; this.drag = null;
+    /* It grows out of the plate you tapped. */
+    const r = src.getBoundingClientRect(), c = this.card.getBoundingClientRect();
+    this.from = `translate(${(r.left + r.width / 2 - c.left - c.width / 2).toFixed(1)}px,${(r.top + r.height / 2 - c.top - c.height / 2).toFixed(1)}px) scale(${(r.width / c.width).toFixed(3)})`;
+    if (!reduceMotion()) this.card.animate([{ transform: this.from, opacity: 0.6 }, { transform: 'none', opacity: 1 }], { duration: 460, easing: 'cubic-bezier(.2,.9,.25,1.04)' });
+    el.classList.add('in');
+    Sound.play('special');
+    this.card.addEventListener('pointerdown', this.onDown);
+    this.card.addEventListener('pointermove', this.onMove);
+    this.card.addEventListener('pointerup', this.onUp);
+    this.card.addEventListener('pointercancel', this.onUp);
+    addEventListener('deviceorientation', this.onGyro);
+    this.loop();
+  },
+  close() {
+    const el = this.el;
+    if (!el) return;
+    this.el = null;
+    cancelAnimationFrame(this.raf);
+    removeEventListener('deviceorientation', this.onGyro);
+    el.classList.remove('in');
+    if (reduceMotion() || !this.card.animate) { el.remove(); return; }
+    this.card.animate([{ transform: 'none', opacity: 1 }, { transform: this.from, opacity: 0 }], { duration: 300, easing: 'cubic-bezier(.5,0,.8,.4)', fill: 'forwards' }).onfinish = () => el.remove();
+  },
+  /* iPhones only share motion after a tap asks for it. */
+  askMotion() {
+    try {
+      const D = window.DeviceOrientationEvent;
+      if (D && typeof D.requestPermission === 'function') D.requestPermission().catch(() => {});
+    } catch (e) { /* no motion here */ }
+  },
+  onGyro(e) {
+    const self = PlayerCard;
+    if (e.gamma == null || e.beta == null) return;
+    if (!self.base) self.base = { b: e.beta, g: e.gamma };
+    /* The resting angle drifts toward how you're holding it, so the foil stays centered. */
+    self.base.b += (e.beta - self.base.b) * 0.006;
+    self.base.g += (e.gamma - self.base.g) * 0.006;
+    self.gyroAt = performance.now();
+    if (!self.drag) self.goal = { x: clamp((e.gamma - self.base.g) / 20, -1, 1), y: clamp((e.beta - self.base.b) / 20, -1, 1) };
+  },
+  onDown(e) {
+    const self = PlayerCard;
+    self.drag = { x: e.clientX, y: e.clientY, moved: 0 };
+    try { self.card.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
+  },
+  onMove(e) {
+    const self = PlayerCard, d = self.drag;
+    if (!d) return;
+    d.moved = Math.max(d.moved, Math.abs(e.clientX - d.x) + Math.abs(e.clientY - d.y));
+    const r = self.card.getBoundingClientRect();
+    self.goal = { x: clamp(((e.clientX - r.left) / r.width - 0.5) * 2, -1, 1), y: clamp(((e.clientY - r.top) / r.height - 0.5) * 2, -1, 1) };
+  },
+  onUp() {
+    const self = PlayerCard, d = self.drag, now = performance.now();
+    self.drag = null;
+    if (!d) return;
+    if (d.moved < 12) {
+      if (now - self.lastTap < 340) { self.lastTap = 0; self.flip(); } else self.lastTap = now;
+    }
+    if (now - self.gyroAt > 300) self.goal = { x: 0, y: 0 };
+  },
+  flip() {
+    this.flipped = !this.flipped;
+    $('#pcf').classList.toggle('over', this.flipped);
+    Sound.play('reflect');
+    vibrate(15);
+  },
+  /* Eases toward the tilt each frame, and sways gently when nothing is moving it. */
+  loop() {
+    const t0 = performance.now(), still = reduceMotion();
+    const step = now => {
+      if (!this.el) return;
+      const idle = !this.drag && now - this.gyroAt > 400 && !still;
+      const g = idle ? { x: Math.sin((now - t0) / 1500) * 0.38, y: Math.cos((now - t0) / 2100) * 0.26 } : this.goal;
+      this.tilt.x += (g.x - this.tilt.x) * 0.12;
+      this.tilt.y += (g.y - this.tilt.y) * 0.12;
+      const { x, y } = this.tilt, s = this.card.style;
+      s.setProperty('--rx', (-y * 13).toFixed(2) + 'deg');
+      s.setProperty('--ry', (x * 15).toFixed(2) + 'deg');
+      s.setProperty('--mx', (50 + x * 50).toFixed(2) + '%');
+      s.setProperty('--my', (50 + y * 50).toFixed(2) + '%');
+      s.setProperty('--ho', (0.55 + Math.min(1, Math.hypot(x, y)) * 0.45).toFixed(3));
+      this.raf = requestAnimationFrame(step);
+    };
+    this.raf = requestAnimationFrame(step);
+  }
+};
+
+/* ==========================================================================
    The card table: opponents, piles, your hand, overlays and animations.
    ========================================================================== */
 /* An opponent's draw is shown card by card; a huge stack animates this many and the rest just appear. */
@@ -6016,7 +6435,7 @@ function sortHand(hand, deck) {
   });
 }
 function particleLayer(id) {
-  const cfg = { bazaar: ['rain', 24], orbital: ['star', 40], hyperlane: ['spark', 18], throne: ['glint', 12], cybercity: ['rain', 30], sakura: ['petal', 16], snow: ['snow', 30], aquarium: ['bubble', 16], space: ['star', 44], rooftop: ['star', 26], velvet: ['glint', 10], arcade: ['spark', 12] }[id];
+  const cfg = { opensea: ['bubble', 14], treasurecove: ['glint', 14], neonalley: ['rain', 28], datacore: ['spark', 18], skyline: ['rain', 24], bazaar: ['rain', 24], orbital: ['star', 40], hyperlane: ['spark', 18], throne: ['glint', 12], cybercity: ['rain', 30], sakura: ['petal', 16], snow: ['snow', 30], aquarium: ['bubble', 16], space: ['star', 44], rooftop: ['star', 26], velvet: ['glint', 10], arcade: ['spark', 12] }[id];
   if (!cfg || reduceMotion()) return '<div class="tparts"></div>';
   let h = '';
   for (let i = 0; i < cfg[1]; i++) {
@@ -6824,7 +7243,7 @@ const ACT = {
   crateequip() {
     const p = app.crate && app.crate.prize;
     if (!p || !p.key) return;
-    Prof.equip('card', ITEM[p.key].id); profileChanged();
+    Prof.equip(ITEM[p.key].cat, ITEM[p.key].id); profileChanged();
     toast(`${esc(ITEM[p.key].name)} equipped`, 'good');
     go('crates');
   },
@@ -6874,7 +7293,19 @@ const ACT = {
   touryes: () => Tour.msg('yes'),
   tourno: () => Tour.msg('no'),
   tourdone() { closeSheet(); FX.stop(); leaveTable({ cancelled: true }); go('tour'); },
-  emoplay: el => Sound.clip(el.dataset.v),
+  emoplay(el) {
+    if (!Sound.emoVol()) { toast('Emote volume is at 0. Raise it in Profile.'); return; }
+    Sound.clip(el.dataset.v, true);
+  },
+  ownedtoggle() { app.ownedOnly = !app.ownedOnly; Sound.play('tap'); render(); },
+  oddstoggle(el) {
+    app.wheelOdds = !app.wheelOdds;
+    el.closest('.oddsdrop').classList.toggle('open', app.wheelOdds);
+    el.setAttribute('aria-expanded', app.wheelOdds);
+    Sound.play('tap');
+  },
+  pcard: el => PlayerCard.open(el),
+  pcclose: () => PlayerCard.close(),
   wheeloff(el) { Prof.toggleWheel(el.dataset.v); render(); },
   wheeltoggle(el) {
     if (!Prof.toggleWheel(el.dataset.v)) { toast(`Your wheel holds ${EMOTE_SLOTS}. Take one off first.`, 'bad'); return; }
@@ -7155,11 +7586,21 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && !$('#modal').hidden) closeSheet();
 });
 document.addEventListener('input', e => {
+  if (e.target && e.target.id === 'emovol') {
+    Prof.P.settings.emoVol = +e.target.value;
+    const v = $('#emovolv');
+    if (v) v.textContent = e.target.value + '%';
+    return;
+  }
   if (!e.target || e.target.id !== 'tnrange') return;
   Tour.form.n = +e.target.value;
   const v = $('#tnval'), h = e.target.nextElementSibling;
   if (v) v.textContent = Tour.form.n;
   if (h) h.textContent = `First to ${tourTarget(Tour.form.n)} wins.${Tour.form.n >= 15 ? ' Long one? You can pause it if you both agree.' : ''}`;
+});
+/* Letting go of the slider saves it and plays a sample at the new level. */
+document.addEventListener('change', e => {
+  if (e.target && e.target.id === 'emovol') { Prof.save(); Sound.unlock(); Sound.clip('jnde', true); }
 });
 addEventListener('resize', () => { if (app.screen === 'game') { GameUI.keys.hand = ''; GameUI.update(); } });
 setInterval(() => {
