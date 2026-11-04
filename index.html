@@ -9,8 +9,8 @@
 <meta name="theme-color" content="#17122b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Cinzel:wght@400;600;700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Jost:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600&family=Unbounded:wght@400;600;800&family=Caveat:wght@400;600;700&family=Shippori+Mincho:wght@400;700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Lilita+One&family=Nunito:wght@600;700;800;900&family=Press+Start+2P&family=Playfair+Display:ital,wght@1,900&family=Baloo+2:wght@800&family=Cabin+Sketch:wght@700&family=Tilt+Neon&family=Bangers&family=Permanent+Marker&family=Chakra+Petch:wght@700&family=Audiowide&family=Cinzel:wght@900&family=Orbitron:wght@800&family=Monoton&family=Pirata+One&family=Rye&family=Share+Tech+Mono&family=Rubik+Glitch&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Cinzel:wght@400;600;700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Jost:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600;700&family=Chakra+Petch:wght@400;500;600&family=Unbounded:wght@400;600;800&family=Caveat:wght@400;600;700&family=Shippori+Mincho:wght@400;700&display=swap">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Lilita+One&family=Nunito:wght@600;700;800;900&family=Press+Start+2P&family=Playfair+Display:ital,wght@1,900&family=Baloo+2:wght@800&family=Cabin+Sketch:wght@700&family=Tilt+Neon&family=Bangers&family=Permanent+Marker&family=Chakra+Petch:wght@700&family=Audiowide&family=Cinzel:wght@900&family=Orbitron:wght@800&family=Monoton&family=Pirata+One&family=Rye&family=Share+Tech+Mono&family=Rubik+Glitch&display=swap">
 <style>
 [hidden]{display:none!important}
 /* Layout: a single phone-width column for menus; the table fills the screen. One dark "cat cafe at midnight" look. */
@@ -2485,7 +2485,7 @@ body[data-screen="game"]::before { display: none; }
 /* Offscreen shop cards don't lay out or animate, and looping art rests during a scroll. */
 .grid > .item, .lb-row { content-visibility: auto; contain-intrinsic-size: auto 164px; }
 .lb-row { contain-intrinsic-size: auto 58px; }
-#app.moving .item *, #app.moving .sp-node *, #app.moving .sp-key *, #app.moving .plate * { animation-play-state: paused !important; }
+#app.moving .cat * { animation-play-state: paused !important; }
 
 /* Screens arrive with a short, quiet slide. */
 .enter { animation: scrin .24s cubic-bezier(.2,.8,.3,1) both; }
@@ -4089,6 +4089,122 @@ body:is([data-theme="sticker"], [data-theme="holo"], [data-theme="paper"], [data
 .pv-pcard .pc-mini { transform: scale(.86); }
 .s2 .s2-cta.alt .cta-mark { color: #d8b36a; }
 .s2 .s2-frame { top: calc(var(--sat) / var(--tz, 1) - 14px); }
+/* ==========================================================================
+   Smoothness pass. Loaded last, so it settles what the earlier sheets set.
+
+   A phone's GPU only animates transform and opacity. Anything else (a gradient
+   sliding, a filter, a shadow, a part inside an inline SVG) is redrawn on the
+   main thread every frame, and every running copy adds up. So:
+   - lists and hands hold still; motion lives on the one thing being looked at
+   - what keeps moving in a match is transform or opacity, or ticks a few times a second
+   - nothing blurs or blends what's behind it while the page moves
+   ========================================================================== */
+
+/* ---------- no live blur: each one re-renders everything behind it, every frame ---------- */
+body::before, .scr > .bar, .gover, .an, .sk-frost .cush, .sk-qglass .cush,
+.s3 .s3-profile, .s3 .s3-coin, .s3 .s3-help, .s3 .s3-lounge, .s3 .s3-card, .s3 .s3-friend, .s3 .s3-play,
+.s3 .s3-mode, .s3 .s3-dropcard, .s3 .s3-livelt, .s3 .s3-dock, .s3 .screen-toast, .s5 .s5-fortune-pop, .s6 .s6-boot {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+/* With no blur behind it, the header goes solid once the page slides under it. */
+#app.scrolled .scr > .bar { background: var(--ink); }
+.gover { background: rgba(10,7,20,.84); }
+.an { background: rgba(12,14,20,.92); }
+.s5 .s5-fortune-pop, .s6 .s6-boot { background: rgba(4,3,12,.9); }
+.s3 .s3-orb, .s5 .s5-petal { filter: none; }
+
+/* ---------- no full-screen blending ---------- */
+.s1 .s1-grain, .s2 .s2-grain, .s4 .s4-grain, .s5 .s5-noise, .s7 .s7-grain { display: none; }
+.s3 .s3-bg::after { mix-blend-mode: normal; }
+.sk-holo .sheen, .sk-holo.back .cb::after, .sk-nchrome .sheen { mix-blend-mode: normal; opacity: .5; }
+
+/* ---------- the same names, now GPU-only, for every place that uses them ---------- */
+@keyframes frbreathe { from { opacity: 1; } to { opacity: .62; } }
+.fr-neonring::after, .fr-ember::after, .fr-crown::after, .fr-synapse::after { filter: drop-shadow(0 0 4px var(--fg)); }
+@keyframes glover { from { opacity: 1; } to { opacity: .74; } }
+@keyframes gloveb { from { opacity: 1; } to { opacity: .74; } }
+.lead-r .glove.r { filter: drop-shadow(0 0 7px #ff2d55) drop-shadow(0 0 14px #ff2d55); }
+.lead-b .glove.b { filter: drop-shadow(0 0 7px #1e90ff) drop-shadow(0 0 14px #1e90ff); }
+@keyframes s2shine { 0%, 58% { transform: translateX(0) rotate(16deg); } 82%, 100% { transform: translateX(460%) rotate(16deg); } }
+@keyframes s3sheen { 0%, 55% { transform: translateX(0) rotate(19deg); } 85%, 100% { transform: translateX(517%) rotate(19deg); } }
+@keyframes s5petal { 0% { transform: translate(0, 0) rotate(0); } 50% { transform: translate(19px, 180px) rotate(210deg); } 100% { transform: translate(-7px, 360px) rotate(420deg); } }
+@keyframes s6ping { 0%, 70% { opacity: 1; } 100% { opacity: .35; } }
+
+/* Tables: the arcade floor rolls by moving the plane, not by repainting it. */
+.tbl-arcade::before { height: calc(52% + 70px); }
+@keyframes grid { from { transform: perspective(260px) rotateX(62deg) translateY(0); } to { transform: perspective(260px) rotateX(62deg) translateY(70px); } }
+/* Snow and petals carry their whole path in one transform. */
+.tp.snow { animation: snowf calc(var(--d) * 1.6) linear infinite var(--dl); }
+.tp.petal { animation: petalf calc(var(--d) * 1.5) linear infinite var(--dl); }
+@keyframes snowf { 0% { transform: translate(-10px, 0); } 25% { transform: translate(10px, 31vh); } 50% { transform: translate(-10px, 62vh); } 75% { transform: translate(10px, 94vh); } 100% { transform: translate(-10px, 125vh); } }
+@keyframes petalf { to { transform: translateY(125vh) rotate(1080deg); } }
+
+/* Glows that used to pulse a shadow stay lit. The emote wheel's only pulses while it's open. */
+.ownedbtn.on { animation: none; }
+.emow.snd { animation: none; }
+.emow.snd::after { content: ""; position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 0 3px #fff0b8, 0 0 20px 5px #ffc933; opacity: 0; pointer-events: none; }
+.emofab.open .emow.snd::after { animation: emopulse 1.6s ease-in-out infinite alternate; }
+@keyframes emopulse { to { opacity: .9; } }
+
+/* The turn clock is a repainted ring, so it ticks four times a second instead of sixty. */
+.tring, .tbar i { animation-timing-function: steps(60, end); }
+
+/* ---------- cards: a hand of 7 is still; the top of the pile and the shop sheet move ---------- */
+.card:not(#modal .card, .pile .top, .fanwrap .card) *,
+.card:not(#modal .card, .pile .top, .fanwrap .card) .cb::after { animation: none !important; }
+.card:not(#modal .card) .cf { animation: none; }
+.card.k-act:not(#modal .card, .pile .top, .fanwrap .card) .cf::after { display: none; }
+
+/* The light across a special card is a wide strip sliding behind the card's own clip. */
+.card.k-act .cf::after { inset: 0 -130%; width: auto; height: auto; border-radius: 0; background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,.2) 49%, rgba(255,255,255,.05) 51%, transparent 56%); transform: translateX(45%); animation-name: sweepx; }
+@keyframes sweepx { 0%, 58% { transform: translateX(45%); } 90%, 100% { transform: translateX(-45%); } }
+
+/* Foil skins do the same on the pile. */
+.pile .top:is(.sk-qglass, .sk-nchrome, .sk-sovereign, .sk-holo) .sheen { inset: 0 -100%; border-radius: 0; background-size: 100% 100%; background-position: 0 0; animation-name: sheenx; }
+.pile .top:is(.sk-cyber, .sk-hologrid) .sheen { animation: none; }
+@keyframes sheenx { from { transform: translateX(-36%); } to { transform: translateX(36%); } }
+
+/* A dimmed card is a flat veil, not a filter on every card in the hand. */
+.hc { transition: transform .18s cubic-bezier(.2,.8,.3,1); }
+.hc.no .card { filter: none; }
+.hc.no::before { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: calc(var(--cw) * .12); background: rgba(10,8,22,.28); pointer-events: none; }
+
+/* ---------- name tags and banners ---------- */
+.nt:not(#modal .nt, .oname .nt, .mtxt .nt), .nt:not(#modal .nt, .oname .nt, .mtxt .nt)::after { animation: none; }
+.oname .nt, .oname .nt::after, .mtxt .nt, .mtxt .nt::after { animation-timing-function: steps(36, end); }
+.bnfx:not(#modal .bnfx) { animation: none; }
+
+/* ---------- lists hold still; tap one to see it move ---------- */
+.grid *, .sp-node *, .sp-key *, .lb-row *, .fr-row *, .catgrid * { animation: none !important; }
+.grid .fr::after, .sp-node .fr::after, .sp-key .fr::after, .lb-row .fr::after, .fr-row .fr::after, .catgrid .fr::after,
+.grid .tbl::before, .grid .tbl::after, .sp-node .tbl::before, .sp-node .tbl::after { animation: none !important; }
+
+/* ---------- avatars ----------
+   Parts inside an inline SVG can't be moved by the GPU, so most avatars are still drawings
+   (see avatar()). Blinks go with them, and seats get a small drift of the whole picture. */
+.cat:not([class*="ca-"]) .eyes { animation: none; }
+.oav .av > *, .mav .av > * { animation: avdrift 3.6s ease-in-out infinite alternate; }
+.opp:nth-child(2) .oav .av > * { animation-delay: -1.2s; }
+.opp:nth-child(3) .oav .av > * { animation-delay: -2.4s; }
+@keyframes avdrift { from { transform: translateY(1.6%) rotate(-1.6deg); } to { transform: translateY(-1.6%) rotate(1.6deg); } }
+
+/* ---------- player card ----------
+   Each layer is painted once and slid around by transform. Only the card moves in 3D,
+   and only transform and opacity change per frame (see PlayerCard.loop). */
+.pc-foil, .pc-spark, .pc-rim, .pc-glare { mix-blend-mode: normal; }
+.pc-card .pc-foil { inset: -60%; background: repeating-linear-gradient(115deg, #ff4d6d 0%, #ffd23f 9%, #2bf0a0 18%, #3fb4ff 27%, #b98cff 36%, #ff4d6d 45%); opacity: calc(var(--pc-foil) * .4); will-change: transform, opacity; }
+.pc-card .pc-spark { opacity: .8; will-change: transform; }
+.pc-face > .pc-in { z-index: 1; }
+/* The rim is the same rainbow sitting behind the card's inner panel, showing only at the edge. */
+.pc-rim { inset: -70%; z-index: 0; padding: 0; border-radius: 0; background: repeating-linear-gradient(115deg, #ff4d6d 0%, #ffd23f 10%, #2bf0a0 20%, #3fb4ff 30%, #b98cff 40%, #ff4d6d 50%); -webkit-mask: none; mask: none; opacity: calc(var(--pc-foil) * 1.3); will-change: transform, opacity; }
+.pc-glare { inset: -50%; z-index: 5; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.3), rgba(255,255,255,.07) 26%, transparent 52%); will-change: transform; }
+.pc-mini .pc-foil { inset: 0; background: repeating-linear-gradient(115deg, #ff4d6d 0%, #ffd23f 16%, #2bf0a0 32%, #3fb4ff 48%, #b98cff 64%, #ff4d6d 80%); opacity: calc(var(--pc-foil) * .4); animation: none; }
+.pc-mini .pc-rim { animation: none; }
+.pc-mini .pc-glare { will-change: auto; }
+
+/* Symbols on the cards are inline SVG too, so they only spin up in the shop sheet. */
+.card:not(#modal .card) .ico * { animation: none !important; }
+.sp-cat .cat { animation: avdrift 3.6s ease-in-out infinite alternate; }
 </style>
 </head>
 <body>
@@ -4462,7 +4578,7 @@ const CRATE_EXTRA = {
 /* ==========================================================================
    Shop catalog. p = silver price, g = gold price, free when neither.
    ========================================================================== */
-const APP_VERSION = '1.0.7';
+const APP_VERSION = '1.0.8';
 const RARITY = { common: 'Common', rare: 'Rare', epic: 'Epic', legendary: 'Legendary', mythic: 'Mythic' };
 const SHOP_TABS = [
   ['card', 'Card Skins'], ['table', 'Tables'], ['avatar', 'Avatars'], ['frame', 'Frames'], ['tag', 'Name Tags'], ['font', 'Fonts'],
@@ -7484,7 +7600,8 @@ const UI_ICON = {
 };
 
 /* ---------- small components ---------- */
-const avatar = (id, cls, frame) => `<span class="av ${cls || ''}${frame && frame !== 'none' ? ' fr fr-' + esc(frame) : ''}">${catSVG(id)}</span>`;
+/* Inline SVG parts repaint on the CPU every frame on a phone, so an avatar only moves when it's the thing being looked at. */
+const avatar = (id, cls, frame, live) => `<span class="av ${cls || ''}${frame && frame !== 'none' ? ' fr fr-' + esc(frame) : ''}">${catSVG(id, live ? null : { still: true })}</span>`;
 const nameTag = (name, tag, font) => `<span class="nt nt-${esc(tag || 'plain')} nf-${esc(font || 'std')}" data-text="${esc(name)}">${esc(name)}</span>`;
 const titleName = id => (ITEM['title:' + id] || {}).name || '';
 function plate(o, cls, extra) {
@@ -7568,6 +7685,7 @@ function render() {
   const strip2 = $('.tabs', root);
   if (strip2) strip2.scrollLeft = stripX;
   if (s === 'season') { const now = $('.sp-col.now'), tr = $('#sptrack'); if (now && tr) tr.scrollLeft = Math.max(0, now.offsetLeft - tr.offsetLeft - 8); }
+  LazyPv.scan(root);
   if (s === 'crate') Crate.bind(app.crate.id);
   if (s === 'profile') PlayerCard.mount();
   if (s === 'setup' || s === 'edit') { const i = $('#nm'); if (i && s === 'setup') setTimeout(() => i.focus(), 50); }
@@ -7801,9 +7919,9 @@ function itemPreview(it, big) {
   switch (it.cat) {
     case 'card': return `<div class="pv pv-card">${cardHTML({ c: 'r', k: '7' }, it.id, { cls: 'p0' })}${cardHTML({ c: 'b', k: 'D' }, it.id, { cls: 'p1' })}${cardHTML({ c: 'w', k: big ? 'C' : 'W' }, it.id, { cls: 'p2' })}${big ? backHTML(it.id, { cls: 'p3' }) : ''}</div>`;
     case 'table': return `<div class="pv pv-table tbl tbl-${it.id}">${big ? particleLayer(it.id) : ''}<div class="mini">${backHTML(P.eq.card)}${cardHTML({ c: 'g', k: '4' }, P.eq.card)}</div></div>`;
-    case 'avatar': return `<div class="pv pv-av">${avatar(it.id)}</div>`;
+    case 'avatar': return `<div class="pv pv-av">${avatar(it.id, '', '', big)}</div>`;
     case 'pcard': return `<div class="pv pv-pcard">${PlayerCard.mini(it.id)}</div>`;
-    case 'frame': return `<div class="pv pv-av">${avatar(P.avatar, '', it.id)}</div>`;
+    case 'frame': return `<div class="pv pv-av">${avatar(P.avatar, '', it.id, big)}</div>`;
     case 'font': return `<div class="pv pv-tag">${nameTag(P.name, P.eq.tag, it.id)}</div>`;
     case 'tag': return `<div class="pv pv-tag">${nameTag(P.name, it.id, P.eq.font)}</div>`;
     case 'banner': return `<div class="pv pv-bn">${plate({ name: P.name, av: P.avatar, cos: Object.assign({}, P.eq, { banner: it.id }) }, 'sm')}</div>`;
@@ -7813,11 +7931,31 @@ function itemPreview(it, big) {
   }
   return '';
 }
+/* A shop tab can hold hundreds of little cards. Each preview is built as it nears the screen,
+   so opening a tab costs what's visible, not the whole catalogue. */
+const LazyPv = {
+  io: null,
+  fill(el) { const it = ITEM[el.dataset.pv]; if (it && el.isConnected) el.outerHTML = itemPreview(it); },
+  scan(root) {
+    if (this.io) this.io.disconnect();
+    const els = [...root.querySelectorAll('.pv.lazy')];
+    if (!els.length) return;
+    if (!window.IntersectionObserver) return els.forEach(e => this.fill(e));
+    if (!this.io) this.io = new IntersectionObserver(list => list.forEach(x => {
+      if (!x.isIntersecting) return;
+      this.io.unobserve(x.target);
+      this.fill(x.target);
+    }), { root, rootMargin: '400px 0px' });
+    /* What's on screen now is drawn right away, so a redraw never flashes empty. */
+    const near = innerHeight + 200, tops = els.map(e => e.getBoundingClientRect());
+    els.forEach((e, i) => { if (tops[i].top < near && tops[i].bottom > -200) this.fill(e); else this.io.observe(e); });
+  }
+};
 function shopCard(it) {
   const [st, lab] = shopState(it);
   const name = it.name || it.t;
   return `<button class="item r-${it.r} st-${st}" data-a="item" data-v="${it.key}">
-    ${itemPreview(it)}
+    <div class="pv lazy" data-pv="${it.key}"></div>
     <span class="it-n">${esc(name)}</span>
     <span class="it-p">${st === 'buy' ? priceHTML(it) : st === 'pass' || st === 'held' || st === 'claim' || st === 'crate' ? `<i class="own lockd">${esc(lab)}</i>` : `<i class="own">${lab}</i>`}</span>
     <span class="rar">${RARITY[it.r]}</span>
@@ -8412,12 +8550,12 @@ const Themes = {
   },
   home() {
     const P = Prof.P, t = this.cur(), lv = Season.info().lv, on = Friends.online(), pct = Math.round(lv / SEASON.levels * 100);
-    const face = f => `<span class="fface">${catSVG(CAT_BY_ID[f.a] ? f.a : 'mochi')}</span>`;
+    const face = f => `<span class="fface">${catSVG(CAT_BY_ID[f.a] ? f.a : 'mochi', { still: true })}</span>`;
     const friend = f => (f ? `<span class="fava">${face(f)}</span>${esc(f.n)}<span class="online"></span>` : '');
     const top = on.slice(0, 3), paw = '<svg><use href="#paw"/></svg>';
     const d = {
       name: esc(P.name), title: esc(titleName(P.eq.title)), s: fmt(P.silver), g: fmt(P.gold), lv, days: Season.daysLeft(), on: on.length,
-      av: catSVG(P.avatar), wins: fmt(P.stats.wins), streak: P.stats.streak, fid: P.fid ? '#' + esc(P.fid) : 'GUEST',
+      av: catSVG(P.avatar, { still: true }), wins: fmt(P.stats.wins), streak: P.stats.streak, fid: P.fid ? '#' + esc(P.fid) : 'GUEST',
       bar: `<i style="flex:${Math.max(pct, 3)}"></i><i style="flex:${100 - Math.max(pct, 3)}"></i>`,
       stack: top.length ? top.map(f => `<span class="mini-ava">${face(f)}</span>`).join('') : `<span class="mini-ava">${paw}</span>`,
       f1: friend(top[0]), f2: friend(top[1]),
@@ -8467,7 +8605,7 @@ function viewSeason() {
   const over = Season.over();
   return `<main class="scr season">${topbar('Season Pass')}
     <section class="sp-hero">
-      <i class="sp-moon"></i><i class="sp-city"></i><span class="sp-cat">${catSVG('mochi')}</span>
+      <i class="sp-moon"></i><i class="sp-city"></i><span class="sp-cat">${catSVG('mochi', { still: true })}</span>
       <p class="sp-eye">Season 1 · ${over ? 'Ended' : `${Season.daysLeft()} days left`}</p>
       <h1><b>Midnight</b><b>Market</b></h1>
       <p class="sp-tag">When the moon hits the alley, the stalls light up.</p>
@@ -8691,23 +8829,31 @@ const PlayerCard = {
     Sound.play('reflect');
     vibrate(15);
   },
-  /* Eases toward the tilt each frame, and sways gently when nothing is moving it. */
+  /* Eases toward the tilt each frame, and sways gently when nothing is moving it.
+     The foil layers are painted once; a frame only slides them, so nothing repaints. */
   loop() {
-    const t0 = performance.now(), still = reduceMotion(), root = $('#app');
+    const t0 = performance.now(), still = reduceMotion(), root = $('#app'), card = this.card;
+    const q = c => card.querySelector(c), foil = q('.pc-foil'), spark = q('.pc-spark'), rim = q('.pc-rim');
+    const glare = card.querySelectorAll('.pc-glare'), tall = card.offsetHeight;
+    const strength = parseFloat(getComputedStyle(card).getPropertyValue('--pc-foil')) || 0.34;
     const step = now => {
-      if (!this.on || !this.card.isConnected) return;
+      if (!this.on || !card.isConnected) return;
       this.raf = requestAnimationFrame(step);
-      if (root.scrollTop > this.card.offsetHeight) return;
+      if (root.scrollTop > tall) return;
       const idle = !this.drag && now - this.gyroAt > 400 && !still;
       const g = idle ? { x: Math.sin((now - t0) / 1500) * 0.38, y: Math.cos((now - t0) / 2100) * 0.26 } : this.goal;
       this.tilt.x += (g.x - this.tilt.x) * 0.12;
       this.tilt.y += (g.y - this.tilt.y) * 0.12;
-      const { x, y } = this.tilt, s = this.card.style;
-      s.setProperty('--rx', (-y * 11).toFixed(2) + 'deg');
-      s.setProperty('--ry', (x * 13).toFixed(2) + 'deg');
-      s.setProperty('--mx', (50 + x * 50).toFixed(2) + '%');
-      s.setProperty('--my', (50 + y * 50).toFixed(2) + '%');
-      s.setProperty('--ho', (0.55 + Math.min(1, Math.hypot(x, y)) * 0.45).toFixed(3));
+      const { x, y } = this.tilt, ho = 0.55 + Math.min(1, Math.hypot(x, y)) * 0.45;
+      const at = (kx, ky) => `translate3d(${(x * kx).toFixed(2)}%,${(y * ky).toFixed(2)}%,0)`;
+      card.style.transform = `rotateX(${(-y * 11).toFixed(2)}deg) rotateY(${(x * 13).toFixed(2)}deg)`;
+      foil.style.transform = at(-20, -20);
+      foil.style.opacity = (strength * 0.75 * ho).toFixed(3);
+      spark.style.transform = at(6, 6);
+      rim.style.transform = at(-18, -18);
+      rim.style.opacity = Math.min(1, strength * 2 * ho).toFixed(3);
+      const shine = at(24, 24);
+      glare.forEach(el => { el.style.transform = shine; });
     };
     this.raf = requestAnimationFrame(step);
   }
@@ -8727,8 +8873,10 @@ function sortHand(hand, deck) {
     return (COLOR_ORDER[A.c] - COLOR_ORDER[B.c]) || (KIND_ORDER.indexOf(A.k) - KIND_ORDER.indexOf(B.k)) || a - b;
   });
 }
+/* Avatars get a fresh uid and start delay on each build; neither changes how a seat looks. */
+const stableHTML = html => html.replace(/\bk\d+\b|--cd:[\d.]+s/g, '');
 function particleLayer(id) {
-  const cfg = { opensea: ['bubble', 14], treasurecove: ['glint', 14], neonalley: ['rain', 28], datacore: ['spark', 18], skyline: ['rain', 24], bazaar: ['rain', 24], orbital: ['star', 40], hyperlane: ['spark', 18], throne: ['glint', 12], cybercity: ['rain', 30], sakura: ['petal', 16], snow: ['snow', 30], aquarium: ['bubble', 16], space: ['star', 44], rooftop: ['star', 26], velvet: ['glint', 10], arcade: ['spark', 12] }[id];
+  const cfg = { opensea: ['bubble', 8], treasurecove: ['glint', 8], neonalley: ['rain', 14], datacore: ['spark', 10], skyline: ['rain', 12], bazaar: ['rain', 12], orbital: ['star', 18], hyperlane: ['spark', 10], throne: ['glint', 7], cybercity: ['rain', 14], sakura: ['petal', 9], snow: ['snow', 14], aquarium: ['bubble', 9], space: ['star', 20], rooftop: ['star', 14], velvet: ['glint', 6], arcade: ['spark', 7] }[id];
   if (!cfg || reduceMotion()) return '<div class="tparts"></div>';
   let h = '';
   for (let i = 0; i < cfg[1]; i++) {
@@ -8862,7 +9010,7 @@ const GameUI = {
     const W = wrap.clientWidth || innerWidth - 32;
     const colW = Math.min(320, (W - (n - 1) * 4) / n);
     const ocw = Math.round(n === 1 ? clamp(Math.min(innerWidth * 0.17, innerHeight * 0.085), 46, 78) : n === 2 ? clamp(Math.min(innerWidth * 0.135, innerHeight * 0.075), 40, 66) : clamp(Math.min(innerWidth * 0.105, innerHeight * 0.065), 34, 58));
-    const html = order.map(i => {
+    const rows = order.map(i => {
       const s = T.s[i], cos = seatCos(T, i), cnt = G.hands[i].length;
       const turn = G.turn === i && G.winner < 0;
       /* Their hand, face down: a fan that spreads toward you, wider as it grows. */
@@ -8875,22 +9023,33 @@ const GameUI = {
         const d = k - (vis - 1) / 2;
         return backHTML(cos.card, { style: `transform:translate(${(d * step).toFixed(1)}px,${(-d * d * ocw * 0.011).toFixed(1)}px) rotate(${(-d * ang).toFixed(1)}deg);z-index:${k + 1}${k >= vis - held ? ';visibility:hidden' : ''}` });
       }).join('');
-      return `<div class="opp ${turn ? 'turn' : ''} ${s.x ? '' : 'off'}" id="opp-${i}" data-seat="${i}">
-        <div class="ofan">${fan}</div>
-        <div class="oinfo bn-${esc(cos.banner)}"><span class="bnfx"></span>
-          <div class="oav">${avatar(s.a, '', cos.frame)}${turn && T.dl > 0 ? '<i class="tring"></i>' : ''}</div>
-          <div class="oname">${nameTag(s.n, cos.tag, cos.font)}<b class="ocount${cnt <= 2 ? ' low' : ''}" aria-label="${cnt} cards">${cnt}</b></div>
-        </div>
-        ${s.u ? '<span class="auto">Bot playing</span>' : ''}
-        ${turn && G.phase !== 'play' ? `<span class="think">${G.phase === 'spin' ? 'spinning…' : 'choosing…'}</span>` : turn ? '<span class="think dots"><i></i><i></i><i></i></span>' : ''}
-      </div>`;
-    }).join('');
-    const key = ocw + html.replace(/catuid|k\d+/g, '');
-    if (this.keys.opps === key) return;
-    this.keys.opps = key;
-    wrap.innerHTML = html;
-    wrap.dataset.n = n;
-    wrap.style.setProperty('--ocw', ocw + 'px');
+      return {
+        i, fan, ring: turn && T.dl > 0, cls: `opp ${turn ? 'turn' : ''} ${s.x ? '' : 'off'}`, info: `oinfo bn-${esc(cos.banner)}`,
+        av: avatar(s.a, '', cos.frame),
+        name: `${nameTag(s.n, cos.tag, cos.font)}<b class="ocount${cnt <= 2 ? ' low' : ''}" aria-label="${cnt} cards">${cnt}</b>`,
+        note: `${s.u ? '<span class="auto">Bot playing</span>' : ''}${turn && G.phase !== 'play' ? `<span class="think">${G.phase === 'spin' ? 'spinning…' : 'choosing…'}</span>` : turn ? '<span class="think dots"><i></i><i></i><i></i></span>' : ''}`
+      };
+    });
+    /* Seats are patched piece by piece: a new turn moves a ring, it doesn't rebuild everyone's cards. */
+    const ring = '<i class="tring"></i>', shape = ocw + '|' + order.join();
+    const was = this.keys.oppRows;
+    if (this.keys.oppShape !== shape || !was || wrap.children.length !== n) {
+      wrap.innerHTML = rows.map(r => `<div class="${r.cls}" id="opp-${r.i}" data-seat="${r.i}"><div class="ofan">${r.fan}</div><div class="${r.info}"><span class="bnfx"></span><div class="oav">${r.av}${r.ring ? ring : ''}</div><div class="oname">${r.name}</div></div>${r.note}</div>`).join('');
+      wrap.dataset.n = n;
+      wrap.style.setProperty('--ocw', ocw + 'px');
+    } else rows.forEach((r, k) => {
+      const o = was[k], el = wrap.children[k];
+      if (r.cls !== o.cls) el.className = r.cls;
+      if (r.fan !== o.fan) el.querySelector('.ofan').innerHTML = r.fan;
+      if (r.info !== o.info) el.querySelector('.oinfo').className = r.info;
+      const av = el.querySelector('.oav');
+      if (stableHTML(r.av) !== stableHTML(o.av)) av.innerHTML = r.av + (r.ring ? ring : '');
+      else if (r.ring !== o.ring) { if (r.ring) av.insertAdjacentHTML('beforeend', ring); else av.querySelector('.tring').remove(); }
+      if (r.name !== o.name) el.querySelector('.oname').innerHTML = r.name;
+      if (r.note !== o.note) { el.querySelectorAll(':scope > .auto, :scope > .think').forEach(x => x.remove()); el.insertAdjacentHTML('beforeend', r.note); }
+    });
+    this.keys.oppShape = shape;
+    this.keys.oppRows = rows;
     this.timerRing(T, G);
   },
   /* The host sends seconds left on each update; animate locally from there. */
@@ -8901,6 +9060,8 @@ const GameUI = {
     const left = Math.max(0, (this.dl - Date.now()) / 1000);
     $$('.tring, .tbar i').forEach(el => {
       if (el.dataset.tk === key) return;
+      /* The same seat going again: only a fresh element restarts the CSS clock. */
+      if (el.dataset.tk) { const fresh = el.cloneNode(false); el.replaceWith(fresh); el = fresh; }
       el.dataset.tk = key;
       el.style.setProperty('--dur', left.toFixed(2) + 's');
       el.style.setProperty('--from', clamp(left / this.dlTotal, 0, 1).toFixed(3));
@@ -8920,7 +9081,7 @@ const GameUI = {
     if (this.keys.deck !== deckKey) {
       this.keys.deck = deckKey;
       const d = $('#deck');
-      d.innerHTML = `${backHTML(mySkin, { cls: 'd2' })}${backHTML(mySkin, { cls: 'd1' })}${backHTML(mySkin, { cls: 'd0' })}`;
+      if (this.keys.deckSkin !== mySkin) { this.keys.deckSkin = mySkin; d.innerHTML = `${backHTML(mySkin, { cls: 'd2' })}${backHTML(mySkin, { cls: 'd1' })}${backHTML(mySkin, { cls: 'd0' })}`; }
       d.className = 'deck' + (mode ? ' can ' + mode : '') + (must || mode === 'take' ? ' must' : mode === 'draw' ? ' opt' : '');
       d.disabled = !mode;
       d.setAttribute('aria-label', mode === 'take' ? `Take ${G.pending.n} cards` : mode === 'pass' ? 'Keep the card you drew and pass' : mode === 'draw' ? 'Draw a card' : `Draw pile, ${G.drawCount} cards`);
@@ -8953,7 +9114,7 @@ const GameUI = {
     const timed = myTurn && T.dl > 0;
     const sub = myTurn ? 'Your turn' : esc(titleName(cos.title)) || `${hand.length} cards`;
     const html = `<div class="mine ${myTurn ? 'turn' : ''} bn-${esc(cos.banner)}"><span class="bnfx"></span><div class="mav">${avatar(s.a, '', cos.frame)}${timed ? '<i class="tring"></i>' : ''}</div><div class="mtxt">${nameTag(s.n, cos.tag, cos.font)}<small>${sub}</small>${timed ? '<span class="tbar"><i></i></span>' : ''}</div></div>`;
-    const key = html.replace(/k\d+/g, '');
+    const key = stableHTML(html);
     if (this.keys.me === key) return;
     this.keys.me = key;
     $('#mybar').innerHTML = html;
@@ -8969,11 +9130,28 @@ const GameUI = {
     const playable = this.playable;
     const drew = myTurn && G.phase === 'play' && G.drew >= 0 ? G.drew : -1;
     if (app.sel != null && !playable.has(app.sel)) app.sel = null;
-    const key = [hand.join(','), [...playable].join(','), app.sel, skin, myTurn, G.phase, drew, innerWidth].join('|');
+    const cards = [hand.join(','), skin, innerWidth, innerHeight].join('|');
+    const key = [cards, [...playable].join(','), app.sel, myTurn, G.phase, drew].join('|');
     if (this.keys.hand === key) return;
     const old = new Set((this.keys.handIds || []));
+    const same = this.keys.handCards === cards && el.children.length === hand.length;
     this.keys.hand = key;
     this.keys.handIds = hand;
+    this.keys.handCards = cards;
+    /* Same cards in the same order: a tap or a new turn only changes classes, so the card lifts instead of the hand being rebuilt. */
+    if (same) {
+      for (const b of el.children) {
+        const id = +b.dataset.id, c = b.classList;
+        c.toggle('ok', playable.has(id));
+        c.toggle('no', !playable.has(id) && myTurn);
+        c.toggle('sel', app.sel === id);
+        c.toggle('drew', id === drew);
+        c.remove('new');
+      }
+      const s = app.sel != null && el.classList.contains('scroll') && el.querySelector('.hc.sel');
+      if (s) s.scrollIntoView({ block: 'nearest', inline: 'center' });
+      return;
+    }
     const n = hand.length;
     const W = el.parentElement.clientWidth;
     /* Big cards while they fit; shrink a little for big hands so every corner index stays visible before scrolling. */
