@@ -5397,6 +5397,122 @@ body:is([data-theme="protocol"], [data-theme="gilded"]) .hubchips button.on { co
 .wval { background: #1a1330; }
 .wval small { color: #c6bbe0; }
 body:is([data-theme="sticker"], [data-theme="holo"], [data-theme="paper"], [data-theme="index"]) .sp-lanes .silver { color: #5c6678; }
+/* ==========================================================================
+   v1.1.3
+   ========================================================================== */
+/* A seven gets a crossbar, so it can't be mistaken for a one on the slanted skins. */
+.n7 { position: relative; display: inline-block; }
+.n7::after { content: ""; position: absolute; left: 22%; right: 12%; top: 52%; height: max(1.5px, .075em); border-radius: 2px; background: currentColor; transform: rotate(-4deg); }
+
+/* Blank Card wheel: the ring turns around the outside of the main wheel. */
+.blankfx .wh-ring { position: absolute; inset: 0; border-radius: 50%; will-change: transform; }
+.blankfx .wh-rot { inset: 7.5%; }
+.blankfx .wh-hub svg { color: #ffd37a; }
+.wh-res b.c-r { color: #ff6b70; } .wh-res b.c-y { color: #ffd34e; } .wh-res b.c-g { color: #4fd18f; } .wh-res b.c-b { color: #6ea2ff; }
+.card.x2 { box-shadow: 0 0 0 2px #ffd34e, 0 0 12px #ffb300; border-radius: calc(var(--cw) * .12); }
+
+/* ---------- Marketplace ---------- */
+.mkbar { display: flex; align-items: center; gap: 12px; width: 100%; margin: 10px 0 2px; padding: 11px 14px; border: 0; border-radius: 16px; text-align: left; color: #fff3e4; background: linear-gradient(120deg, #2a1f55, #1a1330); box-shadow: inset 0 0 0 1.5px #ffd166; }
+.mkbar-i { position: relative; flex: none; width: 42px; height: 30px; }
+.mkbar-i .coin { position: absolute; width: 26px; height: 26px; top: 2px; left: 0; }
+.mkbar-i .coin:nth-child(2) { left: 16px; }
+.mkbar-t { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.mkbar-t b { font: 800 16px/1.15 var(--f-display); }
+.mkbar-t small { font: 700 12px/1.2 var(--f-body); color: #c6bbe0; }
+.mkbar em { flex: none; min-width: 24px; height: 24px; padding: 0 6px; display: grid; place-items: center; border-radius: 12px; font: 900 13px var(--f-body); font-style: normal; color: #2a1a00; background: #ffd166; }
+.x2b { position: absolute; right: 10px; top: 10px; z-index: 4; padding: 2px 7px; border-radius: 9px; font: 900 12px var(--f-body); font-style: normal; color: #2a1a00; background: #ffd166; box-shadow: 0 1px 3px rgba(0,0,0,.5); }
+.grid.g-market { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.mkprice { display: inline-flex; align-items: center; gap: 4px; font: 900 15px var(--f-body); font-style: normal; }
+.mkprice .coin { width: 16px; height: 16px; }
+.mkby { display: block; padding: 0 2px 2px; font: 700 11.5px var(--f-body); color: var(--mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mkrow { display: flex; align-items: center; gap: 10px; padding: 8px; margin-top: 8px; border-radius: 14px; background: #1a1330; color: #fff3e4; }
+.mkart { flex: none; width: 56px; height: 56px; border-radius: 10px; overflow: hidden; }
+.mkart .pv { width: 56px; height: 56px; padding: 0; margin: 0; zoom: .62; width: 90px; height: 90px; pointer-events: none; }
+.mktxt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.mktxt b { font: 800 14.5px/1.15 var(--f-display); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mktxt small { display: flex; align-items: center; gap: 3px; font: 700 12px/1.2 var(--f-body); color: #c6bbe0; }
+.mktxt .coin { width: 14px; height: 14px; }
+.mkoffer { display: flex; align-items: center; gap: 6px; padding: 7px 8px; margin-top: 4px; border-radius: 12px; background: #241a3e; color: #fff3e4; }
+.mkoffer span { flex: 1; min-width: 0; font: 700 13px/1.2 var(--f-body); }
+.mkoffer .coin { width: 14px; height: 14px; vertical-align: -2px; }
+.mkbid { display: flex; align-items: center; gap: 8px; }
+.mkbid input, .mkprice-in { flex: 1; min-width: 0; width: 100%; height: 46px; padding: 0 14px; border: 0; border-radius: 12px; font: 800 17px var(--f-body); color: #fff3e4; background: #0f0b1f; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.16); }
+.mkbid .coin { flex: none; width: 22px; height: 22px; }
+.pc-gp { color: #ffd166; font-weight: 800; }
+
+/* ---------- Fun Soccer ---------- */
+.fgame { position: absolute; inset: 0; display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; background: #0b1225; color: #fff4d2; -webkit-user-select: none; user-select: none; touch-action: manipulation; overflow: hidden; }
+.ftop { flex: none; display: flex; align-items: center; gap: 8px; padding: calc(var(--sat) + 6px) 10px 8px; background: #0b1225; }
+.ftop .iconbtn { flex: none; width: 38px; height: 38px; color: #fff4d2; background: rgba(255,244,210,.1); }
+.fscore { flex: 1; min-width: 0; display: grid; grid-template-columns: 1fr auto 1fr; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 2px #121a33, 0 3px 0 #121a33; }
+.fscore span { display: flex; align-items: center; gap: 6px; padding: 5px 9px; min-width: 0; }
+.fscore .fa { background: #2f6bff; justify-content: space-between; }
+.fscore .fb { background: #ff5a4a; justify-content: space-between; }
+.fscore .fm { flex-direction: column; gap: 0; padding: 3px 9px; background: #fff4d2; color: #121a33; }
+.fscore .fm small { font: 800 8.5px/1 var(--f-body); text-transform: uppercase; letter-spacing: .06em; }
+.fscore .fm b { font: 900 15px/1 var(--f-display); }
+.fscore i { font: 800 12.5px/1.1 var(--f-body); font-style: normal; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.fscore b { flex: none; font: 900 25px/1 'Archivo Black', var(--f-display); color: #fff; }
+.fscore .fm b { color: #121a33; font: 900 15px/1 var(--f-display); }
+.fstage { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.fstage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.fchip { position: absolute; left: 10px; top: 8px; padding: 3px 9px; border-radius: 8px; font: 800 11.5px var(--f-body); letter-spacing: .03em; color: #fff4d2; background: rgba(11,18,37,.72); pointer-events: none; }
+.fpop { position: absolute; left: 50%; top: 42%; width: min(82%, 340px); padding: 14px 16px 15px; border-radius: 16px; text-align: center; color: #121a33; background: #fff4d2; box-shadow: 0 0 0 3px #121a33, 0 7px 0 #121a33; opacity: 0; transform: translate(-50%, -50%) scale(.8) rotate(-2deg); transition: opacity .16s, transform .24s cubic-bezier(.2,1.5,.4,1); pointer-events: none; }
+.fpop.show { opacity: 1; transform: translate(-50%, -50%) rotate(-2deg); }
+.fpop small { display: block; font: 800 11px var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: #5a6480; }
+.fpop h2 { margin: 2px 0 3px; font: 400 32px/1.02 'Archivo Black', var(--f-display); color: #121a33; }
+.fpop p { margin: 0; font: 700 14px/1.25 var(--f-body); color: #3a4258; }
+.fpop.goal.t0 { background: #2f6bff; } .fpop.goal.t1 { background: #ff5a4a; }
+.fpop.goal h2, .fpop.goal small, .fpop.goal p { color: #fff; }
+.fpop.gold { background: #ffd24a; }
+.fpads { flex: none; display: flex; gap: 8px; padding: 8px 10px calc(var(--sab, 0px) + 10px); background: #0b1225; }
+.fpad { flex: 1; min-width: 0; height: 92px; border: 0; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; color: #fff; box-shadow: 0 6px 0 rgba(0,0,0,.45), inset 0 2px 0 rgba(255,255,255,.3); touch-action: none; }
+.fpad:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,.45), inset 0 2px 0 rgba(255,255,255,.3); }
+.fpad.a { background: linear-gradient(#4f86ff, #2556d8); }
+.fpad.b { background: linear-gradient(#ff7a6a, #dc3f30); }
+.fpad b { font: 400 25px/1 'Archivo Black', var(--f-display); letter-spacing: .02em; }
+.fpad small { font: 700 12px var(--f-body); opacity: .85; }
+.fgame .gover { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; padding: 20px; }
+.fgame .gover[hidden] { display: none; }
+.fend-s { margin: 2px 0 8px; font: 400 40px/1 'Archivo Black', var(--f-display); }
+.fgame .rrow { display: flex; align-items: center; justify-content: center; gap: 6px; font: 700 15px var(--f-body); }
+.fgame .rrow .coin { width: 20px; height: 20px; }
+.fhero { position: relative; height: 200px; margin: 2px 0 12px; border-radius: 18px; overflow: hidden; background-size: cover; background-position: 50% 62%; display: flex; align-items: flex-end; }
+.fhero > div { width: 100%; padding: 26px 14px 12px; background: linear-gradient(transparent, rgba(11,18,37,.86)); color: #fff4d2; }
+.fhero span { font: 800 11px var(--f-body); letter-spacing: .1em; text-transform: uppercase; color: #ffd84d; }
+.fhero h1 { margin: 1px 0; font: 400 36px/1 'Archivo Black', var(--f-display); color: #fff4d2; }
+.fhero p { margin: 0; font: 700 13.5px var(--f-body); color: #fff4d2; }
+.fmodes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fmodes div { padding: 8px 10px; border-radius: 12px; background: #1a1330; color: #fff3e4; }
+.fmodes b { display: block; font: 800 14px/1.15 var(--f-display); }
+.fmodes small { display: block; margin-top: 2px; font: 600 11.5px/1.25 var(--f-body); color: #c6bbe0; }
+.hubgrid .gtile.g-soccer { grid-column: span 1; }
+.hubgrid .gtile.g-soccer { grid-column: 1 / -1; aspect-ratio: 2.2; }
+.hubgrid .gtile.g-soccer .ga-img { object-position: 50% 60%; }
+
+/* Comic Pop's lettering drew 1 and 7 almost the same, so its numbers use a face where they differ. */
+.sk-comic .cnum, .sk-comic .ci b { font-family: 'Archivo Black', Impact, sans-serif; font-style: italic; }
+
+/* The stat strip is shared with War, whose display font is only set on War screens. */
+.scr.fhome { --w-disp: 'Archivo Black', var(--f-display); }
+.scr.fhome .wstatrow b { font-size: 18px; }
+.scr.fhome { --w-mono: var(--f-body); }
+.scr.fhome .wstatrow small { font: 800 9.5px var(--f-body); }
+.scr.fhome .menu .tile { grid-column: auto; min-height: 96px; }
+.scr.fhome .menu .tile b { font-size: 20px; }
+.fhero > div { padding-top: 54px; background: linear-gradient(transparent, rgba(11,18,37,.82) 42%, rgba(11,18,37,.94)); }
+
+/* Result card: its own panel, because the match behind it can be any colour. */
+.fgame .gover { background: rgba(6,10,24,.72); }
+.fgame .gcard { width: min(100%, 320px); padding: 18px 18px 16px; border-radius: 20px; text-align: center; color: #fff4d2; background: #17203c; box-shadow: 0 0 0 2px rgba(255,244,210,.16), 0 18px 40px rgba(0,0,0,.5); }
+.fgame .gcard.win { box-shadow: 0 0 0 2px #ffd24a, 0 18px 40px rgba(0,0,0,.5); }
+.fgame .gcard h2 { margin: 0; font: 400 25px/1.1 'Archivo Black', var(--f-display); color: #fff4d2; overflow-wrap: anywhere; }
+.fgame .gcard.win h2 { color: #ffd24a; }
+.fgame .gcard .ractions { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.fgame .gcard .rrow { margin: 3px 0; color: #fff4d2; }
+
+/* These rows are always dark, so their outline buttons can't take a light theme's ink. */
+.mkrow .btn.ghost, .mkoffer .btn.ghost { color: #fff; background: transparent; box-shadow: inset 0 0 0 2px rgba(255,255,255,.3); }
 </style>
 </head>
 <body>
@@ -6156,7 +6272,7 @@ const WAR_PAINT = Object.fromEntries(WAR_PAINTS.map(p => [p.id, p]));
 /* ==========================================================================
    Shop catalog. p = silver price, g = gold price, free when neither.
    ========================================================================== */
-const APP_VERSION = '1.1.2';
+const APP_VERSION = '1.1.3';
 const RARITY = { common: 'Common', rare: 'Rare', epic: 'Epic', legendary: 'Legendary', mythic: 'Mythic' };
 const SHOP_TABS = [
   ['card', 'Card Skins'], ['table', 'Tables'], ['avatar', 'Avatars'], ['frame', 'Frames'], ['tag', 'Name Tags'], ['font', 'Fonts'],
@@ -6382,9 +6498,10 @@ const botBet = w => ({ cur: w.cur, amt: Math.min(w.amt, botBetCap(w.cur)) });
 const BOT_NAMES = ['Sir Meowsalot', 'Purrcy', 'Kit Kat', 'Mittens', 'Nacho', 'Socks', 'Pickles', 'Waffles', 'Noodle', 'Ziggy', 'Pudding', 'Mr. Fluff'];
 
 const UNIQUE_CARDS = [
+  { k: 'B', c: 'w', name: 'Blank', type: 'Wild · Double spin', text: 'Goes on anything except a +2, +4 or Shield. The middle wheel picks what it becomes, then the ring picks the color. Land on +2 and Blue and it is a Blue +2. You don’t choose the color, even on a +4.' },
   { k: 'G', c: 'w', name: 'Magnet', type: 'Wild', text: 'Pick a color and every card of that color in your hand jumps onto the pile with it. Their powers don’t fire, but they’re all gone from your hand.' },
   { k: 'N', c: 'w', name: 'Shield', type: 'Wild · Reflect', text: 'When a +2/+4 is aimed at you, play it to send the whole stack back to whoever played the last draw card. They can shield it right back. Any other time it’s a normal Wild.' },
-  { k: 'M', c: 'w', name: 'Mystery', type: 'Wild · Spin', text: 'Pick a color, then spin the wheel. +2, +4, Draw 3 or Draw 5: the next player draws that many and is skipped. Skip: they lose their turn. Reveal 3: you see 3 of their cards. You draw 1 or You draw 2: bad luck.' },
+  { k: 'M', c: 'w', name: 'Mystery', type: 'Wild · Spin', text: 'Pick a color, then spin the wheel. +2, +4, Draw 3 or Draw 5: the next player draws that many and is skipped. Skip: they lose their turn. Reveal 3: you see 3 of their cards. Fresh Hand: the next player loses every card and gets the same number of new ones. 2x Multiplier: every +2 you hold now hits for +4. You draw 1 or You draw 2: bad luck.' },
   { k: 'C', c: 'w', name: 'Copycat', type: 'Wild', text: 'Becomes an exact copy of the top card: its color, number and power. Copy a +2 and the next player draws 2 (and yes, it stacks).' },
   { k: 'H', c: 'g', name: 'BOGO', type: 'Color action · Buy one, get one free', text: 'Play it, then give any card from your hand to an opponent. You drop two cards, they get one free.' }
 ];
@@ -6501,6 +6618,7 @@ const ICON = {
   C: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"><rect x="3.6" y="7.4" width="12" height="13.8" rx="2"/><path class="back" d="M8 7.4V5.8a2 2 0 0 1 2-2h8.4a2 2 0 0 1 2 2v9.6a2 2 0 0 1-2 2h-2.8M10.6 3.8 11.9 1.8l1.3 2M15.2 3.8l1.3-2 1.3 2"/></svg>',
   N: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round"><path d="M12 2.6 19.6 5.4v5.8c0 4.8-3.3 8.4-7.6 10.2-4.3-1.8-7.6-5.4-7.6-10.2V5.4Z"/><path class="bounce" d="M10.6 7.8 8 10.4l2.6 2.6M8.2 10.4h5.2a3.1 3.1 0 0 1 0 6.2h-1.6"/></svg>',
   H: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M2.6 7.6A1.6 1.6 0 0 1 4.2 6h10.4l6.6 6-6.6 6H4.2a1.6 1.6 0 0 1-1.6-1.6Z"/><circle cx="16.4" cy="12" r="1.3" fill="currentColor" stroke="none"/><text x="8.6" y="14.9" text-anchor="middle" font-size="8.2" font-weight="800" font-family="Outfit, system-ui, sans-serif" fill="currentColor" stroke="none">+1</text></svg>',
+  B: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2.6" stroke-dasharray="3 3.2"/><path d="M9.6 9.8a2.5 2.5 0 1 1 3.7 2.2c-.8.5-1.3 1-1.3 2M12 16.8v.1"/></svg>',
   G: '<svg viewBox="0 0 24 24"><path d="M5.2 4.6h4.2v7.4a2.6 2.6 0 0 0 5.2 0V4.6h4.2V12a6.8 6.8 0 0 1-13.6 0Z" fill="currentColor"/><path d="M5.2 4.6h4.2v3H5.2zM14.6 4.6h4.2v3h-4.2z" fill="#e5484d"/></svg>'
 };
 /* Suits: one plain shape per color so the colors stay apart for color-blind players. */
@@ -6514,18 +6632,18 @@ const SUIT = {
 const PAW_MARK = '<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="15.6" rx="5.6" ry="4.6"/><circle cx="5.4" cy="10" r="2.4"/><circle cx="9.6" cy="6" r="2.4"/><circle cx="14.4" cy="6" r="2.4"/><circle cx="18.6" cy="10" r="2.4"/></svg>';
 /* Minimal cat-head mark used on card backs and the wild ring. */
 const CAT_MARK = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.2 18.2V7.4c0-.9 1-1.4 1.7-.8l3.3 2.9h5.6l3.3-2.9c.7-.6 1.7-.1 1.7.8v10.8c0 .3 0 .5-.1.8C18.9 21 15.8 22 12 22s-6.9-1-7.7-3c-.1-.3-.1-.5-.1-.8Z"/></svg>';
-const UNIQUE_LABEL = { C: 'Copycat', N: 'Shield', H: 'BOGO', M: 'Mystery', G: 'Magnet' };
+const UNIQUE_LABEL = { C: 'Copycat', N: 'Shield', H: 'BOGO', M: 'Mystery', G: 'Magnet', B: 'Blank' };
 
 /* +2 and +4 carry little cards in the middle so they never read as a number card. */
 function cardSymbol(k) {
-  if (isNum(k)) return `<b class="cnum${k === '6' || k === '9' ? ' u' : ''}">${k}</b>`;
+  if (isNum(k)) return `<b class="cnum${k === '6' || k === '9' ? ' u' : k === '7' ? ' n7' : ''}">${k}</b>`;
   if (k === 'D') return '<span class="minis m2"><i></i><i></i></span><b class="cnum plus">+2</b>';
   if (k === 'F') return `<span class="minis m4"><i class="mr"></i><i class="mg"></i><i class="my"></i><i class="mb"></i></span><b class="cnum plus">+4</b><span class="toes">${SUIT.w}</span>`;
   if (k === 'M') return '<b class="cnum q">?</b>';
   return `<span class="ico">${ICON[k]}</span>`;
 }
 function cornerSymbol(k) {
-  if (isNum(k)) return `<b>${k}</b>`;
+  if (isNum(k)) return `<b${k === '7' ? ' class="n7"' : ''}>${k}</b>`;
   if (k === 'D') return '<b>+2</b>';
   if (k === 'F') return '<b>+4</b>';
   if (k === 'M') return '<b>?</b>';
@@ -6555,10 +6673,10 @@ const COLORS = ['r', 'y', 'g', 'b'];
 const COLOR_NAME = { r: 'Red', y: 'Yellow', g: 'Green', b: 'Blue', w: 'Wild' };
 const COLOR_BIT = { r: 1, y: 2, g: 4, b: 8 };
 const NUM_KINDS = new Set(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']);
-const WILD_KINDS = new Set(['W', 'F', 'C', 'N', 'M', 'G']);
+const WILD_KINDS = new Set(['W', 'F', 'C', 'N', 'M', 'G', 'B']);
 const KIND_NAME = {
   S: 'Skip', R: 'Reverse', D: '+2', W: 'Wild', F: '+4',
-  C: 'Copycat', N: 'Shield', H: 'BOGO', M: 'Mystery', G: 'Magnet'
+  C: 'Copycat', N: 'Shield', H: 'BOGO', M: 'Mystery', G: 'Magnet', B: 'Blank'
 };
 /* Mystery wheel: eight equal slices, so every outcome is exactly as likely as it looks.
    Draw outcomes hit the next player and skip them; "You draw" hits whoever spun. */
@@ -6570,7 +6688,14 @@ const WHEEL = [
   { id: 'd3', label: 'Draw 3', n: 3 },
   { id: 'peek', label: 'Reveal 3' },
   { id: 'd5', label: 'Draw 5', n: 5 },
-  { id: 'me2', label: 'You draw 2', n: 2, self: 1 }
+  { id: 'me2', label: 'You draw 2', n: 2, self: 1 },
+  { id: 'fresh', label: 'Fresh Hand' },
+  { id: 'x2', label: '2x Multiplier' }
+];
+/* Blank Card: the middle wheel picks what it becomes, then the ring around it picks the color. */
+const BLANK_WHEEL = [
+  { k: 'D', label: '+2' }, { k: 'F', label: '+4' }, { k: '#', label: 'Number' }, { k: 'C', label: 'Copycat' }, { k: 'N', label: 'Shield' }, { k: 'M', label: 'Mystery' },
+  { k: 'G', label: 'Magnet' }, { k: 'H', label: 'BOGO' }, { k: 'S', label: 'Skip' }, { k: 'R', label: 'Reverse' }, { k: 'W', label: 'Wild' }
 ];
 /* turn: seconds per turn, 0 = no clock. Running out draws a card for you and passes. */
 const DEFAULT_RULES = { stack: true, uniques: 1, hand: 7, drawMode: 'one', turn: 15 };
@@ -6586,7 +6711,7 @@ function buildDeck(rules) {
     for (let i = 0; i < u; i++) add(c, 'H');
   }
   for (let i = 0; i < 4; i++) { add('w', 'W'); add('w', 'F'); }
-  for (let i = 0; i < 2 * u; i++) { add('w', 'C'); add('w', 'N'); add('w', 'M'); add('w', 'G'); }
+  for (let i = 0; i < 2 * u; i++) { add('w', 'C'); add('w', 'N'); add('w', 'M'); add('w', 'G'); add('w', 'B'); }
   return d;
 }
 
@@ -6614,7 +6739,7 @@ function newGame(o) {
     hands: Array.from({ length: n }, () => []),
     draw: [], discard: [],
     color: 'r', topAs: null, turn: 0, dir: 1, pending: null,
-    phase: 'play', ctx: null, drew: null, pull: [], winner: -1,
+    phase: 'play', ctx: null, drew: null, pull: [], boost: [], winner: -1,
     evs: [], seq: 0, tseq: 0,
     lack: Array(n).fill(0), bonus: Array(n).fill(0),
     played: Array(n).fill(0), specials: Array(n).fill(0)
@@ -6682,6 +6807,8 @@ function canPlay(S, seat, id) {
     if (!S.rules.stack) return false;
     return k === 'F' || k === 'D';
   }
+  /* A Blank goes on anything except a draw card or a Shield. */
+  if (k === 'B') return tk !== 'D' && tk !== 'F' && tk !== 'N';
   if (WILD_KINDS.has(k)) return true;
   return card.c === S.color || k === tk;
 }
@@ -6722,6 +6849,8 @@ function play(S, seat, id) {
   hand.splice(hand.indexOf(id), 1);
   S.discard.push(id);
   S.topAs = null; S.drew = null;
+  const boosted = S.boost.indexOf(id) >= 0;
+  if (boosted) S.boost.splice(S.boost.indexOf(id), 1);
   S.played[seat]++;
   if (!isNum(card.k)) S.specials[seat]++;
   if (card.c !== 'w') { S.color = card.c; S.lack[seat] &= ~COLOR_BIT[card.c]; }
@@ -6738,10 +6867,40 @@ function play(S, seat, id) {
     case 'R':
       if (S.n === 2) { ev(S, 'skip', nextSeat(S, 1)); return advance(S, 2); }
       S.dir *= -1; ev(S, 'rev', seat, S.dir); return advance(S, 1);
-    case 'D': addPending(S, seat, 2, 'D'); return advance(S, 1);
+    case 'D': addPending(S, seat, boosted ? 4 : 2, 'D'); return advance(S, 1);
     case 'H': S.phase = 'give'; S.ctx = { k: 'H' }; ev(S, 'bogo', seat); return true;
     case 'W': case 'F': case 'N': case 'M': case 'G':
       S.phase = 'color'; S.ctx = { k }; return true;
+    case 'B': {
+      /* Both results are drawn now. The host settles them once both wheels have visibly stopped. */
+      const o = Math.floor(rand(S) * BLANK_WHEEL.length), c = Math.floor(rand(S) * 4);
+      S.phase = 'blank'; S.ctx = { k: 'B', o, c, prev: prevKind };
+      ev(S, 'blank', seat, o, c);
+      return true;
+    }
+    default: return advance(S, 1);
+  }
+}
+
+/* The Blank becomes what the wheels landed on, in the ring's color. Nobody gets to choose. */
+function resolveBlank(S, seat) {
+  const { o, c, prev } = S.ctx, col = COLORS[c];
+  let k = BLANK_WHEEL[o].k;
+  S.phase = 'play'; S.ctx = null; S.color = col;
+  if (k === '#') k = String(Math.floor(rand(S) * 10));
+  if (k === 'C') k = prev;
+  S.topAs = k;
+  ev(S, 'color', seat, col);
+  switch (k) {
+    case 'S': ev(S, 'skip', nextSeat(S, 1)); return advance(S, 2);
+    case 'R':
+      if (S.n === 2) { ev(S, 'skip', nextSeat(S, 1)); return advance(S, 2); }
+      S.dir *= -1; ev(S, 'rev', seat, S.dir); return advance(S, 1);
+    case 'D': addPending(S, seat, 2, 'D'); return advance(S, 1);
+    case 'F': addPending(S, seat, 4, 'F'); return advance(S, 1);
+    case 'H': S.phase = 'give'; S.ctx = { k: 'H' }; ev(S, 'bogo', seat); return true;
+    case 'M': return spinWheel(S, seat);
+    case 'G': return magnetPull(S, seat, col);
     default: return advance(S, 1);
   }
 }
@@ -6794,6 +6953,23 @@ function resolveWheel(S, seat) {
   if (w.id === 'peek') {
     const ids = shuffleS(S, S.hands[nx].slice()).slice(0, 3);
     ev(S, 'peek', seat, nx, ids.reduce((a, id, i) => a + (id + 1) * Math.pow(256, i), 0));
+    return advance(S, 1);
+  }
+  if (w.id === 'fresh') {
+    /* Their whole hand goes back in the deck and they get the same number of new cards. */
+    const n = S.hands[nx].length;
+    S.draw.push(...S.hands[nx]);
+    S.hands[nx] = [];
+    S.boost = S.boost.filter(id => S.draw.indexOf(id) < 0);
+    shuffleS(S, S.draw);
+    giveCards(S, nx, n);
+    ev(S, 'fresh', nx, n);
+    return advance(S, 1);
+  }
+  if (w.id === 'x2') {
+    /* Every +2 the spinner is holding now hits for +4. */
+    for (const id of S.hands[seat]) if (S.deck[id].k === 'D' && S.boost.indexOf(id) < 0) S.boost.push(id);
+    ev(S, 'boost', seat, S.boost.length);
     return advance(S, 1);
   }
   if (w.self) { const got = giveCards(S, seat, w.n); ev(S, 'draw', seat, got.length, 1); return advance(S, 1); }
@@ -6863,6 +7039,7 @@ function gameAct(S, seat, a) {
     case 't': return chooseTarget(S, seat, x);
     case 'g': return giveCard(S, seat, x);
     case 'w': return S.phase === 'spin' ? resolveWheel(S, seat) : false;
+    case 'b': return S.phase === 'blank' ? resolveBlank(S, seat) : false;
     case 'a': return S.pending && S.phase === 'play' ? acceptPending(S, seat) : false;
   }
   return false;
@@ -6946,6 +7123,7 @@ function botScore(S, seat, id, diff) {
   else if (k === 'N') s = hand.length <= 2 ? 15 : (diff === 'hard' ? -12 : -3);
   else if (k === 'C') { const tk = topKind(S); s = (tk === 'D' || tk === 'F') ? 16 : (tk === 'G' || tk === 'H') ? 12 : 6; }
   else if (k === 'M') s = 7;
+  else if (k === 'B') s = hand.length <= 2 ? 14 : 8;
   else s = 5;
   if (diff === 'hard' && c.c !== 'w') {
     const theirs = colorCounts(S, S.hands[nx]);
@@ -6961,6 +7139,7 @@ function botAction(S, seat, diff) {
     case 'target': return ['t', botPickTarget(S, seat)];
     case 'give': return ['g', botPickGive(S, seat)];
     case 'spin': return ['w'];
+    case 'blank': return ['b'];
   }
   const legal = legalCards(S, seat);
   if (S.drew != null) {
@@ -7330,6 +7509,345 @@ function warBot(S, side, skill, rnd) {
   }
   /* A good general waits for the right moment, unless the factory is backing up. */
   return best && raw < B.hold && q.length < WAR.TRAY ? null : best;
+}
+
+/* ==========================================================================
+   Fun Soccer: the physics. No DOM in here.
+   A player is a balancing body on one springy standing leg, with a kicking leg
+   on a hinge at the hip. A spring keeps the body upright, so players stand, wobble
+   and bounce instead of collapsing. World units, y points up, the ground is y = 0.
+   ========================================================================== */
+const FS = { W: 560, DT: 1 / 120, G: 1500, GD: 46, LEG: 46, BODY: 36, HEAD: 18 };
+const FS_TARGET = 5;
+
+/* Every mode only changes numbers here, so a new one is a line, not a rewrite. */
+const F_BASE = { g: 1, ballR: 15, ballE: 0.74, ballDrag: 0.9996, fric: 7, playerS: 1.16, jump: 1, goalH: 118, bounce: 0.34, wind: 0, balls: 1, look: 'day', ball: 'soccer' };
+const F_MODES = [
+  { id: 'kickoff', name: 'Kickoff', sub: 'Boot it into the net.' },
+  { id: 'hoops', name: 'Hoops', sub: 'Drop it through the ring.', look: 'hall', ball: 'basket', hoop: 1, ballE: 0.8 },
+  { id: 'splash', name: 'Big Splash', sub: 'Shove the beach ball into the floating goal.', look: 'pool', ball: 'beach', water: 1, ballR: 34, ballE: 0.6, g: 0.62, jump: 0.9 },
+  { id: 'moon', name: 'Moon Ball', sub: 'Almost no gravity. Enjoy the view.', look: 'moon', g: 0.34, jump: 0.72, ballE: 0.82 },
+  { id: 'mega', name: 'Mega Ball', sub: 'It’s bigger than you are.', ball: 'mega', ballR: 44, ballE: 0.66, look: 'dusk' },
+  { id: 'tiny', name: 'Tiny Ball', sub: 'Small, fast and very rude.', ballR: 8, ballE: 0.84, look: 'day2' },
+  { id: 'ice', name: 'Ice Rink', sub: 'Nobody here can stop.', look: 'ice', ball: 'puck', fric: 0.25, ballE: 0.7 },
+  { id: 'bouncy', name: 'Bouncy Castle', sub: 'The floor wants you gone.', look: 'castle', bounce: 0.86, ballE: 0.95, ball: 'beachs' },
+  { id: 'wind', name: 'Wild Wind', sub: 'Blame the weather.', look: 'storm', wind: 620 },
+  { id: 'double', name: 'Double Trouble', sub: 'Two balls. First one in scores.', balls: 2, look: 'day2' },
+  { id: 'bomb', name: 'Hot Potato', sub: 'When it blows, that half loses the point.', ball: 'bomb', fuse: 11, look: 'dusk' },
+  { id: 'barn', name: 'Barn Doors', sub: 'You can’t miss these goals. Probably.', goalH: 300, look: 'day' },
+  { id: 'keyhole', name: 'Keyhole', sub: 'Goals for very small footballs.', goalH: 62, look: 'night' },
+  { id: 'giants', name: 'Giants', sub: 'Everyone got taller overnight.', playerS: 1.6, jump: 1.08, look: 'day2' },
+  { id: 'minis', name: 'Little Legs', sub: 'Everyone got shorter overnight.', playerS: 0.76, jump: 0.9, look: 'dusk' },
+  { id: 'pinball', name: 'Pinball', sub: 'Bumpers everywhere. Good luck.', look: 'neon', bumpers: [[-150, 250, 30], [0, 340, 34], [150, 250, 30], [0, 150, 22]], ballE: 0.8 },
+  { id: 'shifty', name: 'Shifty Goals', sub: 'The goals won’t stay where you left them.', shift: 1, goalH: 110, look: 'storm' },
+  { id: 'lights', name: 'Lights Out', sub: 'Follow the glow.', dark: 1, look: 'night' },
+  { id: 'bowling', name: 'Bowling Ball', sub: 'Heavy. Grumpy. Hard to shift.', ball: 'bowl', ballM: 2.6, ballE: 0.3, g: 1.15, look: 'night' }
+];
+const F_GOLDEN = { id: 'golden', name: 'Golden Goal', sub: 'Four all. Next goal wins it all.', ball: 'gold', look: 'gold' };
+const fmode = id => Object.assign({}, F_BASE, id === 'golden' ? F_GOLDEN : F_MODES.find(m => m.id === id));
+
+function fshuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function fnew(o) {
+  return { score: [0, 0], bag: [], last: '', M: null, t: 0, ps: [], bs: [], ev: [], ceil: o.ceil || 900, touched: 0, still: 0, wind: 0, pow: [1, 1] };
+}
+/* Modes come out of a shuffled bag, so all of them turn up before any repeats. */
+function fnextMode(S) {
+  if (S.score[0] === FS_TARGET - 1 && S.score[1] === FS_TARGET - 1) return 'golden';
+  if (!S.bag.length) { S.bag = fshuffle(F_MODES.map(m => m.id)); if (S.bag[S.bag.length - 1] === S.last) S.bag.unshift(S.bag.pop()); }
+  return (S.last = S.bag.pop());
+}
+function fplayer(team, role, x, M) {
+  const dir = team ? -1 : 1;
+  return { team, role, dir, home: x, x, y: 0, vx: 0, vy: 0, a: 0, w: 0, s: M.playerS, leg: 0.12, lv: 0, kick: 0, face: dir, ground: true, coy: 0, cd: 0, air: 0, sq: 0, down: 0, flail: Math.random() * 6 };
+}
+function fball(M, x, y) { return { x, y, vx: 0, vy: 0, r: M.ballR, rot: 0, last: -1, fuse: M.fuse || 0 }; }
+/* Sets everyone up for a point. */
+function fsetup(S, id) {
+  const M = S.M = fmode(id), L = FS.W / 2;
+  S.t = 0; S.ev = []; S.touched = 0; S.still = 0; S.wind = 0;
+  /* A weak side sets up badly: the keeper comes off the line and leaves the net open behind. */
+  const off = t => (1 - (S.pow[t] || 1)) * 520;
+  S.ps = [fplayer(0, 'K', -L + 92 + off(0), M), fplayer(0, 'S', -92, M), fplayer(1, 'S', 92, M), fplayer(1, 'K', L - 92 - off(1), M)];
+  for (const p of S.ps) p.y = FS.LEG * p.s + (M.water ? -18 : 0);
+  S.bs = [];
+  for (let i = 0; i < M.balls; i++) S.bs.push(fball(M, M.balls > 1 ? (i ? 60 : -60) : 0, 300 + i * 40));
+  for (const b of S.bs) b.vx = (Math.random() - 0.5) * 60;
+}
+/* Where each moving goal sits right now. */
+function fgoalY(S, side) { return S.M.shift ? 95 + 95 * Math.sin(S.t * 1.05 + side * Math.PI) : 0; }
+
+/* The body's parts, in world space. */
+function fparts(p) {
+  const s = p.s, sa = Math.sin(p.a), ca = Math.cos(p.a), L = FS.LEG * s;
+  const up = FS.BODY * s, hr = FS.HEAD * s;
+  const psi = -p.a + p.face * p.leg;
+  return {
+    sx: p.x - sa * L, sy: p.y - ca * L,                                   // standing foot
+    kx: p.x + Math.sin(psi) * L, ky: p.y - Math.cos(psi) * L,              // kicking foot
+    tx: p.x + sa * up, ty: p.y + ca * up,                                  // neck
+    hx: p.x + sa * (up + hr * 0.9), hy: p.y + ca * (up + hr * 0.9), hr,    // head
+    psi, L
+  };
+}
+/* One tap. Grounded, you leap at the play. Airborne, you throw a kick, and over your head if that's where the ball is. */
+function fjump(S, p) {
+  if (p.cd > 0) return false;
+  const M = S.M;
+  let b = S.bs[0], best = 1e9;
+  for (const q of S.bs) { const d = Math.abs(q.x - p.x); if (d < best) { best = d; b = q; } }
+  const dx = b.x - p.x;
+  let dir = p.dir;
+  if (p.role === 'K') {
+    /* The keeper hops at anything close, and otherwise heads back to the goal. */
+    const near = Math.abs(dx) < 150;
+    /* Never toward a ball that's already between the keeper and the net: that only helps it in. */
+    dir = near ? (dx * p.dir > 26 ? p.dir : 0) : (Math.abs(p.x - p.home) > 30 ? Math.sign(p.home - p.x) : 0);
+  } else if (dx * p.dir < -70) dir = -p.dir;
+  /* A keeper with nothing to do hops on the spot and stays in goal. */
+  const stay = !dir;
+  if (stay) dir = p.dir;
+  /* You can hop back after the ball, but the kick always swings toward their goal. No own-goal machines. */
+  p.face = p.dir;
+  if (p.coy > 0) {
+    const pow = M.jump * (p.role === 'K' ? 0.94 : 1) * (0.5 + 0.5 * S.pow[p.team]);
+    p.vy = 655 * pow * Math.sqrt(M.g < 0.5 ? 0.6 : 1) * (0.92 + 0.08 * p.s);
+    p.vx = stay ? 0 : dir * (p.role === 'K' ? 165 : dir === p.dir ? 250 : 190) * (M.jump > 1 ? 1.1 : 1) * S.pow[p.team];
+    p.w += dir * 1.5; p.coy = 0; p.ground = false; p.air = 0; p.cd = 0.24; p.sq = -0.5;
+    S.ev.push(['jump', p.x]);
+  } else if (p.air < 2) {
+    p.air++; p.cd = 0.2;
+    const above = b.y > p.y + 50 && Math.abs(dx) < 90;
+    p.w -= dir * (above ? 7 : 2.5);
+    p.vy += 130; p.vx += dir * 40;
+  } else return false;
+  p.kick = 0.19;
+  return true;
+}
+function fpress(S, team) { let any = false; for (const p of S.ps) if (p.team === team && fjump(S, p)) any = true; return any; }
+
+function fstepPlayer(S, p, dt) {
+  const M = S.M, s = p.s, L = FS.LEG * s;
+  p.cd = Math.max(0, p.cd - dt); p.coy = Math.max(0, p.coy - dt); p.kick = Math.max(0, p.kick - dt);
+  p.sq += (0 - p.sq) * Math.min(1, dt * 9);
+  /* The kicking leg rides a stiff spring: whipped forward on a kick, relaxed otherwise. */
+  const want = p.kick > 0 ? 2.15 : p.ground ? 0.12 : -0.42;
+  p.lv += (300 * (want - p.leg) - 26 * p.lv) * dt;
+  p.leg = Math.max(-0.9, Math.min(2.4, p.leg + p.lv * dt));
+  /* Balance: much stronger on the ground, loose in the air so landings wobble. */
+  const k = p.ground ? 110 : 52, c = p.ground ? 13 : 5.5;
+  let wrap = p.a; while (wrap > Math.PI) wrap -= 6.2832; while (wrap < -Math.PI) wrap += 6.2832;
+  p.a = wrap;
+  p.w += (-k * p.a - c * p.w) * dt;
+  p.a += p.w * dt;
+  p.vy -= FS.G * M.g * dt;
+  if (M.water) {
+    const d = -(p.y - L * 0.72);
+    if (d > 0) { p.vy += d * 34 * dt * 60 * 0.28; p.vy *= 1 - 3.4 * dt; p.vx *= 1 - 1.5 * dt; }
+  }
+  p.vx += S.wind * 0.22 * dt;
+  p.vx = Math.max(-620, Math.min(620, p.vx)); p.vy = Math.max(-1100, Math.min(860, p.vy)); p.w = Math.max(-22, Math.min(22, p.w));
+  p.x += p.vx * dt; p.y += p.vy * dt;
+  const X = FS.W / 2 - FS.GD - 12;
+  if (p.x < -X) { p.x = -X; p.vx = Math.abs(p.vx) * 0.5; p.w += 1.5; }
+  if (p.x > X) { p.x = X; p.vx = -Math.abs(p.vx) * 0.5; p.w -= 1.5; }
+  /* The ground touches whatever is lowest: the foot normally, a head or hip after a bad landing. */
+  const P = fparts(p), low = Math.min(P.sy, p.y - 6 * s, P.hy - P.hr, P.tx * 0 + P.ty - 8 * s), floor = M.water ? -30 : 0;
+  const was = p.ground;
+  p.ground = false;
+  /* Floating counts as standing, so you can still leap out of the water. */
+  if (M.water && P.sy < 12) { p.ground = true; p.air = 0; p.coy = 0.09; }
+  if (low <= floor) {
+    p.y += floor - low;
+    const hit = -p.vy;
+    if (p.vy < 0) p.vy = hit > 110 ? hit * M.bounce : 0;
+    p.ground = true; p.air = 0; p.coy = 0.09;
+    p.vx *= Math.exp(-M.fric * dt);
+    if (hit > 200 && !was) { p.sq = Math.min(1, hit / 800); p.w += (Math.random() - 0.5) * 2 + p.vx * 0.006; S.ev.push(['land', p.x, hit]); }
+    /* Knocked flat? Bounce straight back up. Nobody crawls in this game. */
+    if (Math.abs(p.a) > 0.85) { p.down += dt; if (p.down > 0.16) { p.vy = 340; p.w += -Math.sign(p.a) * 13; p.down = 0; p.sq = -0.4; } } else p.down = 0;
+  }
+}
+/* Pushes a ball off a limb. pvx/pvy is how fast that part of the body is moving at the contact. */
+function fseg(S, b, p, ax, ay, bx, by, r, vfn, kick) {
+  const dx = bx - ax, dy = by - ay, l = dx * dx + dy * dy || 1;
+  let t = ((b.x - ax) * dx + (b.y - ay) * dy) / l;
+  t = t < 0 ? 0 : t > 1 ? 1 : t;
+  const cx = ax + dx * t, cy = ay + dy * t, ex = b.x - cx, ey = b.y - cy, d2 = ex * ex + ey * ey, R = r + b.r;
+  if (d2 >= R * R) return false;
+  const d = Math.sqrt(d2) || 0.01, nx = ex / d, ny = ey / d;
+  b.x = cx + nx * R; b.y = cy + ny * R;
+  const v = vfn(cx, cy, t), rel = (b.vx - v[0]) * nx + (b.vy - v[1]) * ny;
+  if (rel < 0) {
+    const m = S.M.ballM || 1, e = kick ? 0.55 : 0.12, j = -(1 + e) * rel / m * (kick && p ? S.pow[p.team] : 1);
+    b.vx += nx * j; b.vy += ny * j;
+    /* A ball that hits you from behind dies at your feet instead of pinging into your own net. */
+    if (p && !kick && (b.x - p.x) * p.dir < 0 && b.vx * p.dir < 0) b.vx *= 0.22;
+    /* A proper boot always gets some air on it. */
+    if (kick && b.vy < 200 && -rel > 220) b.vy += 170;
+    if (p) { p.vx -= nx * j * 0.08 * m; if (p.ground === false && ny < 0) p.vy -= ny * j * 0.03 * m; p.w += (nx * (cy - p.y) - ny * (cx - p.x)) * j * 0.0001; }
+    const sp = Math.min(1200, -rel);
+    if (sp > 70) S.ev.push([kick ? 'kick' : 'bump', b.x, b.y, sp]);
+    if (p) { b.last = p.team; S.touched = S.t; }
+  }
+  return true;
+}
+function fstatic(S, b, ax, ay, bx, by, r, e) {
+  const dx = bx - ax, dy = by - ay, l = dx * dx + dy * dy || 1;
+  let t = ((b.x - ax) * dx + (b.y - ay) * dy) / l;
+  t = t < 0 ? 0 : t > 1 ? 1 : t;
+  const cx = ax + dx * t, cy = ay + dy * t, ex = b.x - cx, ey = b.y - cy, d2 = ex * ex + ey * ey, R = r + b.r;
+  if (d2 >= R * R) return false;
+  const d = Math.sqrt(d2) || 0.01, nx = ex / d, ny = ey / d;
+  b.x = cx + nx * R; b.y = cy + ny * R;
+  const rel = b.vx * nx + b.vy * ny;
+  if (rel < 0) { b.vx -= (1 + e) * rel * nx; b.vy -= (1 + e) * rel * ny; if (-rel > 120) S.ev.push(['post', b.x, b.y]); }
+  return true;
+}
+function fstepBall(S, b, dt) {
+  const M = S.M, L = FS.W / 2;
+  b.vy -= FS.G * M.g * dt;
+  b.vx += S.wind * dt;
+  b.vx *= M.ballDrag; b.vy *= M.ballDrag;
+  if (M.water) {
+    const d = b.r * 0.55 - b.y;
+    if (d > 0) { b.vy += d * 52 * dt * 60 * 0.3; b.vy *= 1 - 3 * dt; b.vx *= 1 - 0.7 * dt; }
+  }
+  const sp = Math.hypot(b.vx, b.vy), top = 960;
+  if (sp > top) { b.vx *= top / sp; b.vy *= top / sp; }
+  b.x += b.vx * dt; b.y += b.vy * dt;
+  b.rot += b.vx * dt / b.r;
+  if (!M.water && b.y < b.r) {
+    b.y = b.r;
+    if (b.vy < -60) { if (b.vy < -240) S.ev.push(['bounce', b.x]); b.vy *= -M.ballE; } else b.vy = 0;
+    b.vx *= M.fric < 1 ? 0.9995 : 0.985;
+  }
+  if (b.y > S.ceil - b.r) { b.y = S.ceil - b.r; b.vy = -Math.abs(b.vy) * 0.6; }
+  if (b.x < -L + b.r) { b.x = -L + b.r; b.vx = Math.abs(b.vx) * 0.62; }
+  if (b.x > L - b.r) { b.x = L - b.r; b.vx = -Math.abs(b.vx) * 0.62; }
+  /* Goals: a crossbar and roof, or a hoop on a backboard. */
+  for (const side of [-1, 1]) {
+    if (M.hoop) {
+      const rx = side * (L - 74), y = 262;
+      fstatic(S, b, side * (L - 18), 228, side * (L - 18), 340, 5, 0.6);
+      fstatic(S, b, rx - 31, y, rx - 31, y, 3, 0.5);
+      fstatic(S, b, rx + 31, y, rx + 31, y, 3, 0.5);
+    } else {
+      const gx = side * (L - FS.GD), y0 = fgoalY(S, side), y1 = y0 + M.goalH;
+      fstatic(S, b, gx, y1, side * L, y1, 4, 0.5);
+      if (y0 > 4) fstatic(S, b, gx, y0, side * L, y0, 4, 0.5);
+    }
+  }
+  for (const q of M.bumpers || []) {
+    const ex = b.x - q[0], ey = b.y - q[1], R = q[2] + b.r, d2 = ex * ex + ey * ey;
+    if (d2 < R * R) {
+      const d = Math.sqrt(d2) || 0.01, nx = ex / d, ny = ey / d;
+      b.x = q[0] + nx * R; b.y = q[1] + ny * R;
+      const rel = b.vx * nx + b.vy * ny;
+      if (rel < 0) { b.vx -= 2 * rel * nx; b.vy -= 2 * rel * ny; }
+      b.vx += nx * 460; b.vy += ny * 460;
+      S.ev.push(['bumper', q[0], q[1], q[2]]);
+    }
+  }
+}
+function fballHits(S, b) {
+  for (const p of S.ps) {
+    const P = fparts(p), s = p.s;
+    if (Math.abs(b.x - p.x) > 150 * s + b.r || Math.abs(b.y - p.y) > 150 * s + b.r) continue;
+    const body = (x, y) => [p.vx + p.w * (y - p.y), p.vy - p.w * (x - p.x)];
+    fseg(S, b, p, P.hx, P.hy, P.hx, P.hy, P.hr, body, false);
+    fseg(S, b, p, p.x, p.y, P.tx, P.ty, 13 * s, body, false);
+    fseg(S, b, p, p.x, p.y, P.sx, P.sy, 8 * s, body, false);
+    /* The kicking leg's speed comes from its own swing, so timing is everything. */
+    /* Only the forward swing has power. The leg coming back is just a leg. */
+    const fwd = p.face * p.lv > 0, swing = -p.w + p.face * p.lv * (fwd ? 1 : 0.12);
+    fseg(S, b, p, p.x, p.y, P.kx, P.ky, 9 * s, (x, y, t) => {
+      const q = P.L * t;
+      return [p.vx + Math.cos(P.psi) * swing * q, p.vy + Math.sin(P.psi) * swing * q];
+    }, fwd && (p.kick > 0 || Math.abs(p.lv) > 7));
+  }
+}
+function fbodies(S) {
+  for (let i = 0; i < S.ps.length; i++) for (let j = i + 1; j < S.ps.length; j++) {
+    const a = S.ps[i], c = S.ps[j], ay = a.y + 12 * a.s, cy = c.y + 12 * c.s, dx = c.x - a.x, dy = cy - ay, R = 22 * (a.s + c.s), d2 = dx * dx + dy * dy;
+    if (d2 >= R * R || !d2) continue;
+    const d = Math.sqrt(d2), nx = dx / d, ny = dy / d, push = (R - d) * 0.5;
+    a.x -= nx * push; c.x += nx * push;
+    const rel = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;
+    if (rel < 0) {
+      a.vx += rel * nx * 0.7; c.vx -= rel * nx * 0.7;
+      if (a.team !== c.team) { a.w += nx * rel * 0.012; c.w -= nx * rel * 0.012; }
+      if (-rel > 200) S.ev.push(['clash', (a.x + c.x) / 2, (a.y + c.y) / 2]);
+    }
+  }
+}
+/* Returns the team that just scored, or -1. */
+function fscored(S) {
+  const M = S.M, L = FS.W / 2;
+  for (const b of S.bs) {
+    if (M.hoop) {
+      for (const side of [-1, 1]) {
+        const rx = side * (L - 74), py = b.y - b.vy * FS.DT;
+        if (py >= 262 && b.y < 262 && Math.abs(b.x - rx) < 28 && b.vy < 0) return side > 0 ? 0 : 1;
+      }
+      continue;
+    }
+    for (const side of [-1, 1]) {
+      const y0 = fgoalY(S, side), y1 = y0 + M.goalH;
+      /* Big balls can't fit past the line, so theirs counts as soon as the middle of the ball is in. */
+      if (side * b.x > Math.min(L - FS.GD + b.r * 0.5, L - b.r - 1) && b.y > y0 && b.y < y1) return side > 0 ? 0 : 1;
+    }
+  }
+  return -1;
+}
+/* One physics step. Returns the scoring team or -1. */
+function fstep(S) {
+  const dt = FS.DT, M = S.M;
+  S.t += dt;
+  if (M.wind) S.wind = M.wind * Math.sin(S.t * 0.8) * (0.6 + 0.4 * Math.sin(S.t * 2.3));
+  for (const p of S.ps) fstepPlayer(S, p, dt);
+  fbodies(S);
+  for (const b of S.bs) { fstepBall(S, b, dt); fballHits(S, b); }
+  if (M.fuse) {
+    const b = S.bs[0];
+    b.fuse -= dt;
+    if (b.fuse <= 0) {
+      S.ev.push(['boom', b.x, b.y]);
+      for (const p of S.ps) { const d = Math.hypot(p.x - b.x, p.y - b.y) || 1; if (d < 260) { p.vx += (p.x - b.x) / d * 620; p.vy += 420; p.w += (p.x - b.x) / d * 16; } }
+      return b.x < 0 ? 1 : 0;
+    }
+  }
+  const sc = fscored(S);
+  if (sc >= 0) return sc;
+  /* A ball nobody can reach gets a little help. */
+  for (const b of S.bs) {
+    const stuck = (b.y > M.goalH - 4 && Math.abs(b.x) > FS.W / 2 - FS.GD - b.r) || (Math.abs(b.vx) + Math.abs(b.vy) < 8);
+    if (stuck) { S.still += dt; if (S.still > 3.5) { S.still = 0; b.vx = -Math.sign(b.x || 1) * 340; b.vy = 300; S.ev.push(['nudge', b.x, b.y]); } } else if (b === S.bs[0]) S.still = 0;
+  }
+  return -1;
+}
+/* The other team, played by the game. Taps like a person: late sometimes, too keen other times. */
+const F_BOT = { easy: { think: 0.5, reach: 56, idle: 2.4, miss: 0.5, lead: 0 }, normal: { think: 0.2, reach: 96, idle: 1.3, miss: 0.14, lead: 0.12 }, hard: { think: 0.06, reach: 118, idle: 0.95, miss: 0.02, lead: 0.17 } };
+function fbot(S, team, skill, bot, dt) {
+  const B = F_BOT[skill] || F_BOT.normal;
+  bot.wait -= dt;
+  if (bot.wait > 0) return;
+  bot.wait = B.think * (0.7 + Math.random() * 0.6);
+  let press = false, chase = false;
+  for (const p of S.ps) {
+    if (p.team !== team) continue;
+    for (const b of S.bs) {
+      /* Too far from the ball to matter: walking up to it is still worthwhile. */
+      if (p.role === 'S' && Math.abs(b.x - p.x) > 130) chase = true;
+      const lead = B.lead, fx = b.x + b.vx * lead, fy = b.y + b.vy * lead - 0.5 * FS.G * S.M.g * lead * lead, dx = (fx - p.x) * p.dir, dy = fy - p.y;
+      /* Ball in front and within a leg's reach: go. Behind and close: hop after it. */
+      if (dx > -26 && dx < B.reach * p.s && dy < 210 * p.s && dy > -50) press = true;
+      if (!p.ground && Math.abs(fx - p.x) < 62 * p.s && dy > -40 && dy < 150 * p.s) press = true;
+    }
+  }
+  if (press && Math.random() < B.miss) press = false;
+  bot.idle += B.think;
+  if (!press && chase && bot.idle > B.idle * (0.7 + Math.random() * 0.8)) press = true;
+  if (press) { bot.idle = 0; fpress(S, team); }
 }
 
 /* ==========================================================================
@@ -9283,8 +9801,10 @@ function hashStr(s) { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h <
 const rid = (n) => Array.from(crypto.getRandomValues(new Uint8Array(n || 8)), b => 'abcdefghijkmnpqrstuvwxyz23456789'[b % 32]).join('');
 
 /* Table protocol. Bump it whenever the deck or the rules change, so mixed versions never share a table. */
-const PROTO = 2;
+const PROTO = 3;
 const SPIN_MS = 3900;
+/* The middle wheel takes 2.9 seconds, the ring stops 1.75 after that, then the result holds for a moment. */
+const BLANK_MS = 5700;
 
 function encGame(S) {
   let cx = 0;
@@ -9292,7 +9812,7 @@ function encGame(S) {
   return {
     id: S.gid, n: S.n, t: S.turn, d: S.dir, c: S.color, tp: topId(S), ta: S.topAs || 0,
     pd: S.pending ? [S.pending.n, S.pending.from, S.pending.kind] : 0,
-    ph: S.phase, cx, dr: S.drew == null ? -1 : S.drew, w: S.winner, pl: (S.pull || []).map(enc36).join(''),
+    ph: S.phase, cx, dr: S.drew == null ? -1 : S.drew, w: S.winner, pl: (S.pull || []).map(enc36).join(''), bo: (S.boost || []).map(enc36).join(''),
     h: S.hands.map(h => h.map(enc36).join('')),
     dc: S.draw.length, xc: S.discard.length, pv: S.discard.slice(-3, -1),
     ev: S.evs.slice(-10), sq: S.seq, ts: S.tseq, u: S.rules.uniques, st: S.rules.stack ? 1 : 0, bn: S.bonus
@@ -9306,7 +9826,7 @@ function decGame(g) {
   return {
     gid: g.id, n: g.n, turn: g.t, dir: g.d, color: g.c, top: g.tp, topAs: g.ta || null,
     pending: g.pd ? { n: g.pd[0], from: g.pd[1], kind: g.pd[2] } : null,
-    phase: g.ph, ctx, drew: g.dr, winner: g.w, pull: decHand(g.pl || ''),
+    phase: g.ph, ctx, drew: g.dr, winner: g.w, pull: decHand(g.pl || ''), boost: decHand(g.bo || ''),
     hands: g.h.map(decHand), drawCount: g.dc, discardCount: g.xc, prev: g.pv || [],
     evs: g.ev || [], seq: g.sq, tseq: g.ts, deck, rules: { uniques: g.u, stack: !!g.st }, bonus: g.bn || []
   };
@@ -9493,6 +10013,12 @@ class TableHost {
       this.deadline = 0; this.deadlineKey = '';
       return;
     }
+    if (S.phase === 'blank') {
+      const key = S.seq;
+      this.botTimer = setTimeout(() => { if (this.S === S && S.seq === key && S.phase === 'blank') this.act(S.turn, ['b']); }, BLANK_MS);
+      this.deadline = 0; this.deadlineKey = '';
+      return;
+    }
     if (this.isAuto(seat)) {
       let d = S.phase === 'play' ? 850 + Math.random() * 650 : 600 + Math.random() * 300;
       /* Give an opponent's draw time to finish on screen before the next bot moves. */
@@ -9673,7 +10199,7 @@ class TableHost {
       code: this.code, mode: this.mode, ph: this.phase, rd: this.round, r: this.rules, w: this.wager,
       tok: this.readyToken(), mx: this.maxSeats,
       tr: this.tour ? (({ S, ...t }) => Object.assign(t, { hasS: !!S }))(this.tour) : undefined,
-      s: this.seats.map(s => ({ c: s.cid, n: s.name, a: s.av, o: cosStr(s.cos), u: s.u || '', b: s.bot ? DIFF_CODE[s.diff] : 0, x: s.conn ? 1 : 0, u: s.auto ? 1 : 0, e: s.em || 0, r: this.clients[s.cid] && this.clients[s.cid].p.rdy === this.readyToken() ? 1 : 0 })),
+      s: this.seats.map(s => ({ c: s.cid, n: s.name, a: s.av, o: cosStr(s.cos), un: s.u || '', b: s.bot ? DIFF_CODE[s.diff] : 0, x: s.conn ? 1 : 0, u: s.auto ? 1 : 0, e: s.em || 0, r: this.clients[s.cid] && this.clients[s.cid].p.rdy === this.readyToken() ? 1 : 0 })),
       g: this.S ? encGame(this.S) : null,
       res: this.res,
       ack: this.ack,
@@ -10161,6 +10687,9 @@ const Prof = {
     p.weq = Object.assign({}, WAR_DEFAULT_EQ, p.weq || {});
     for (const u of WAR_ORDER) if (!WAR_PAINT[p.weq[u]]) p.weq[u] = 'olive';
     if (!ITEM['wfield:' + p.weq.field]) p.weq.field = 'meadow';
+    p.sstats = Object.assign({ played: 0, wins: 0, streak: 0, best: 0, silverWon: 0, goldWon: 0, potsWon: 0, goals: 0, conceded: 0 }, p.sstats || {});
+    p.spare = p.spare && typeof p.spare === 'object' ? p.spare : {};
+    for (const k of ['listings', 'offersIn', 'offersOut', 'sellWait']) p[k] = Array.isArray(p[k]) ? p[k] : [];
     p.favs = Array.isArray(p.favs) ? p.favs : [];
     p.settings = Object.assign({ sound: 1, quick: 0, vib: 1, sort: 1, emoVol: 90, theme: 'cafe' }, p.settings || {});
     p.friends = Array.isArray(p.friends) ? p.friends : [];
@@ -10291,7 +10820,7 @@ const Prof = {
     return e;
   },
   forfeit(gid, game) {
-    const P = this.P, st = game === 'war' ? P.wstats : P.stats;
+    const P = this.P, st = game === 'war' ? P.wstats : game === 'soccer' ? P.sstats : P.stats;
     if (P.escrow && P.escrow.gid === gid) P.escrow = null;
     if (!P.settled.includes(gid)) { P.settled.push(gid); st.played++; st.streak = 0; }
     this.save();
@@ -10299,7 +10828,7 @@ const Prof = {
   settle(res, seat) {
     const P = this.P;
     if (!res || seat < 0 || P.settled.includes(res.gid)) return null;
-    const won = res.w === seat, st = res.game === 'war' ? P.wstats : P.stats;
+    const won = res.w === seat, st = res.game === 'war' ? P.wstats : res.game === 'soccer' ? P.sstats : P.stats;
     const R = REWARDS[res.rmode] || REWARDS.bots;
     let [s, g] = won ? R.win : R.lose;
     st.played++;
@@ -10408,9 +10937,25 @@ const Cloud = {
     if (!r.ok) return false;
     this.world = {};
     for (const d of r.j.documents || []) this.world[d.name.split('/').pop()] = this.parseDoc(d);
+    this.repairWorld();
     const P = Prof.P, it = P && ITEM['title:' + P.eq.title];
     if (it && it.world && !this.ownsWorld(it.id)) { P.eq.title = 'rookie'; Prof.save(); }
     return true;
+  },
+  /* Puts right titles an older build wrote to a display name, and locks left by finished tournaments. */
+  async repairWorld() {
+    const me = this.me(), P = Prof.P;
+    if (!me || !this.acct || !P) return;
+    for (const [id, w] of Object.entries(this.world)) {
+      const mine = w.k === me.toLowerCase();
+      if (!mine && w.k === String(P.name).toLowerCase()) {
+        const taken = await this.docs(['names/' + w.k]);
+        if (taken && !taken[w.k]) { await this.setWorld(id, me); if (app.screen === 'shop' || app.screen === 'tour') render(); }
+      } else if (mine && w.lk) {
+        const t = await this.tourGet(w.lk);
+        if (!t || t.st === 'done') { await this.setWorld(id, me); if (app.screen === 'tour') render(); }
+      }
+    }
   },
   worldBody(name, code) { return JSON.stringify({ fields: { n: { stringValue: name }, k: { stringValue: name.toLowerCase() }, lk: { stringValue: code || '' }, at: { integerValue: String(Date.now()) } } }); },
   async claimWorld(id) {
@@ -10438,10 +10983,11 @@ const Cloud = {
   pushBoard() {
     const P = Prof.P;
     if (!this.acct || !P) return;
-    const k = [P.stats.wins, P.stats.played, P.wstats.wins, P.wstats.played, P.avatar, P.eq.title].join('|');
+    const lv = Season.info().lv, gp = Season.s.gold ? 1 : 0;
+    const k = [P.stats.wins, P.stats.played, P.wstats.wins, P.wstats.played, P.sstats.wins, P.sstats.played, P.avatar, P.eq.title, P.silver, P.gold, lv, gp].join('|');
     if (k === this.boardKey) return;
     const name = this.acct.name, S = s => ({ stringValue: String(s) }), I = n => ({ integerValue: String(n) });
-    this.req('board/' + name.toLowerCase(), { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { n: S(name), w: I(P.stats.wins), p: I(P.stats.played), ww: I(P.wstats.wins), wp: I(P.wstats.played), a: S(P.avatar), t: S(P.eq.title) } }) })
+    this.req('board/' + name.toLowerCase(), { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { n: S(name), w: I(P.stats.wins), p: I(P.stats.played), ww: I(P.wstats.wins), wp: I(P.wstats.played), sw: I(P.sstats.wins), sp: I(P.sstats.played), sv: I(P.silver), gd: I(P.gold), lv: I(lv), gp: I(gp), a: S(P.avatar), t: S(P.eq.title) } }) })
       .then(r => { if (r.ok) this.boardKey = k; }).catch(() => {});
   },
   /* Everyone with an account, most wins first. Accounts that haven't played since the board opened start at 0. */
@@ -10492,6 +11038,28 @@ const Cloud = {
   mailSend(k, o) {
     return this.req(`mail/${k}/box/${rid(12)}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { j: { stringValue: JSON.stringify(o) } } }) }).catch(() => null);
   },
+  /* A shared box: a listing is created once, read by everyone, and claimed by deleting it. */
+  async boxPut(box, id, o) {
+    const r = await this.req(`mail/${box}/box/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { j: { stringValue: JSON.stringify(o) } } }) }, '&currentDocument.exists=false').catch(() => null);
+    return !!(r && r.ok);
+  },
+  /* Only one person can ever get a true back from this. */
+  async boxTake(box, id) {
+    const r = await this.req(`mail/${box}/box/${id}`, { method: 'DELETE' }, '&currentDocument.exists=true').catch(() => null);
+    return !!(r && r.ok);
+  },
+  async boxList(box) {
+    const out = [];
+    let tok = '';
+    for (let page = 0; page < 5; page++) {
+      const r = await this.req(`mail/${box}/box`, { method: 'GET' }, '&pageSize=300' + (tok ? '&pageToken=' + encodeURIComponent(tok) : '')).catch(() => null);
+      if (!r || !r.ok) return page ? out : null;
+      for (const d of r.j.documents || []) { try { out.push(Object.assign(JSON.parse(this.parseDoc(d).j), { id: d.name.split('/').pop() })); } catch (e) { /* not a listing */ } }
+      tok = r.j.nextPageToken;
+      if (!tok) break;
+    }
+    return out;
+  },
   async mailList(k) {
     const r = await this.req(`mail/${k}/box`, { method: 'GET' }).catch(() => null);
     if (!r || !r.ok) return [];
@@ -10541,7 +11109,7 @@ function timeAgo(ms) {
   return m < 1 ? 'just now' : m < 60 ? say(m, 'minute') : h < 24 ? say(h, 'hour') : say(d, 'day');
 }
 const Friends = {
-  live: {}, started: false, lastBeat: 0, lastLive: 0, inbox: [],
+  live: {}, boards: {}, started: false, lastBeat: 0, lastLive: 0, inbox: [],
   key: () => (Cloud.me() || '').toLowerCase(),
   list: () => (Prof.P ? Prof.P.friends : []),
   isOn(f) { const l = this.live[f.k]; return !!(l && Date.now() - l.at < ONLINE_MS); },
@@ -10571,29 +11139,33 @@ const Friends = {
   beat() {
     if (!this.key()) return;
     this.lastBeat = Date.now();
-    Cloud.liveSet(this.key(), { n: Cloud.me(), id: Prof.P.fid || '', a: Prof.P.avatar, st: app.screen === 'game' || app.screen === 'wgame' ? 'game' : 'menu', c: JSON.stringify(this.card()) });
+    Cloud.liveSet(this.key(), { n: Cloud.me(), id: Prof.P.fid || '', a: Prof.P.avatar, st: app.screen === 'game' || app.screen === 'wgame' || app.screen === 'sgame' ? 'game' : 'menu', c: JSON.stringify(this.card()) });
   },
   /* What a friend sees when they open your Player Card. It rides along with the heartbeat. */
   card() {
-    const P = Prof.P, s = P.stats, w = P.wstats;
-    return { s: P.silver, g: P.gold, eq: P.eq, st: [s.played, s.wins, s.best, s.silverWon, s.tours], wt: [w.played, w.wins, w.best, w.dealt, w.crushed], we: P.weq };
+    const P = Prof.P, s = P.stats, w = P.wstats, f = P.sstats;
+    return { s: P.silver, g: P.gold, eq: P.eq, st: [s.played, s.wins, s.best, s.silverWon, s.tours], wt: [w.played, w.wins, w.best, w.dealt, w.crushed], ft: [f.played, f.wins, f.best, f.goals], we: P.weq, lv: Season.info().lv, gp: Season.s.gold ? 1 : 0 };
   },
   /* Turns what a friend published back into something the Player Card can show. */
   cardOf(f) {
-    const l = this.live[f.k] || {};
+    const l = this.live[f.k] || {}, b = this.boards[f.k] || {};
     let c = null;
     try { c = l.c ? JSON.parse(l.c) : null; } catch (e) { c = null; }
-    const st = (c && c.st) || [], wt = (c && c.wt) || [];
+    const st = (c && c.st) || [], wt = (c && c.wt) || [], ft = (c && c.ft) || [];
+    /* The leaderboard row covers anyone whose game hasn't sent a full card yet. */
+    const big = (a, x) => Math.max(a | 0, +x || 0), sv = c ? c.s : b.sv, gd = c ? c.g : b.gd, known = c || b.sv != null;
     const eq = Object.assign({}, DEFAULT_EQ, (c && c.eq) || {});
     for (const k of Object.keys(DEFAULT_EQ)) if (!ITEM[k + ':' + eq[k]]) eq[k] = DEFAULT_EQ[k];
     const weq = Object.assign({}, WAR_DEFAULT_EQ, (c && c.we) || {});
     for (const u of WAR_ORDER) if (!WAR_PAINT[weq[u]]) weq[u] = 'olive';
     if (!ITEM['wfield:' + weq.field]) weq.field = 'meadow';
     return {
-      name: f.n, avatar: CAT_BY_ID[l.a || f.a] ? l.a || f.a : 'mochi', fid: f.id || l.id || '', eq, weq, fresh: !!c,
-      silver: c ? c.s | 0 : null, gold: c ? c.g | 0 : null, at: l.at || 0,
-      stats: { played: st[0] | 0, wins: st[1] | 0, best: st[2] | 0, silverWon: st[3] | 0, tours: st[4] | 0 },
-      wstats: { played: wt[0] | 0, wins: wt[1] | 0, best: wt[2] | 0, dealt: wt[3] | 0, crushed: wt[4] | 0 }
+      name: f.n, avatar: CAT_BY_ID[l.a || f.a] ? l.a || f.a : 'mochi', fid: f.id || l.id || '', eq, weq, fresh: !!known,
+      silver: known ? Math.floor(+sv || 0) : null, gold: known ? Math.floor(+gd || 0) : null, at: l.at || 0,
+      pass: { lv: big(c && c.lv, b.lv), gold: !!((c && c.gp) || +b.gp) },
+      stats: { played: big(st[0], b.p), wins: big(st[1], b.w), best: st[2] | 0, silverWon: st[3] | 0, tours: st[4] | 0 },
+      wstats: { played: big(wt[0], b.wp), wins: big(wt[1], b.ww), best: wt[2] | 0, dealt: wt[3] | 0, crushed: wt[4] | 0 },
+      sstats: { played: big(ft[0], b.sp), wins: big(ft[1], b.sw), best: ft[2] | 0, goals: ft[3] | 0 }
     };
   },
   async refresh() {
@@ -10648,11 +11220,12 @@ const Friends = {
           this.refresh();
         }
       } else if (m.t === 'invite' && Date.now() - (m.at || 0) < INVITE_MS) this.inbox.push(m);
+      else if (String(m.t).startsWith('mk_')) Market.onMail(m);
     }
     this.nextInvite();
   },
   nextInvite() {
-    if (!this.inbox.length || !$('#modal').hidden || app.screen === 'game' || app.screen === 'wgame' || app.screen === 'crate' || app.host || app.client || WarNet.ch) return;
+    if (!this.inbox.length || !$('#modal').hidden || app.screen === 'game' || app.screen === 'wgame' || app.screen === 'sgame' || app.screen === 'crate' || app.host || app.client || WarNet.ch) return;
     const m = this.inbox.shift();
     if (Date.now() - m.at > INVITE_MS) { this.nextInvite(); return; }
     app.invite = m;
@@ -10696,7 +11269,7 @@ function viewFriendCard() {
   if (!f) return viewFriends();
   const d = PlayerCard.who = Friends.cardOf(f), on = Friends.isOn(f);
   const coinRow = d.fresh ? `<div class="fc-coins"><div>${coin('s')}<span><b>${thousands(d.silver)}</b><small>Silver</small></span></div><div>${coin('g')}<span><b>${thousands(d.gold)}</b><small>Gold</small></span></div></div>
-    <p class="fc-when">${on ? 'Right now' : d.at ? 'As of ' + esc(timeAgo(Date.now() - d.at)) : ''}</p>` : `<p class="hint tc">${esc(f.n)} needs to open the latest version of the game before their card and coins show up here.</p>`;
+    <p class="fc-when">${on ? 'Right now' : d.at ? 'As of ' + esc(timeAgo(Date.now() - d.at)) : ''}</p>` : `<p class="hint tc">${esc(f.n)}’s coins show up here once they open version ${APP_VERSION} or later.</p>`;
   return `<main class="scr profile fcard">${topbar(esc(f.n), 'friends')}
     <nav class="gameswitch" role="tablist" aria-label="Show stats for">${GAMES.map(g => `<button role="tab" aria-selected="${PlayerCard.game() === g.id}" class="${PlayerCard.game() === g.id ? 'on' : ''}" data-a="pcgame" data-v="${g.id}">${esc(g.name)}</button>`).join('')}</nav>
     ${coinRow}
@@ -10767,7 +11340,8 @@ const Tour = {
     if (tr.st === 'done') this.finish(T, me);
   },
   finish(T, me) {
-    const tr = T.tr, won = tr.w === me, wname = T.s[tr.w].u || T.s[tr.w].n;
+    /* Always the account name: a title written to a display name belongs to nobody. */
+    const tr = T.tr, won = tr.w === me, wname = (tr.w === 0 ? tr.a : tr.b) || T.s[tr.w].un || T.s[tr.w].n;
     this.pay(tr, won);
     if (app.isHost) {
       Cloud.tourSet(tr.id, { st: 'done', sc: tr.sc, w: wname });
@@ -11218,6 +11792,14 @@ const Sound = {
     try {
       switch (name) {
         case 'card': this.swish({ f0: 1900, f1: 950, dur: 0.075, vol: 0.2, hp: 600 }); this.tone(150, 0.05, 0.025); break;
+        case 'sjump': this.tone(260, 0.09, 0.05, 0, 'triangle'); this.tone(420, 0.08, 0.04, 0.03, 'triangle'); break;
+        case 'skick': this.tone(170, 0.09, 0.2); this.swish({ f0: 900, f1: 300, dur: 0.07, vol: 0.14, hp: 120 }); break;
+        case 'sbump': this.tone(210, 0.06, 0.07); break;
+        case 'sland': this.tone(110, 0.08, 0.09); break;
+        case 'spost': this.tone(1320, 0.18, 0.06); this.tone(1980, 0.14, 0.03); this.tone(240, 0.06, 0.08); break;
+        case 'swhistle': this.tone(2300, 0.16, 0.05, 0, 'square'); this.tone(2460, 0.16, 0.04, 0, 'square'); break;
+        case 'sgoal': this.swish({ f0: 500, f1: 1500, q: 0.5, dur: 1.5, vol: 0.2, att: 0.3, hp: 200 }); [523, 659, 784, 1047].forEach((f, i) => this.bell(f, 0.06, i * 0.09)); break;
+        case 'sconcede': this.swish({ f0: 700, f1: 300, q: 0.5, dur: 0.9, vol: 0.13, att: 0.1, hp: 120 }); this.tone(196, 0.4, 0.06, 0.1, 'triangle'); break;
         case 'special': this.swish({ f0: 1900, f1: 950, dur: 0.075, vol: 0.2, hp: 600 }); this.bell(784, 0.02, 0.05); break;
         case 'draw': for (let i = 0; i < (n || 1); i++) this.swish({ f0: 900, f1: 2600, q: 0.7, dur: 0.11, vol: 0.08, att: 0.03, hp: 400, when: i * 0.09 }); break;
         case 'deal': for (let i = 0; i < 6; i++) this.swish({ f0: 1100, f1: 2800, q: 0.7, dur: 0.09, vol: 0.06, att: 0.02, hp: 500, when: i * 0.075 }); break;
@@ -11475,13 +12057,288 @@ const VSND = (() => {
 })();
 
 /* ==========================================================================
+   The Marketplace: players sell crate duplicates to each other. There's no
+   server of our own, so it runs on small Firestore documents:
+     mail/mkt.world/box/<id>   every listing, readable by everyone
+     mail/<name>/box/<msg>     sold notices, offers and replies
+   A listing is claimed by deleting it with an "it must still exist" check, so
+   only one buyer can ever win it. Coins for an offer are held on the buyer's
+   phone until the seller answers, and the seller is paid from that hold.
+   ========================================================================== */
+const MARKET_BOX = 'mkt.world', MARKET_MAX = 20, MARKET_OFFERS = 10, MARKET_TOP = 100000000;
+const MARKET_CATS = [['all', 'All'], ['card', 'Cards'], ['war', 'War'], ['emote', 'Emotes'], ['avatar', 'Avatars'], ['style', 'Style']];
+const marketCat = it => (it.cat === 'card' ? 'card' : ['wskin', 'wfield', 'relic'].includes(it.cat) ? 'war' : it.cat === 'emote' ? 'emote' : it.cat === 'avatar' ? 'avatar' : 'style');
+const itemName = it => it.name || it.t || '';
+
+const Market = {
+  rows: [], loaded: 0, busy: false, tab: 'browse', cat: 'all', cur: 's', err: '',
+  spare(key) { return (Prof.P.spare[key] | 0); },
+  listing(key) { return Prof.P.listings.find(l => l.key === key) || null; },
+  have(key) { const it = ITEM[key]; return it && it.cat === 'avatar' ? Prof.ownsCat(it.id) : Prof.owns(key); },
+  /* One spare of each item, counting one that's already on sale. Past that it's silver. */
+  canKeep(key) { return !!Cloud.me() && !this.spare(key) && !this.listing(key); },
+  keep(key) { Prof.P.spare[key] = 1; },
+  /* Puts a bought item in your collection, wherever it fits. */
+  grant(key) {
+    const P = Prof.P, it = ITEM[key];
+    if (!it) return;
+    if (this.have(key)) { if (this.canKeep(key)) this.keep(key); else P.silver += CRATE_REPEAT; return; }
+    P.owned.push(key);
+    if (it.cat === 'emote' && P.emo.length < EMOTE_SLOTS && !P.emo.includes(it.id)) P.emo.push(it.id);
+  },
+  changed() { Prof.save(); if (typeof profileChanged === 'function') profileChanged(); $$('.coins').forEach(el => { el.outerHTML = coinsBar(); }); },
+  async load(force) {
+    if (!force && Date.now() - this.loaded < 20000) return;
+    const list = await Cloud.boxList(MARKET_BOX);
+    if (!list) { this.err = 'Couldn’t reach the Marketplace. Check your connection.'; if (app.screen === 'market') render(); return; }
+    this.err = '';
+    this.loaded = Date.now();
+    this.rows = list.filter(r => ITEM[r.key] && r.price > 0 && (r.cur === 's' || r.cur === 'g') && r.sk).sort((a, b) => (b.at || 0) - (a.at || 0));
+    if (app.screen === 'market' && $('#modal').hidden) render();
+  },
+  async list(key, cur, price) {
+    const P = Prof.P;
+    if (P.listings.length >= MARKET_MAX) { toast(`All ${MARKET_MAX} of your slots are full. Take one down first.`, 'bad'); return false; }
+    if (!this.spare(key) || this.listing(key) || this.busy) return false;
+    this.busy = true;
+    const row = { id: 'l' + rid(14), key, cur, price, s: Cloud.me(), sk: Friends.key(), a: P.avatar, at: Date.now() };
+    const ok = await Cloud.boxPut(MARKET_BOX, row.id, row);
+    this.busy = false;
+    if (!ok) { toast('Couldn’t reach the Marketplace. Try again in a moment.', 'bad'); return false; }
+    delete P.spare[key];
+    P.listings.push(row);
+    this.rows.unshift(row);
+    this.changed();
+    return true;
+  },
+  /* Declines everyone still waiting on a listing that's gone. */
+  closeOffers(lid, keep) {
+    const P = Prof.P;
+    for (const o of P.offersIn.filter(x => x.lid === lid && x.oid !== keep)) Cloud.mailSend(o.fk, { t: 'mk_no', oid: o.oid });
+    P.offersIn = P.offersIn.filter(x => x.lid !== lid);
+  },
+  async takeDown(lid) {
+    const P = Prof.P, l = P.listings.find(x => x.id === lid);
+    if (!l || this.busy) return;
+    this.busy = true;
+    const ok = await Cloud.boxTake(MARKET_BOX, lid);
+    this.busy = false;
+    if (!ok) { toast('It just sold. Your coins are on the way.', 'good'); return; }
+    P.listings = P.listings.filter(x => x.id !== lid);
+    this.rows = this.rows.filter(x => x.id !== lid);
+    this.closeOffers(lid);
+    P.spare[l.key] = 1;
+    this.changed();
+    toast(`${esc(itemName(ITEM[l.key]))} is back in your Owned tab as x2`, 'good');
+    render();
+  },
+  async buy(id) {
+    const r = this.rows.find(x => x.id === id), P = Prof.P;
+    if (!r || this.busy) return;
+    if (r.sk === Friends.key()) return;
+    if (Prof.bal(r.cur) < r.price) { toast(`You need ${coin(r.cur)}<b>${thousands(r.price - Prof.bal(r.cur))}</b> more.`, 'bad'); return; }
+    if (this.have(r.key)) { toast('You already own this.', 'bad'); return; }
+    this.busy = true;
+    const ok = await Cloud.boxTake(MARKET_BOX, id);
+    this.busy = false;
+    this.rows = this.rows.filter(x => x.id !== id);
+    closeSheet();
+    if (!ok) { toast('Someone else just bought it.', 'bad'); render(); return; }
+    Prof.add(r.cur, -r.price);
+    this.grant(r.key);
+    /* Anything you offered on this one comes back. */
+    const mine = P.offersOut.find(o => o.lid === id);
+    if (mine) { Prof.add(mine.cur, mine.amt); P.offersOut = P.offersOut.filter(o => o !== mine); }
+    this.changed();
+    Cloud.mailSend(r.sk, { t: 'mk_sold', lid: id, by: Cloud.me() });
+    Sound.play('coin');
+    toast(`${esc(itemName(ITEM[r.key]))} is yours!`, 'good');
+    render();
+  },
+  offer(id, amt) {
+    const r = this.rows.find(x => x.id === id), P = Prof.P;
+    if (!r || !(amt > 0)) return;
+    if (amt >= r.price) { toast('That’s the full price. Tap Buy now.', 'bad'); return; }
+    if (P.offersOut.length >= MARKET_OFFERS) { toast(`You can have ${MARKET_OFFERS} offers open at once.`, 'bad'); return; }
+    if (P.offersOut.some(o => o.lid === id)) { toast('You already have an offer on this.', 'bad'); return; }
+    if (Prof.bal(r.cur) < amt) { toast('You don’t have that many coins.', 'bad'); return; }
+    const oid = 'o' + rid(12);
+    Prof.add(r.cur, -amt);
+    P.offersOut.push({ oid, lid: id, key: r.key, cur: r.cur, amt, s: r.s, sk: r.sk, at: Date.now() });
+    this.changed();
+    Cloud.mailSend(r.sk, { t: 'mk_offer', oid, lid: id, amt, from: Cloud.me(), fk: Friends.key() });
+    closeSheet();
+    toast(`Offer sent. ${coin(r.cur)}<b>${thousands(amt)}</b> is held until ${esc(r.s)} answers.`, 'good');
+    render();
+  },
+  cancelOffer(oid) {
+    const P = Prof.P, o = P.offersOut.find(x => x.oid === oid);
+    if (!o) return;
+    Prof.add(o.cur, o.amt);
+    P.offersOut = P.offersOut.filter(x => x !== o);
+    this.changed();
+    Cloud.mailSend(o.sk, { t: 'mk_cancel', oid });
+    render();
+  },
+  async accept(oid) {
+    const P = Prof.P, o = P.offersIn.find(x => x.oid === oid), l = o && P.listings.find(x => x.id === o.lid);
+    if (!l || this.busy) return;
+    this.busy = true;
+    const ok = await Cloud.boxTake(MARKET_BOX, l.id);
+    this.busy = false;
+    if (!ok) { toast('It just sold to someone else.', 'bad'); return; }
+    P.listings = P.listings.filter(x => x !== l);
+    this.rows = this.rows.filter(x => x.id !== l.id);
+    this.closeOffers(l.id, oid);
+    /* You're paid out of the buyer's hold as soon as their game picks this up. */
+    P.sellWait.push({ oid, key: l.key, cur: l.cur, amt: o.amt, from: o.from, at: Date.now() });
+    this.changed();
+    Cloud.mailSend(o.fk, { t: 'mk_yes', oid, by: Cloud.me() });
+    toast(`Sold to ${esc(o.from)}. Your coins arrive when their game confirms.`, 'good');
+    render();
+  },
+  decline(oid) {
+    const P = Prof.P, o = P.offersIn.find(x => x.oid === oid);
+    if (!o) return;
+    P.offersIn = P.offersIn.filter(x => x !== o);
+    Prof.save();
+    Cloud.mailSend(o.fk, { t: 'mk_no', oid });
+    render();
+  },
+  /* What arrives in your mailbox. Amounts always come from your own records, never from the message. */
+  onMail(m) {
+    const P = Prof.P;
+    if (m.t === 'mk_sold') {
+      const l = P.listings.find(x => x.id === m.lid);
+      if (!l) return;
+      P.listings = P.listings.filter(x => x !== l);
+      this.closeOffers(l.id);
+      Prof.add(l.cur, l.price);
+      toast(`${esc(m.by || 'Someone')} bought ${esc(itemName(ITEM[l.key]))}: ${coin(l.cur)}<b>+${thousands(l.price)}</b>`, 'good');
+      Sound.play('coin');
+    } else if (m.t === 'mk_offer') {
+      const l = P.listings.find(x => x.id === m.lid), amt = Math.floor(+m.amt) || 0;
+      if (!l || amt <= 0 || !m.fk) { if (m.fk) Cloud.mailSend(m.fk, { t: 'mk_no', oid: m.oid }); return; }
+      P.offersIn.push({ oid: m.oid, lid: l.id, amt, from: m.from, fk: m.fk, at: Date.now() });
+      toast(`${esc(m.from)} offered ${coin(l.cur)}<b>${thousands(amt)}</b> for ${esc(itemName(ITEM[l.key]))}`, 'good');
+    } else if (m.t === 'mk_cancel') {
+      P.offersIn = P.offersIn.filter(x => x.oid !== m.oid);
+    } else if (m.t === 'mk_yes') {
+      const o = P.offersOut.find(x => x.oid === m.oid);
+      if (!o) { if (m.by) Cloud.mailSend(m.by.toLowerCase(), { t: 'mk_back', oid: m.oid }); return; }
+      P.offersOut = P.offersOut.filter(x => x !== o);
+      this.grant(o.key);
+      Cloud.mailSend(o.sk, { t: 'mk_paid', oid: o.oid });
+      toast(`${esc(o.s)} accepted! ${esc(itemName(ITEM[o.key]))} is yours.`, 'good');
+      Sound.play('coin');
+    } else if (m.t === 'mk_no') {
+      const o = P.offersOut.find(x => x.oid === m.oid);
+      if (!o) return;
+      P.offersOut = P.offersOut.filter(x => x !== o);
+      Prof.add(o.cur, o.amt);
+      toast(`Your offer on ${esc(itemName(ITEM[o.key]))} wasn’t taken. ${coin(o.cur)}<b>${thousands(o.amt)}</b> came back.`);
+    } else if (m.t === 'mk_paid') {
+      const w = P.sellWait.find(x => x.oid === m.oid);
+      if (!w) return;
+      P.sellWait = P.sellWait.filter(x => x !== w);
+      Prof.add(w.cur, w.amt);
+      toast(`${esc(w.from)} paid ${coin(w.cur)}<b>+${thousands(w.amt)}</b>`, 'good');
+      Sound.play('coin');
+    } else if (m.t === 'mk_back') {
+      const w = P.sellWait.find(x => x.oid === m.oid);
+      if (!w) return;
+      P.sellWait = P.sellWait.filter(x => x !== w);
+      if (this.canKeep(w.key)) this.keep(w.key); else P.silver += CRATE_REPEAT;
+      toast(`${esc(w.from)} had pulled their offer, so ${esc(itemName(ITEM[w.key]))} came back to you.`);
+    } else return;
+    this.changed();
+    if (app.screen === 'market' && $('#modal').hidden) render();
+  }
+};
+
+/* ---------- screens ---------- */
+function marketCard(r) {
+  const it = ITEM[r.key], mine = r.sk === Friends.key();
+  return `<button class="item r-${it.r}" data-a="mkopen" data-v="${esc(r.id)}"><div class="pv lazy" data-pv="${it.key}"></div><span class="it-n">${esc(itemName(it))}</span><span class="it-p"><i class="mkprice">${coin(r.cur)}${fmt(r.price)}</i></span><span class="mkby">${mine ? 'Your listing' : esc(r.s)}</span><span class="rar">${CRATE_CAT[it.cat] || RARITY[it.r]}</span></button>`;
+}
+function marketRow(key, body, right) {
+  const it = ITEM[key];
+  return `<div class="mkrow r-${it ? it.r : 'common'}"><div class="mkart"><div class="pv lazy" data-pv="${esc(key)}"></div></div><div class="mktxt"><b>${esc(it ? itemName(it) : key)}</b>${body}</div>${right || ''}</div>`;
+}
+function viewMarket() {
+  const P = Prof.P, t = Market.tab;
+  if (!Cloud.me()) return `<main class="scr market">${topbar('Marketplace', 'shop')}<section class="card-sec"><h3>The Marketplace needs an account</h3><p>Make a username and PIN to buy and sell with players around the world.</p><button class="btn primary" data-a="acctsheet">Log in or create account</button></section></main>`;
+  const inN = P.offersIn.length, spares = Object.keys(P.spare).filter(k => P.spare[k] && ITEM[k]);
+  const tabs = [['browse', 'Browse'], ['sell', `Selling${inN ? ` (${inN})` : ''}`], ['offers', `My offers${P.offersOut.length ? ' ' + P.offersOut.length : ''}`]];
+  let body = '';
+  if (t === 'browse') {
+    const rows = Market.rows.filter(r => Market.cat === 'all' || marketCat(ITEM[r.key]) === Market.cat);
+    body = `<nav class="subtabs" role="tablist">${MARKET_CATS.map(([k, l]) => `<button role="tab" aria-selected="${k === Market.cat}" class="${k === Market.cat ? 'on' : ''}" data-a="mkcat" data-v="${k}">${l}</button>`).join('')}</nav>
+      ${Market.err ? `<p class="warnline">${esc(Market.err)}</p>` : ''}
+      ${rows.length ? `<section class="grid g-market">${rows.map(marketCard).join('')}</section>` : `<p class="hint tc">${Market.loaded ? 'Nothing for sale here yet. Duplicates from crates can be sold here.' : 'Looking around the market…'}</p>`}
+      <button class="btn ghost" data-a="mkreload">Refresh</button>`;
+  } else if (t === 'sell') {
+    body = `${P.sellWait.length ? `<section class="card-sec"><h3>Waiting for payment</h3>${P.sellWait.map(w => marketRow(w.key, `<small>Sold to ${esc(w.from)} for ${coin(w.cur)}${thousands(w.amt)}</small>`)).join('')}</section>` : ''}
+      <section class="card-sec"><h3>On sale <small>${P.listings.length} of ${MARKET_MAX}</small></h3>${P.listings.length ? P.listings.map(l => {
+        const offers = P.offersIn.filter(o => o.lid === l.id);
+        return marketRow(l.key, `<small>Asking ${coin(l.cur)}${thousands(l.price)}</small>`, `<button class="btn sm ghost" data-a="mkdown" data-v="${esc(l.id)}">Take down</button>`) + offers.map(o => `<div class="mkoffer"><span><b>${esc(o.from)}</b> offers ${coin(l.cur)}<b>${thousands(o.amt)}</b></span><button class="btn sm ghost" data-a="mkno" data-v="${esc(o.oid)}">Decline</button><button class="btn sm primary" data-a="mkyes" data-v="${esc(o.oid)}">Accept</button></div>`).join('');
+      }).join('') : '<p class="hint">Nothing on sale yet.</p>'}</section>
+      <section class="card-sec"><h3>Ready to sell</h3>${spares.length ? spares.map(k => marketRow(k, '<small>x2 in your Owned tab</small>', `<button class="btn sm primary" data-a="mksell" data-v="${esc(k)}">Sell</button>`)).join('') : '<p class="hint">Get a duplicate from a crate and it waits here as x2.</p>'}</section>`;
+  } else {
+    body = `<section class="card-sec"><h3>Waiting for an answer</h3>${P.offersOut.length ? P.offersOut.map(o => marketRow(o.key, `<small>${coin(o.cur)}${thousands(o.amt)} held · seller ${esc(o.s)}</small>`, `<button class="btn sm ghost" data-a="mkcancel" data-v="${esc(o.oid)}">Cancel</button>`)).join('') : '<p class="hint">Your offers show up here. The coins are held until the seller answers, and come back if they say no.</p>'}</section>`;
+  }
+  return `<main class="scr market">${topbar('Marketplace', 'shop')}
+    <nav class="gameswitch" role="tablist">${tabs.map(([k, l]) => `<button role="tab" aria-selected="${k === t}" class="${k === t ? 'on' : ''}" data-a="mktab" data-v="${k}">${l}</button>`).join('')}</nav>
+    ${body}
+  </main>`;
+}
+function marketSheet(id) {
+  const r = Market.rows.find(x => x.id === id), it = r && ITEM[r.key];
+  if (!it) return;
+  const mine = r.sk === Friends.key(), have = Market.have(r.key), ok = Prof.bal(r.cur) >= r.price, offered = Prof.P.offersOut.some(o => o.lid === id);
+  sheet(`<div class="itemsheet r-${it.r}"><button class="iconbtn close" data-a="closesheet" aria-label="Close">${UI_ICON.x}</button>
+    ${itemPreview(it, it.cat === 'wskin' ? false : it.cat === 'wfield' ? 'mid' : true)}
+    <span class="rar">${RARITY[it.r]}</span><h3>${esc(itemName(it))}</h3><p>Sold by <b>${esc(r.s)}</b></p>
+    ${it.snd ? `<button class="btn ghost" data-a="emoplay" data-v="${it.id}">${UI_ICON.sound} Play sound</button>` : ''}
+    ${mine ? '<button class="btn big ghost" disabled>This is your listing</button>' : have ? '<button class="btn big ghost" disabled>You already own this</button>' : `
+      <button class="btn big primary" data-a="mkbuy" data-v="${esc(id)}"${ok ? '' : ' disabled'}>${ok ? `Buy now ${coin(r.cur)}${thousands(r.price)}` : `Need ${coin(r.cur)}${thousands(r.price - Prof.bal(r.cur))} more`}</button>
+      ${offered ? '<p class="hint tc">You have an offer waiting on this one.</p>' : `<div class="joinrow mkbid"><input id="mkamt" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Your offer" aria-label="Your offer">${coin(r.cur)}<button class="btn primary" data-a="mkoffer" data-v="${esc(id)}">Offer</button></div>`}`}
+  </div>`, 'shopsheet');
+}
+function marketSell(key) {
+  const it = ITEM[key];
+  if (!it) return;
+  const full = Prof.P.listings.length >= MARKET_MAX;
+  sheet(`<div class="itemsheet r-${it.r}"><button class="iconbtn close" data-a="closesheet" aria-label="Close">${UI_ICON.x}</button>
+    ${itemPreview(it, it.cat === 'wskin' ? false : it.cat === 'wfield' ? 'mid' : true)}
+    <span class="rar">${RARITY[it.r]}</span><h3>Sell ${esc(itemName(it))}</h3>
+    ${full ? `<p class="warnline">All ${MARKET_MAX} of your slots are full. Take something down to free one up.</p>` : `<p>Players around the world can buy it at your price or send you an offer.</p>
+    <div class="row mkcur"><span>Ask for</span><div class="seg"><button class="${Market.cur === 's' ? 'on' : ''}" data-a="mkcur" data-v="s">Silver</button><button class="${Market.cur === 'g' ? 'on' : ''}" data-a="mkcur" data-v="g">Gold</button></div></div>
+    <input class="mkprice-in" id="mkprice" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="Your price" aria-label="Your price">
+    <button class="btn big primary" data-a="mklist" data-v="${esc(key)}">Put it on the Marketplace</button>`}
+    <button class="btn ghost" data-a="mkhouse" data-v="${esc(key)}">Sell to the house for ${coin('s')}${thousands(CRATE_REPEAT)}</button>
+  </div>`, 'shopsheet');
+}
+
+/* ==========================================================================
    Prize wheels: the Mystery card's wheel at the table and the Lucky Wheel
    in the shop. Both are SVG wheels spun with requestAnimationFrame.
    ========================================================================== */
 const MYSTERY_SLICES = WHEEL.map((w, i) => Object.assign({}, w, {
-  color: ['#3f7cf5', '#f2a31b', '#e5484d', '#454857', '#26a866', '#8b5cf6', '#d6336c', '#454857'][i],
-  lines: { me1: ['You', 'draw 1'], me2: ['You', 'draw 2'], peek: ['Reveal', '3 cards'], d3: ['Draw 3'], d5: ['Draw 5'] }[w.id] || [w.label]
+  color: ['#3f7cf5', '#f2a31b', '#e5484d', '#454857', '#26a866', '#8b5cf6', '#d6336c', '#454857', '#0f9fa8', '#c2410c'][i],
+  lines: { me1: ['You', 'draw 1'], me2: ['You', 'draw 2'], peek: ['Reveal', '3 cards'], d3: ['Draw 3'], d5: ['Draw 5'], fresh: ['Fresh', 'Hand'], x2: ['2x', 'Multiply'] }[w.id] || [w.label]
 }));
+const BLANK_SLICES = BLANK_WHEEL.map((w, i) => Object.assign({}, w, {
+  color: ['#d6336c', '#c2410c', '#3f7cf5', '#8b5cf6', '#0f9fa8', '#7c3aed', '#26a866', '#f2a31b', '#454857', '#2563a8', '#5a4a7a'][i],
+  lines: [w.label], fs: w.label.length <= 2 ? 19 : 10
+}));
+/* The ring around the Blank wheel: four color quarters, one per color. Quarter i is centered on i * 90 degrees. */
+const BLANK_RING_COLORS = ['#e5484d', '#f2c14e', '#26a866', '#3f7cf5'];
+function blankRingSVG() {
+  const R = 100, r = 89, pt = (deg, q) => { const a = (deg - 90) * Math.PI / 180; return [(R + q * Math.cos(a)).toFixed(2), (R + q * Math.sin(a)).toFixed(2)]; };
+  const arcs = BLANK_RING_COLORS.map((c, i) => { const [a, b] = pt(i * 90 - 45, R), [d, e] = pt(i * 90 + 45, R), [f, g] = pt(i * 90 + 45, r), [h, j] = pt(i * 90 - 45, r); return `<path d="M${a} ${b}A${R} ${R} 0 0 1 ${d} ${e}L${f} ${g}A${r} ${r} 0 0 0 ${h} ${j}Z" fill="${c}" stroke="#101018" stroke-width="1"/>`; }).join('');
+  return `<svg class="wheel-svg" viewBox="0 0 200 200" aria-hidden="true">${arcs}</svg>`;
+}
 
 /* Lucky Wheel: 20 silver a spin. Slices are drawn equal; the real odds are listed under the wheel.
    Weights are thousandths of a percent. These odds are generous on purpose: a spin pays out far more than it costs. */
@@ -11524,7 +12381,7 @@ function wheelSVG(slices) {
     const [lx, ly] = pt(i * step - step / 2, R);
     lines += `<path d="M${R} ${R}L${lx} ${ly}"/>`;
     const one = s.lines.length === 1;
-    const fs = s.coin ? (s.lines[0].length > 4 ? 11 : 13) : one ? (s.lines[0].length <= 2 ? 24 : 14) : 11;
+    const fs = s.fs || (s.coin ? (s.lines[0].length > 4 ? 11 : 13) : one ? (s.lines[0].length <= 2 ? 24 : 14) : 11);
     const y0t = s.coin ? 25 : one ? (fs > 20 ? 36 : 32) : 27;
     const txt = s.lines.map((l, j) => `<tspan x="${R}" dy="${j ? fs * 1.05 : 0}">${esc(l)}</tspan>`).join('');
     const coinUse = s.coin ? `<use href="#coin-${s.coin}" x="${R - 8}" y="34" width="16" height="16"/>` : '';
@@ -11539,7 +12396,8 @@ function spinWheelTo(el, n, k, opts) {
   const step = 360 / n, from = el._rot || 0, dur = opts.dur || 4200;
   const jitter = (Math.random() - 0.5) * step * 0.6;
   const base = -k * step + jitter;
-  const to = from + 360 * (opts.turns || 5) + ((((base - from) % 360) + 360) % 360);
+  /* ccw runs the other way, so two wheels can spin against each other. */
+  const to = opts.ccw ? from - 360 * (opts.turns || 5) - ((((from - base) % 360) + 360) % 360) : from + 360 * (opts.turns || 5) + ((((base - from) % 360) + 360) % 360);
   el._rot = to;
   return new Promise(resolve => {
     if (reduceMotion() || document.hidden) { el.style.transform = `rotate(${to}deg)`; resolve(); return; }
@@ -11550,7 +12408,7 @@ function spinWheelTo(el, n, k, opts) {
       const t = Math.min(1, (now - t0) / dur), a = from + (to - from) * ease(t);
       el.style.transform = `rotate(${a.toFixed(2)}deg)`;
       const s = Math.floor((a + step / 2) / step);
-      if (s !== last) { last = s; if (now - lastTick > 55) { lastTick = now; Sound.play('tick'); } }
+      if (s !== last) { last = s; if (!opts.quiet && now - lastTick > 55) { lastTick = now; Sound.play('tick'); } }
       if (t < 1) requestAnimationFrame(frame); else resolve();
     };
     requestAnimationFrame(frame);
@@ -11622,7 +12480,8 @@ const Crate = {
     app.coinView = { s: P.silver - CRATE_COST, g: P.gold };
     P.silver -= CRATE_COST;
     if (prize.key) {
-      if (prize.repeat) P.silver += CRATE_REPEAT;
+      /* The first spare is yours to sell. Past that it's silver. */
+      if (prize.repeat) { if (Market.canKeep(prize.key)) { Market.keep(prize.key); prize.kept = 1; } else P.silver += CRATE_REPEAT; }
       else {
         P.owned.push(prize.key);
         /* A new emote goes straight on the wheel if there's a free slot. */
@@ -11750,7 +12609,7 @@ const Crate = {
     const E = this.el, it = p.key && ITEM[p.key], rar = it ? it.r : 'common', w = Math.round(168 * this.base);
     const art = !it ? '' : it.cat === 'card' ? cardHTML({ c: 'r', k: '7' }, it.id, { style: `--cw:${w}px` }) : it.cat === 'pcard' ? `<div class="reveal-pc" style="--rs:${(this.base * 1.9).toFixed(2)}">${PlayerCard.mini(it.id)}</div>` : `<div class="itemsheet reveal-item" style="width:${Math.round(250 * this.base)}px">${itemPreview(it, it.cat === 'wskin' ? false : it.cat === 'wfield' ? 'mid' : true)}</div>`;
     E.card.innerHTML = it ? `${art}${p.repeat ? '<i class="repeat">Repeat</i>' : ''}` : `<div class="coinprize">${coin(p.c)}<b>+${fmt(p.n)}</b></div>`;
-    E.label.innerHTML = `<small>${p.repeat ? 'ALREADY OWNED' : it ? CRATE_CAT[it.cat].toUpperCase() : 'CRATE REVEAL'}</small><b>${esc(p.key ? ITEM[p.key].name || ITEM[p.key].t : `${fmt(p.n)} ${curName(p.c)}`)}</b><span class="r-${rar}">${p.key ? (p.repeat ? `+${thousands(CRATE_REPEAT)} SILVER` : RARITY[rar].toUpperCase()) : 'COINS'}</span>`;
+    E.label.innerHTML = `<small>${p.repeat ? 'ALREADY OWNED' : it ? CRATE_CAT[it.cat].toUpperCase() : 'CRATE REVEAL'}</small><b>${esc(p.key ? ITEM[p.key].name || ITEM[p.key].t : `${fmt(p.n)} ${curName(p.c)}`)}</b><span class="r-${rar}">${p.key ? (p.kept ? 'SPARE · X2' : p.repeat ? `+${thousands(CRATE_REPEAT)} SILVER` : RARITY[rar].toUpperCase()) : 'COINS'}</span>`;
   },
   skip() { if (this.busy) { this.t0 = performance.now() - 3200; } },
   finish() {
@@ -11782,7 +12641,7 @@ function viewCrates() {
     ${vaultHero()}
     <h3 class="vsub">Lucky Crates</h3>
     ${CRATE_ORDER.map(id => row(CRATES[id])).join('')}
-    <p class="hint tc">Open a crate for a cosmetic or coins. Anything you already own turns into ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.</p>
+    <p class="hint tc">Open a crate for a cosmetic or coins. A duplicate waits in your Owned tab as x2 to sell on the Marketplace. One more on top of that turns into ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.</p>
   </main>`;
 }
 function crateInfo(id) {
@@ -11809,11 +12668,11 @@ function cratePanel() {
   if (gone && !a.prize) return `<p class="hint tc">This crate has left the vault. It comes back in ${Vault.returns(c.id)} days.</p><button class="btn big primary" data-a="crates">See today’s crates</button>`;
   if (!a.prize) return `${c.vault ? `<p class="vtimer">Leaves the vault in <b class="vclock">${clockStr(Vault.left())}</b></p>` : `<p class="hint tc">${esc(c.blurb)}</p>`}${go('Open for', 'primary')}<button class="btn ghost" data-a="crateinfo" data-v="${c.id}">${c.vault ? `All ${c.skins.length} rewards` : 'What’s inside'}</button>`;
   const p = a.prize, fresh = p.key && !p.repeat;
-  const msg = p.repeat ? `You already own this, so it became ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.` : fresh ? 'New item unlocked!' : `${coin(p.c)}<b>${fmt(p.n)}</b> added to your coins.`;
+  const msg = p.kept ? 'Duplicate! It’s in your Owned tab as x2, ready to sell.' : p.repeat ? `You already have a spare, so this one became ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.` : fresh ? 'New item unlocked!' : `${coin(p.c)}<b>${fmt(p.n)}</b> added to your coins.`;
   const again = gone ? '<button class="btn big ghost" data-a="crates">See today’s crates</button>' : null;
   const equipLabel = fresh && ITEM[p.key].cat === 'emote' ? 'Back to crates' : 'Equip it';
   return `<p class="crate-msg">${msg}</p>${c.vault ? `<p class="vcur">Curated by <b>${esc(c.curator)}</b> · ${crateOwned(c)} of ${c.skins.length} collected</p>` : ''}
-    ${fresh ? `<button class="btn big primary" data-a="crateequip">${equipLabel}</button>${again || go('Open another', 'ghost')}` : again || go('Open another', 'primary')}`;
+    ${p.kept ? `<button class="btn big primary" data-a="mksell" data-v="${esc(p.key)}">Sell it</button>${again || go('Open another', 'ghost')}` : fresh ? `<button class="btn big primary" data-a="crateequip">${equipLabel}</button>${again || go('Open another', 'ghost')}` : again || go('Open another', 'primary')}`;
 }
 
 /* ==========================================================================
@@ -11969,7 +12828,7 @@ function vaultInfo(id) {
   }).join('');
   sheet(`<div class="vsheet" style="--ac:${c.accent}"><button class="iconbtn close" data-a="closesheet" aria-label="Close">${UI_ICON.x}</button>
     <small>${esc(c.scene)}</small><h3>${esc(c.name)}</h3><p class="vlore">${esc(c.lore)}</p><p class="vcur">Curated by <b>${esc(c.curator)}</b></p>
-    <p class="hint">${live ? `On sale for <b class="vclock">${clockStr(Vault.left())}</b> more.` : `Back in the vault in ${back} day${back === 1 ? '' : 's'}.`} Every opening gives one of these ${c.skins.length} rewards. One you already own turns into ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>.</p>
+    <p class="hint">${live ? `On sale for <b class="vclock">${clockStr(Vault.left())}</b> more.` : `Back in the vault in ${back} day${back === 1 ? '' : 's'}.`} Every opening gives one of these ${c.skins.length} rewards. Duplicates can be sold on the Marketplace.</p>
     <section class="grid g-vault">${rows}</section></div>`, 'shopsheet');
   Vault.fill($('#modal .vsheet'));
 }
@@ -12058,12 +12917,13 @@ function sheet(html, cls) {
   m.innerHTML = `<div class="scrim" data-a="closesheet"></div><div class="sheet ${cls || ''}" role="dialog" aria-modal="true">${html}</div>`;
   m.hidden = false;
 }
-function closeSheet() { const m = $('#modal'); m.hidden = true; m.innerHTML = ''; if (app.screen === 'wgame') WarGame.pause(false); }
+function closeSheet() { const m = $('#modal'); m.hidden = true; m.innerHTML = ''; if (app.screen === 'wgame') WarGame.pause(false); if (app.screen === 'sgame') Soccer.paused = false; }
 
 /* ---------- screens ---------- */
 function go(screen, opt) {
   if (app.screen === 'game' && screen !== 'game') GameUI.leave();
   if (app.screen === 'wgame' && screen !== 'wgame') WarGame.stop();
+  if (app.screen === 'sgame' && screen !== 'sgame') Soccer.abandon();
   if (app.screen === 'crate' && screen !== 'crate') Crate.stop();
   if ((app.screen === 'profile' || app.screen === 'fcard') && screen !== app.screen) PlayerCard.stop();
   const moved = app.screen !== screen, root = $('#app');
@@ -12084,8 +12944,9 @@ function render() {
   Themes.dock();
   if (s === 'game') return GameUI.enter();
   if (s === 'wgame') return WarGame.enter();
+  if (s === 'sgame') return Soccer.enter();
   const strip = $('.tabs', root), stripX = strip ? strip.scrollLeft : 0;
-  const fn = { hub: viewHub, war: viewWar, wsolo: viewWarSolo, wonline: viewWarOnline, wroom: viewWarRoom, wrules: viewWarRules, splash: viewSplash, setup: viewSetup, edit: viewSetup, home: viewHome, solo: viewSolo, local: viewLocal, online: viewOnline, table: viewTable, shop: viewShop, fcard: viewFriendCard, wheel: viewWheel, rules: viewRules, profile: viewProfile, season: viewSeason, board: viewBoard, tour: viewTour, crates: viewCrates, crate: viewCrate, friends: viewFriends }[s] || viewHome;
+  const fn = { hub: viewHub, war: viewWar, wsolo: viewWarSolo, wonline: viewWarOnline, wroom: viewWarRoom, wrules: viewWarRules, splash: viewSplash, setup: viewSetup, edit: viewSetup, home: viewHome, solo: viewSolo, local: viewLocal, online: viewOnline, table: viewTable, shop: viewShop, soccer: viewSoccer, fsolo: viewSoccerSolo, frules: viewSoccerRules, market: viewMarket, fcard: viewFriendCard, wheel: viewWheel, rules: viewRules, profile: viewProfile, season: viewSeason, board: viewBoard, tour: viewTour, crates: viewCrates, crate: viewCrate, friends: viewFriends }[s] || viewHome;
   root.innerHTML = fn();
   /* Redrawing a screen keeps the tab strip where you left it, and the Season track on your level. */
   const strip2 = $('.tabs', root);
@@ -12260,11 +13121,12 @@ function viewShop() {
       <button class="sptile crate-t" data-a="crates"><span class="st-art vart">${Vault.scene(CRATES[Vault.live()[0]], true)}</span><b>Crates</b><small>${Vault.fresh() ? 'New today' : '2 Premium today'}</small></button>
       <button class="sptile wheel-t" data-a="lucky"><span class="st-art">${wheelSVG(LUCKY_SLICES)}</span><b>Lucky Wheel</b><small>${coin('s')}${LUCKY_COST} a spin</small></button>
     </div>
+    <button class="mkbar" data-a="market"><span class="mkbar-i">${coin('s')}${coin('g')}</span><span class="mkbar-t"><b>Marketplace</b><small>Buy and sell duplicates with the world</small></span>${Prof.P.offersIn.length ? `<em>${Prof.P.offersIn.length}</em>` : ''}</button>
     <div class="shoptools">
       <button class="ownedbtn ${ownedOnly ? 'on' : ''}" data-a="ownedtoggle" aria-pressed="${ownedOnly}">Owned</button>
       <button class="exbtn" data-a="exchange">${coin('s')}<span>⇄</span>${coin('g')}<b>Exchange</b><small>100 silver = 1 gold</small></button>
     </div>
-    <nav class="gameswitch" role="tablist">${GAMES.map(g => `<button role="tab" aria-selected="${(g.id === 'war') === war}" class="${(g.id === 'war') === war ? 'on' : ''}" data-a="shopg" data-v="${g.id}">${esc(g.name)}</button>`).join('')}</nav>
+    <nav class="gameswitch" role="tablist">${GAMES.filter(g => g.id !== 'soccer').map(g => `<button role="tab" aria-selected="${(g.id === 'war') === war}" class="${(g.id === 'war') === war ? 'on' : ''}" data-a="shopg" data-v="${g.id}">${esc(g.name)}</button>`).join('')}</nav>
     ${war ? `<nav class="tabs" role="tablist">${WAR_TABS.map(([k, l]) => `<button role="tab" aria-selected="${k === wtab}" class="${k === wtab ? 'on' : ''}" data-a="wtab" data-v="${k}">${l}</button>`).join('')}</nav>
     <p class="hint">${wtab === 'field' ? 'The ground you fight on. Only you see your own.' : wtab === 'relic' ? 'Your relic rides on your Player Card and next to your name in battle. Everyone sees it.' : 'Skins change how it looks, never how it plays.'}</p>
     <section class="grid g-war">${items.length ? items.map(shopCard).join('') : ''}</section>${items.length ? '' : '<p class="hint tc">You don’t own anything in this section yet.</p>'}
@@ -12375,7 +13237,7 @@ function shopCard(it) {
   const [st, lab] = shopState(it);
   const name = it.name || it.t;
   return `<button class="item r-${it.r} st-${st}" data-a="item" data-v="${it.key}">
-    <div class="pv lazy" data-pv="${it.key}"></div>
+    <div class="pv lazy" data-pv="${it.key}"></div>${Market.spare(it.key) ? '<i class="x2b">x2</i>' : ''}
     <span class="it-n">${esc(name)}</span>
     <span class="it-p">${st === 'buy' ? priceHTML(it) : st === 'pass' || st === 'held' || st === 'claim' || st === 'crate' ? `<i class="own lockd">${esc(lab)}</i>` : `<i class="own">${lab}</i>`}</span>
     <span class="rar">${RARITY[it.r]}</span>
@@ -12408,6 +13270,7 @@ function openItem(key) {
     ${it.cat === 'fx' ? `<button class="btn ghost" data-a="previewfx" data-v="${it.id}">Preview</button>` : ''}
     ${it.snd ? `<button class="btn ghost" data-a="emoplay" data-v="${it.id}">${UI_ICON.sound} Play sound</button>` : ''}
     ${btn}
+    ${Market.spare(key) ? `<button class="btn primary" data-a="mksell" data-v="${esc(key)}">Sell your spare (x2)</button>` : Market.listing(key) ? `<p class="hint tc">Your spare is on the Marketplace for ${coin(Market.listing(key).cur)}<b>${thousands(Market.listing(key).price)}</b>.</p>` : ''}
   </div>`, 'shopsheet');
   if (it.cat === 'wskin') WarTurn.mount(it);
 }
@@ -12430,7 +13293,7 @@ function viewRules() {
       <p>Before a match the host can set a <b>bet</b>. Everyone puts the same stake in, and the winner takes the whole pot. Leave mid-match and your stake stays in the pot.</p></section>
     <section class="card-sec"><h3>Season Pass</h3><p>Every match earns season XP. Levels unlock rewards on the free <b>Silver Pass</b>, and at every level on the <b>Gold Pass</b>, the only place to get Legends and sound emotes.</p></section>
     <section class="card-sec"><h3>Tournaments</h3><p>A 1v1 series of 7 to 50 matches with silver, gold or a World Title on the line. First past half the matches wins. Both players must agree to pause, and leaving forfeits.</p></section>
-    <section class="card-sec"><h3>Crates</h3><p>Every crate costs ${coin('s')}${thousands(CRATE_COST)}, and anything you already own turns into ${coin('s')}${thousands(CRATE_REPEAT)}. <b>Lucky Crates</b> hold a skin or coins and never leave.</p><p><b>Premium Crates</b> are on sale two at a time for 24 hours, then the next two take over. There are ${Vault.ids.length} in all, and after the last one it starts again from the first. Each holds ${CRATES[Vault.ids[0]].skins.length} rewards and always gives you one. See <b>Rewards</b> for the real odds.</p></section>
+    <section class="card-sec"><h3>Crates</h3><p>Every crate costs ${coin('s')}${thousands(CRATE_COST)}, and your first duplicate of anything waits in the Owned tab as x2 to sell on the Marketplace. Another one on top of that turns into ${coin('s')}${thousands(CRATE_REPEAT)}. <b>Lucky Crates</b> hold a skin or coins and never leave.</p><p><b>Premium Crates</b> are on sale two at a time for 24 hours, then the next two take over. There are ${Vault.ids.length} in all, and after the last one it starts again from the first. Each holds ${CRATES[Vault.ids[0]].skins.length} rewards and always gives you one. See <b>Rewards</b> for the real odds.</p></section>
   </main>`;
 }
 
@@ -13084,19 +13947,19 @@ function spBuySheet() {
 
 /* ---------- Leaderboard ---------- */
 function viewBoard() {
-  const b = app.board, me = (Cloud.me() || '').toLowerCase(), war = app.boardG === 'war';
-  const sorted = b && b.rows ? b.rows.slice().sort((x, y) => (war ? (y.ww || 0) - (x.ww || 0) || (x.wp || 0) - (y.wp || 0) : (y.w || 0) - (x.w || 0) || (x.p || 0) - (y.p || 0)) || x.n.localeCompare(y.n)) : [];
+  const b = app.board, me = (Cloud.me() || '').toLowerCase(), bg = app.boardG === 'war' || app.boardG === 'soccer' ? app.boardG : 'mocho', wk = { mocho: 'w', war: 'ww', soccer: 'sw' }[bg], pk = { mocho: 'p', war: 'wp', soccer: 'sp' }[bg];
+  const sorted = b && b.rows ? b.rows.slice().sort((x, y) => (y[wk] || 0) - (x[wk] || 0) || (x[pk] || 0) - (y[pk] || 0) || x.n.localeCompare(y.n)) : [];
   const holder = n => Object.entries(Cloud.world).filter(([, w]) => w.k === n.toLowerCase()).map(([id]) => ITEM['title:' + id].name)[0];
   const row = (r, i) => {
     const av = CAT_BY_ID[r.a] ? r.a : 'mochi', t = holder(r.n) || titleName(r.t) || 'Rookie';
-    return `<div class="lb-row ${i < 3 ? 'top t' + i : ''} ${r.n.toLowerCase() === me ? 'me' : ''}"><b class="lb-r">${i + 1}</b>${avatar(av)}<span class="lb-n"><b>${esc(r.n)}</b><small>${esc(t)}</small></span><span class="ldw"><b>${fmt((war ? r.ww : r.w) || 0)}</b><small>wins</small></span></div>`;
+    return `<div class="lb-row ${i < 3 ? 'top t' + i : ''} ${r.n.toLowerCase() === me ? 'me' : ''}"><b class="lb-r">${i + 1}</b>${avatar(av)}<span class="lb-n"><b>${esc(r.n)}</b><small>${esc(t)}</small></span><span class="ldw"><b>${fmt(r[wk] || 0)}</b><small>wins</small></span></div>`;
   };
   const body = !b ? '<section class="card-sec center"><div class="spin"></div><p>Loading players…</p></section>'
     : b.err ? `<section class="card-sec warn"><h3>Leaderboard is offline</h3><p>${esc(b.err)}</p><button class="btn ghost" data-a="board">Try again</button></section>`
     : !b.rows.length ? '<section class="card-sec center"><p>No players yet. Make an account and be first.</p></section>'
     : `<section class="lb">${sorted.map(row).join('')}</section>`;
   return `<main class="scr board">${topbar('Leaderboard')}
-    <nav class="gameswitch" role="tablist">${GAMES.map(g => `<button role="tab" aria-selected="${(g.id === 'war') === war}" class="${(g.id === 'war') === war ? 'on' : ''}" data-a="boardg" data-v="${g.id}">${esc(g.name)}</button>`).join('')}</nav>
+    <nav class="gameswitch" role="tablist">${GAMES.map(g => `<button role="tab" aria-selected="${g.id === bg}" class="${g.id === bg ? 'on' : ''}" data-a="boardg" data-v="${g.id}">${esc(g.name)}</button>`).join('')}</nav>
     ${Cloud.acct ? '' : '<section class="card-sec"><p class="hint">Only players with an online account appear here.</p><button class="btn primary" data-a="acctsheet">Log in or create account</button></section>'}
     ${body}</main>`;
 }
@@ -13170,20 +14033,21 @@ const PlayerCard = {
   card: null, raf: 0, flipped: false, on: false, who: null,
   tilt: { x: 0, y: 0 }, goal: { x: 0, y: 0 }, base: null, gyroAt: 0, drag: null, lastTap: 0,
   /* Which game's numbers the card is showing. */
-  game() { return app.pcGame === 'war' ? 'war' : 'mocho'; },
+  game() { return app.pcGame === 'war' ? 'war' : app.pcGame === 'soccer' ? 'soccer' : 'mocho'; },
   /* The card shows you, or a friend when one's open. */
   data() { return this.who || Prof.P; },
   front() {
-    const P = this.data(), war = this.game() === 'war', st = war ? P.wstats : P.stats, eq = P.eq, rate = st.played ? Math.round(st.wins / st.played * 100) : 0;
+    const P = this.data(), g = this.game(), war = g === 'war', soc = g === 'soccer', st = war ? P.wstats : soc ? P.sstats : P.stats, eq = P.eq, rate = st.played ? Math.round(st.wins / st.played * 100) : 0;
+    const pass = P.pass || { lv: Season.info().lv, gold: !!Season.s.gold };
     const row = (l, v) => `<div class="pc-move"><i>${PAW_MARK}</i><b>${l}</b><em>${v}</em></div>`;
     const stat = (l, v) => `<div><small>${l}</small><b>${v}</b></div>`;
     return `<div class="pc-in">
-      <header class="pc-top"><span class="pc-stage">${war ? 'War' : 'Mocho'}</span>${nameTag(P.name, eq.tag, eq.font)}<span class="pc-hp"><small>WINS</small><b>${fmt(st.wins)}</b><i>${PAW_MARK}</i></span></header>
+      <header class="pc-top"><span class="pc-stage">${war ? 'War' : soc ? 'Soccer' : 'Mocho'}</span>${nameTag(P.name, eq.tag, eq.font)}<span class="pc-hp"><small>WINS</small><b>${fmt(st.wins)}</b><i>${PAW_MARK}</i></span></header>
       <div class="pc-art ${eq.banner === 'none' ? '' : 'bn-' + esc(eq.banner)}"><span class="bnfx"></span>${avatar(P.avatar, '', eq.frame)}${relicHTML(equippedRelic(eq), 'pc-relic')}<i class="pc-foil"></i><i class="pc-spark"></i></div>
       <p class="pc-title">${esc(titleName(eq.title))}</p>
       <div class="pc-moves">${row('Matches', st.played)}${row('Win rate', rate + '%')}</div>
-      <div class="pc-stats">${war ? stat('Best streak', st.best) + stat('Base damage', fmt(st.dealt)) + stat('Enemies crushed', fmt(st.crushed)) : stat('Best streak', st.best) + stat('Silver won', fmt(st.silverWon)) + stat('Tournament won', st.tours || 0)}</div>
-      <footer class="pc-foot"><span>Meow Mayhem · Season 1</span><b>${P.fid ? 'ID #' + esc(P.fid) : 'No ID yet'}</b><i class="pc-stamp">S1</i></footer>
+      <div class="pc-stats">${soc ? stat('Best streak', st.best) + stat('Goals', fmt(st.goals || 0)) + stat('Wins', fmt(st.wins)) : war ? stat('Best streak', st.best) + stat('Base damage', fmt(st.dealt)) + stat('Enemies crushed', fmt(st.crushed)) : stat('Best streak', st.best) + stat('Silver won', fmt(st.silverWon)) + stat('Tournament won', st.tours || 0)}</div>
+      <footer class="pc-foot"><span class="${pass.gold ? 'pc-gp' : ''}">${pass.gold ? 'Gold' : 'Silver'} Pass · Level ${pass.lv}</span><b>${P.fid ? 'ID #' + esc(P.fid) : 'No ID yet'}</b><i class="pc-stamp">S1</i></footer>
     </div><i class="pc-rim"></i><i class="pc-glare"></i>`;
   },
   back() {
@@ -13303,12 +14167,14 @@ const PlayerCard = {
    ========================================================================== */
 const GAMES = [
   { id: 'mocho', name: 'Mocho', tag: 'card', note: 'Cards, cats and chaos' },
-  { id: 'war', name: 'War', tag: 'battle', fresh: 1, note: 'Five lanes, one base left' }
+  { id: 'war', name: 'War', tag: 'battle', note: 'Five lanes, one base left' },
+  { id: 'soccer', name: 'Fun Soccer', tag: 'sport', fresh: 1, note: 'One button, twenty modes' }
 ];
-const HUB_CHIPS = [['all', 'All', 'i-games'], ['new', 'New', 'i-spark'], ['card', 'Card', 'i-bag'], ['battle', 'Battle', 'i-rank'], ['fav', 'Favorites', 'i-heart']];
+const HUB_CHIPS = [['all', 'All', 'i-games'], ['new', 'New', 'i-spark'], ['card', 'Card', 'i-bag'], ['battle', 'Battle', 'i-rank'], ['sport', 'Sport', 'i-trophy'], ['fav', 'Favorites', 'i-heart']];
 function gameArt(g) {
   const P = Prof.P;
   if (g.id === 'war') return `<img class="ga-img" ${WarArt.posterAttr(240, 300)} alt="">`;
+  if (g.id === 'soccer') return `<img class="ga-img" src="${FArt.poster(240, 300)}" alt="">`;
   return `<span class="ga-mocho"><span class="ga-fan">${[['r', '7'], ['w', 'W'], ['b', 'D']].map(([c, k], i) => cardHTML({ c, k }, P.eq.card, { cls: 'gf gf' + i })).join('')}</span><span class="ga-cat">${catSVG(P.avatar, { still: true })}</span></span>`;
 }
 function hubTiles() {
@@ -13316,7 +14182,7 @@ function hubTiles() {
   const list = GAMES.filter(g => f === 'all' || (f === 'new' && g.fresh) || f === g.tag || (f === 'fav' && favs.includes(g.id)));
   if (!list.length) return `<p class="hint tc hubnone">${f === 'fav' ? 'Tap the heart on a game to keep it here.' : 'More games are on the way.'}</p>`;
   return list.map(g => {
-    const st = g.id === 'war' ? Prof.P.wstats : Prof.P.stats, on = favs.includes(g.id);
+    const st = g.id === 'war' ? Prof.P.wstats : g.id === 'soccer' ? Prof.P.sstats : Prof.P.stats, on = favs.includes(g.id);
     return `<div class="gtile g-${g.id}"><button class="gmain" data-a="${g.id}" aria-label="Open ${esc(g.name)}">${gameArt(g)}<span class="gshade"></span>${g.fresh ? '<i class="gnew">New</i>' : ''}<span class="gtxt"><b>${esc(g.name)}</b><small>${st.wins ? `${fmt(st.wins)} win${st.wins === 1 ? '' : 's'}` : esc(g.note)}</small></span></button>
       <button class="gheart ${on ? 'on' : ''}" data-a="gfav" data-v="${g.id}" aria-label="${on ? 'Remove from' : 'Add to'} favorites" aria-pressed="${on}"><svg viewBox="0 0 24 24"><use href="#i-heart"/></svg></button></div>`;
   }).join('');
@@ -13507,7 +14373,7 @@ const GameUI = {
         i, fan, ring: turn && T.dl > 0, cls: `opp ${turn ? 'turn' : ''} ${s.x ? '' : 'off'}`, info: `oinfo bn-${esc(cos.banner)}`,
         av: avatar(s.a, '', cos.frame),
         name: `${nameTag(s.n, cos.tag, cos.font)}<b class="ocount${cnt <= 2 ? ' low' : ''}" aria-label="${cnt} cards">${cnt}</b>`,
-        note: `${s.u ? '<span class="auto">Bot playing</span>' : ''}${turn && G.phase !== 'play' ? `<span class="think">${G.phase === 'spin' ? 'spinning…' : 'choosing…'}</span>` : turn ? '<span class="think dots"><i></i><i></i><i></i></span>' : ''}`
+        note: `${s.u ? '<span class="auto">Bot playing</span>' : ''}${turn && G.phase !== 'play' ? `<span class="think">${G.phase === 'spin' || G.phase === 'blank' ? 'spinning…' : 'choosing…'}</span>` : turn ? '<span class="think dots"><i></i><i></i><i></i></span>' : ''}`
       };
     });
     /* Seats are patched piece by piece: a new turn moves a ring, it doesn't rebuild everyone's cards. */
@@ -13575,8 +14441,10 @@ const GameUI = {
       this.keys.pile = pileKey;
       const owner = this.cardOwner || {};
       const prev = G.prev.map((id, i) => cardHTML(G.deck[id], owner[id] || mySkin, { cls: 'pv' + i })).join('');
-      const asBadge = G.topAs ? `<span class="asb">Copycat → ${esc(KIND_NAME[G.topAs] || G.topAs)}</span>` : '';
-      $('#pile').innerHTML = `${prev}${cardHTML(topCard, owner[G.top] || mySkin, { cls: 'top', id: G.top })}${topCard.c === 'w' ? `<span class="wcol c-${G.color}">${SUIT[G.color]}</span>` : ''}${asBadge}`;
+      /* A Blank shows as the card it turned into. */
+      const blank = topCard.k === 'B' && G.topAs, shown = blank ? { c: WILD_KINDS.has(G.topAs) || G.topAs === 'W' ? 'w' : G.color, k: G.topAs } : topCard;
+      const asBadge = G.topAs ? `<span class="asb">${blank ? 'Blank' : 'Copycat'} → ${esc(KIND_NAME[G.topAs] || G.topAs)}</span>` : '';
+      $('#pile').innerHTML = `${prev}${cardHTML(shown, owner[G.top] || mySkin, { cls: 'top', id: G.top })}${shown.c === 'w' ? `<span class="wcol c-${G.color}">${SUIT[G.color]}</span>` : ''}${asBadge}`;
       $('#center').dataset.col = G.color;
     }
     const pend = $('#pend');
@@ -13610,7 +14478,7 @@ const GameUI = {
     const playable = this.playable;
     const drew = myTurn && G.phase === 'play' && G.drew >= 0 ? G.drew : -1;
     if (app.sel != null && !playable.has(app.sel)) app.sel = null;
-    const cards = [hand.join(','), skin, innerWidth, innerHeight].join('|');
+    const cards = [hand.join(','), (G.boost || []).join(','), skin, innerWidth, innerHeight].join('|');
     const key = [cards, [...playable].join(','), app.sel, myTurn, G.phase, drew].join('|');
     if (this.keys.hand === key) return;
     const old = new Set((this.keys.handIds || []));
@@ -13647,7 +14515,7 @@ const GameUI = {
     el.style.width = scroll ? (cw + step * (n - 1)) + 'px' : '';
     el.innerHTML = hand.map((id, i) => {
       const cls = [playable.has(id) ? 'ok' : myTurn ? 'no' : '', app.sel === id ? 'sel' : '', id === drew ? 'drew' : '', old.size && !old.has(id) ? 'new' : ''].join(' ');
-      return `<button class="hc ${cls}" data-a="card" data-id="${id}" style="margin-left:${i ? (step - cw).toFixed(1) : 0}px;z-index:${i + 1}" aria-label="${esc(cardLabel(G.deck[id]))}">${cardHTML(G.deck[id], skin)}</button>`;
+      return `<button class="hc ${cls}" data-a="card" data-id="${id}" style="margin-left:${i ? (step - cw).toFixed(1) : 0}px;z-index:${i + 1}" aria-label="${esc(cardLabel(G.deck[id]))}">${G.boost.includes(id) ? cardHTML(G.deck[id], skin, { cls: 'x2' }).replace(/\+2/g, '+4') : cardHTML(G.deck[id], skin)}</button>`;
     }).join('');
     if (app.sel != null) { const s = el.querySelector('.hc.sel'); if (s && scroll) s.scrollIntoView({ block: 'nearest', inline: 'center' }); }
   },
@@ -13666,6 +14534,7 @@ const GameUI = {
       else if (G.phase === 'target') t = 'BOGO: pick who gets your card';
       else if (G.phase === 'give') t = 'BOGO: tap a card to give away, then tap it again';
       else if (G.phase === 'spin') t = 'Spinning the Mystery wheel…';
+      else if (G.phase === 'blank') t = 'Spinning the Blank wheel…';
       else if (G.pending) t = `${G.rules.stack ? 'Stack a +2 or +4, block it with a Shield' : 'Block it with a Shield'}, or tap the deck to take <b>+${G.pending.n}</b>`;
       else if (G.drew >= 0) t = 'That card fits. Play it, or tap the deck to pass.';
       else if (!this.playable.size) t = `No match for ${colorName}${sym && !WILD_KINDS.has(topK) ? ` or <b>${esc(sym)}</b>` : ''}. Tap the deck to draw.`;
@@ -13675,6 +14544,7 @@ const GameUI = {
       else if (G.phase === 'target') t = `${who} is picking who gets a free card…`;
       else if (G.phase === 'give') t = `${who} is picking a card to give away…`;
       else if (G.phase === 'spin') t = `${who} spins the Mystery wheel…`;
+      else if (G.phase === 'blank') t = `${who} spins the Blank wheel…`;
       else t = `${who}’s turn · ${colorName}`;
     }
     if (this.keys.status !== t) { this.keys.status = t; $('#status').innerHTML = t; }
@@ -13872,6 +14742,9 @@ const GameUI = {
       case 'copy': this.announce('Copycat', `copies ${esc(KIND_NAME[b] || 'the ' + b)}`, 'k-u'); break;
       case 'give': this.fly(backHTML(seatCos(T, a).card), this.seatRect(a, me), this.seatRect(b, me), { w0: 34, w1: 34, dur: 520 }); this.floaty(b, me, '+1 free', 'bad'); break;
       case 'spin': this.wheel(a, b, T, G, me); break;
+      case 'blank': this.blankWheel(a, b, c, T, me); break;
+      case 'fresh': this.floaty(a, me, 'Fresh hand!', 'skip'); Sound.play('shuffle'); break;
+      case 'boost': this.floaty(a, me, '+2s are now +4', 'skip'); break;
       case 'peek': { const ids = unpackPeek(c); if (a === me && ids.length) this.reveal(b, ids, T, G); else this.floaty(a, me, 'Peeked', 'skip'); break; }
       case 'magnet': {
         /* The pulled cards chase the Magnet onto the pile, one after another. */
@@ -13930,6 +14803,8 @@ const GameUI = {
     const res = w.id === 'skip' ? `${who(nx)} ${nx === me ? 'are' : 'is'} skipped`
       : w.self ? `${who(seat)} ${verb(seat, 'draw')} ${w.n}`
       : w.id === 'peek' ? `${who(seat)} ${verb(seat, 'see')} 3 of ${nx === me ? 'your' : esc(seatName(T, nx)) + '’s'} cards`
+      : w.id === 'fresh' ? `${who(nx)} ${verb(nx, 'lose')} every card and ${verb(nx, 'get')} a brand new hand`
+      : w.id === 'x2' ? `Every +2 ${seat === me ? 'you’re' : esc(seatName(T, seat)) + ' is'} holding now hits for +4`
       : `${who(nx)} ${verb(nx, 'draw')} ${w.n} and ${nx === me ? 'are' : 'is'} skipped`;
     const el = document.createElement('div');
     el.className = 'wheelfx';
@@ -13941,6 +14816,26 @@ const GameUI = {
       el.classList.add('done');
       Sound.play(w.self ? 'hit' : 'special');
       setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 400); }, 1300);
+    });
+  },
+  /* Blank Card: the middle wheel picks the card, and the ring spinning the other way picks its color. */
+  blankWheel(seat, o, c, T, me) {
+    const w = BLANK_SLICES[o], col = COLORS[c];
+    if (!w) return;
+    const el = document.createElement('div');
+    el.className = 'wheelfx blankfx';
+    el.innerHTML = `<div class="wh"><div class="wh-ring">${blankRingSVG()}</div><div class="wh-rot">${wheelSVG(BLANK_SLICES)}</div><i class="wh-ptr"></i><b class="wh-hub">${ICON.B}</b></div><div class="wh-res"><b id="blres">${esc(w.label)}</b><small id="blsub">Now for the color…</small></div>`;
+    $('#fly').appendChild(el);
+    requestAnimationFrame(() => el.classList.add('in'));
+    Sound.play('mystery');
+    const ring = spinWheelTo(el.querySelector('.wh-ring'), 4, c, { dur: 4650, turns: 16, ccw: true, quiet: true });
+    spinWheelTo(el.querySelector('.wh-rot'), BLANK_SLICES.length, o, { dur: 2900, turns: 4 }).then(() => { el.classList.add('done'); Sound.play('special'); });
+    ring.then(() => {
+      const r = el.querySelector('#blres'), s = el.querySelector('#blsub');
+      if (r) { r.textContent = `${COLOR_NAME[col]} ${w.label}`; r.className = 'c-' + col; }
+      if (s) s.textContent = `${seat === me ? 'Your' : esc(seatName(T, seat)) + '’s'} Blank becomes this card`;
+      Sound.play('hit');
+      setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 400); }, 900);
     });
   },
   /* Reveal 3: only the player who spun sees the cards. */
@@ -14814,6 +15709,416 @@ function warEmote(id, mine) {
 }
 
 /* ==========================================================================
+   Fun Soccer: the look and the match. The physics live in 47-fsim.js.
+   The arena is painted once per mode on its own canvas; each frame only draws
+   four players, the ball and a few sparks on top of it.
+   ========================================================================== */
+const F_LOOK = {
+  day: { sky: ['#4cb8ea', '#c9eef2'], sun: '#fff3b0', stand: ['#21385c', '#182a46'], turf: ['#43b05c', '#379c4f'], line: 'rgba(255,255,255,.8)', board: '#16213d', cloud: 1, flags: 1 },
+  day2: { sky: ['#6ec6c8', '#f4e7bd'], sun: '#ffe08a', stand: ['#2f4a4a', '#22383a'], turf: ['#58b24a', '#4aa03f'], line: 'rgba(255,255,255,.8)', board: '#1d2a2a', cloud: 1, flags: 1 },
+  dusk: { sky: ['#3f2a6e', '#ff9e6a'], sun: '#ffd9a0', stand: ['#2a1f48', '#1e1636'], turf: ['#3a9a5e', '#2f8852'], line: 'rgba(255,255,255,.72)', board: '#1a1230', flags: 1 },
+  night: { sky: ['#0a1230', '#23306a'], moon: 1, stars: 1, stand: ['#141c40', '#0e1430'], turf: ['#2a8a55', '#23794a'], line: 'rgba(255,255,255,.7)', board: '#0c1228', lights: 1 },
+  gold: { sky: ['#0d0a24', '#3a2a6a'], moon: 1, stars: 1, stand: ['#1c1436', '#141028'], turf: ['#2f8a58', '#277a4c'], line: 'rgba(255,214,110,.8)', board: '#2a1e08', lights: 1, confetti: 1 },
+  hall: { sky: ['#20183f', '#5a2a55'], stand: ['#261b46', '#1c1436'], turf: ['#c98a4e', '#b97a42'], line: 'rgba(255,255,255,.7)', board: '#1b1230', lights: 1, wood: 1 },
+  pool: { sky: ['#6a4fa8', '#ffb37a'], sun: '#fff0c0', sea: 1, turf: ['#22b5c6', '#1a97ad'], line: 'rgba(255,255,255,.4)', flat: 1 },
+  moon: { sky: ['#04050f', '#141a38'], stars: 1, planet: 1, turf: ['#8a8fa0', '#777c8e'], line: 'rgba(120,220,255,.6)', flat: 1, craters: 1 },
+  ice: { sky: ['#20506e', '#9fd6e6'], stand: ['#2a4a60', '#1e3a50'], turf: ['#d9eef6', '#c6e2ee'], line: 'rgba(230,70,90,.6)', board: '#17324a', lights: 1 },
+  castle: { sky: ['#ffb3d0', '#fff0c0'], sun: '#ffffff', turf: ['#ff7fb0', '#ff5f9e'], line: 'rgba(255,255,255,.8)', flat: 1, cloud: 1, puff: 1 },
+  storm: { sky: ['#37465a', '#8d9aa8'], stand: ['#27323f', '#1d2630'], turf: ['#4a9a62', '#3f8a56'], line: 'rgba(255,255,255,.7)', board: '#171f28', rainy: 1 },
+  neon: { sky: ['#0a0620', '#2a1058'], stars: 1, stand: ['#160c34', '#100826'], turf: ['#191040', '#120a30'], line: 'rgba(34,230,255,.8)', board: '#0c0620', lights: 1, grid: 1 }
+};
+const F_KIT = [{ a: '#2f6bff', b: '#0f2f8a', c: '#ffffff' }, { a: '#ff5a4a', b: '#a81f1f', c: '#fff3d6' }];
+const F_FUR = ['#f2a65a', '#8d95a8', '#fbf7f2', '#6b5246', '#2b2533', '#e8c07a'];
+const fcat = id => { const c = CAT_BY_ID[id] || {}; let h = 0; for (const ch of String(id)) h = h * 31 + ch.charCodeAt(0) | 0; const f = c.fur || F_FUR[Math.abs(h) % F_FUR.length]; return { fur: f, ear: c.ear || '#ffb8a8', eye: c.eye || '#3ee6a8', nose: c.nose || '#e86f6f', belly: c.belly || '#fff' }; };
+
+const FArt = {
+  /* The stadium for one mode, painted once. */
+  arena(cv, w, h, gy, look, dpr) {
+    const L = F_LOOK[look] || F_LOOK.day, c = cv.getContext('2d');
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    c.setTransform(dpr, 0, 0, dpr, 0, 0);
+    let seed = look.length * 77 + 5;
+    const R = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+    let g = c.createLinearGradient(0, 0, 0, gy);
+    g.addColorStop(0, L.sky[0]); g.addColorStop(1, L.sky[1]);
+    c.fillStyle = g; c.fillRect(0, 0, w, gy + 2);
+    if (L.stars) { c.fillStyle = '#fff'; for (let i = 0; i < 90; i++) { c.globalAlpha = 0.3 + R() * 0.7; c.fillRect(R() * w, R() * gy * 0.75, 1.4, 1.4); } c.globalAlpha = 1; }
+    if (L.sun) { g = c.createRadialGradient(w * 0.76, gy * 0.26, 4, w * 0.76, gy * 0.26, w * 0.5); g.addColorStop(0, L.sun); g.addColorStop(0.16, L.sun); g.addColorStop(0.19, L.sun + '55'); g.addColorStop(1, L.sun + '00'); c.fillStyle = g; c.fillRect(0, 0, w, gy); }
+    if (L.moon) { c.fillStyle = '#f6efd6'; c.beginPath(); c.arc(w * 0.76, gy * 0.22, w * 0.075, 0, 7); c.fill(); c.fillStyle = L.sky[0]; c.beginPath(); c.arc(w * 0.73, gy * 0.205, w * 0.066, 0, 7); c.fill(); }
+    if (L.planet) { c.fillStyle = '#3f8fd0'; c.beginPath(); c.arc(w * 0.74, gy * 0.26, w * 0.13, 0, 7); c.fill(); c.fillStyle = '#5fbf7a'; c.beginPath(); c.ellipse(w * 0.7, gy * 0.24, w * 0.05, w * 0.03, 0.5, 0, 7); c.fill(); }
+    if (L.cloud) for (let i = 0; i < 5; i++) { const x = R() * w, y = 30 + R() * gy * 0.36, s = 14 + R() * 18; c.fillStyle = 'rgba(255,255,255,.82)'; for (const [a, b, r] of [[0, 0, 1], [1.1, 0.2, 0.8], [-1.1, 0.25, 0.75], [0.3, -0.5, 0.8]]) { c.beginPath(); c.arc(x + a * s, y + b * s, r * s, 0, 7); c.fill(); } }
+    if (L.lights) for (const x of [w * 0.1, w * 0.9]) { g = c.createRadialGradient(x, gy * 0.3, 2, x, gy * 0.3, w * 0.42); g.addColorStop(0, 'rgba(255,250,220,.5)'); g.addColorStop(1, 'rgba(255,250,220,0)'); c.fillStyle = g; c.fillRect(0, 0, w, gy); c.fillStyle = '#e8e4d0'; c.fillRect(x - 17, gy * 0.3 - 9, 34, 15); c.fillStyle = '#2a3048'; c.fillRect(x - 2, gy * 0.3 + 6, 4, gy * 0.42); }
+    if (L.rainy) { c.strokeStyle = 'rgba(255,255,255,.14)'; c.lineWidth = 1; for (let i = 0; i < 90; i++) { const x = R() * w, y = R() * gy; c.beginPath(); c.moveTo(x, y); c.lineTo(x - 5, y + 15); c.stroke(); } }
+    /* Stands with a crowd, or open water and sky. */
+    const sh = Math.round(gy * 0.34), st = gy - sh;
+    if (L.stand) {
+      g = c.createLinearGradient(0, st, 0, gy); g.addColorStop(0, L.stand[0]); g.addColorStop(1, L.stand[1]);
+      c.fillStyle = g; c.fillRect(0, st, w, sh);
+      const cols = ['#ff6a5a', '#ffd84d', '#69e3c2', '#fff4d2', '#5b8cff', '#ff9ec4'];
+      for (let y = st + 7; y < gy - 22; y += 8.5) for (let x = 3 + (y % 5); x < w; x += 7.5) { if (R() < 0.12) continue; c.fillStyle = cols[Math.floor(R() * 6)]; c.globalAlpha = 0.8; c.beginPath(); c.arc(x + R() * 2, y + R() * 2, 2.1, 0, 7); c.fill(); }
+      c.globalAlpha = 1;
+      /* Ad boards along the touchline. */
+      c.fillStyle = L.board; c.fillRect(0, gy - 20, w, 20);
+      c.font = "800 11px 'Archivo Black', system-ui, sans-serif"; c.textBaseline = 'middle'; c.textAlign = 'center';
+      ['FUN SOCCER', 'MEOW MAYHEM', 'FIRST TO 5', 'NO HANDS'].forEach((t, i) => { c.fillStyle = ['#ffd84d', '#fff4d2', '#69e3c2', '#ff8a7a'][i]; c.fillText(t, w * (i + 0.5) / 4, gy - 10); });
+    }
+    if (L.flags) { c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 1; c.beginPath(); c.moveTo(0, st - 26); c.quadraticCurveTo(w / 2, st + 2, w, st - 26); c.stroke(); const fc = ['#ff6a5a', '#ffd84d', '#69e3c2', '#5b8cff']; for (let i = 1; i < 18; i++) { const u = i / 18, x = u * w, y = st - 26 + 28 * 4 * u * (1 - u) * 0.5; c.fillStyle = fc[i % 4]; c.beginPath(); c.moveTo(x - 5, y); c.lineTo(x + 5, y); c.lineTo(x, y + 10); c.fill(); } }
+    if (L.sea) { g = c.createLinearGradient(0, gy - 70, 0, gy); g.addColorStop(0, '#ff9e8a'); g.addColorStop(1, '#2fa8b8'); c.fillStyle = g; c.fillRect(0, gy - 70, w, 70); c.fillStyle = '#1f3a4a'; for (const x of [w * 0.06, w * 0.9]) { c.fillRect(x, gy - 96, 4, 40); c.beginPath(); c.ellipse(x + 2, gy - 98, 20, 7, 0.2, 0, 7); c.fill(); } }
+    if (L.puff) { c.fillStyle = '#ffd84d'; for (let x = 0; x < w + 30; x += 44) { c.beginPath(); c.arc(x, gy - 12, 26, Math.PI, 0); c.fill(); } }
+    /* The ground. */
+    g = c.createLinearGradient(0, gy, 0, h); g.addColorStop(0, L.turf[0]); g.addColorStop(1, L.turf[1]);
+    c.fillStyle = g; c.fillRect(0, gy, w, h - gy);
+    if (L.wood) { c.strokeStyle = 'rgba(70,30,10,.35)'; c.lineWidth = 1; for (let i = -14; i < 15; i++) { c.beginPath(); c.moveTo(w / 2 + i * 26, gy); c.lineTo(w / 2 + i * 44, h); c.stroke(); } }
+    else if (L.grid) { c.strokeStyle = 'rgba(34,230,255,.3)'; c.lineWidth = 1; for (let i = -14; i < 15; i++) { c.beginPath(); c.moveTo(w / 2 + i * 26, gy); c.lineTo(w / 2 + i * 44, h); c.stroke(); } for (let y = gy + 8; y < h; y += 16) { c.beginPath(); c.moveTo(0, y); c.lineTo(w, y); c.stroke(); } }
+    else if (!L.flat) for (let i = -9; i < 10; i += 2) { c.fillStyle = 'rgba(255,255,255,.055)'; c.beginPath(); c.moveTo(w / 2 + i * 38, gy); c.lineTo(w / 2 + (i + 1) * 38, gy); c.lineTo(w / 2 + (i + 1) * 64, h); c.lineTo(w / 2 + i * 64, h); c.fill(); }
+    if (L.craters) { c.fillStyle = 'rgba(0,0,0,.14)'; for (let i = 0; i < 9; i++) { c.beginPath(); c.ellipse(R() * w, gy + 8 + R() * (h - gy - 12), 12 + R() * 16, 4 + R() * 4, 0, 0, 7); c.fill(); } }
+    c.strokeStyle = L.line; c.lineWidth = 2;
+    c.beginPath(); c.moveTo(0, gy + 3); c.lineTo(w, gy + 3); c.moveTo(w / 2, gy + 3); c.lineTo(w / 2, h); c.stroke();
+    if (!L.flat) { c.beginPath(); c.ellipse(w / 2, gy + (h - gy) * 0.56, w * 0.17, (h - gy) * 0.3, 0, 0, 7); c.stroke(); }
+    if (L.confetti) { const cc = ['#ffd84d', '#ff6a5a', '#69e3c2']; for (let i = 0; i < 60; i++) { c.fillStyle = cc[i % 3]; c.fillRect(R() * w, R() * gy, 3, 5); } }
+  },
+  ball(c, b, M, t) {
+    const r = b.r, k = M.ball;
+    c.save(); c.translate(b.x, b.y); c.rotate(-b.rot);
+    c.lineWidth = 2.4; c.strokeStyle = '#121a33';
+    const disc = f => { c.fillStyle = f; c.beginPath(); c.arc(0, 0, r, 0, 7); c.fill(); };
+    if (k === 'basket') { disc('#f08a3a'); c.lineWidth = 1.8; c.beginPath(); c.moveTo(-r, 0); c.lineTo(r, 0); c.moveTo(0, -r); c.lineTo(0, r); c.moveTo(-r * 0.7, -r * 0.7); c.quadraticCurveTo(-r * 0.15, 0, -r * 0.7, r * 0.7); c.moveTo(r * 0.7, -r * 0.7); c.quadraticCurveTo(r * 0.15, 0, r * 0.7, r * 0.7); c.stroke(); }
+    else if (k === 'beach' || k === 'beachs' || k === 'mega') { disc('#fff'); ['#ff5a4a', '#ffd84d', '#2f9bff'].forEach((f, i) => { for (const o of [0, 3.1416]) { c.fillStyle = f; c.beginPath(); c.moveTo(0, 0); c.arc(0, 0, r, i * 1.05 + o, i * 1.05 + o + 0.55); c.fill(); } }); c.fillStyle = '#fff'; c.beginPath(); c.arc(0, 0, r * 0.2, 0, 7); c.fill(); }
+    else if (k === 'bomb') { disc('#23252e'); c.fillStyle = 'rgba(255,255,255,.22)'; c.beginPath(); c.arc(-r * 0.35, r * 0.35, r * 0.24, 0, 7); c.fill(); }
+    else if (k === 'gold') { disc('#ffd24a'); c.fillStyle = '#b8861f'; for (let i = 0; i < 5; i++) { const a = i * 1.2566; c.beginPath(); c.arc(Math.cos(a) * r * 0.62, Math.sin(a) * r * 0.62, r * 0.2, 0, 7); c.fill(); } c.beginPath(); c.arc(0, 0, r * 0.26, 0, 7); c.fill(); }
+    else if (k === 'bowl') { disc('#3a2a6a'); c.fillStyle = '#120a28'; for (const [x, y] of [[-0.2, 0.3], [0.2, 0.34], [0, 0.02]]) { c.beginPath(); c.arc(x * r, y * r, r * 0.13, 0, 7); c.fill(); } }
+    else if (k === 'puck') { disc('#1f2430'); c.strokeStyle = '#8fd8ff'; c.beginPath(); c.arc(0, 0, r * 0.62, 0, 7); c.stroke(); c.strokeStyle = '#121a33'; }
+    else { disc('#fff'); c.fillStyle = '#121a33'; c.beginPath(); for (let i = 0; i < 5; i++) { const a = i * 1.2566 + 0.3; c[i ? 'lineTo' : 'moveTo'](Math.cos(a) * r * 0.42, Math.sin(a) * r * 0.42); } c.closePath(); c.fill(); for (let i = 0; i < 5; i++) { const a = i * 1.2566 + 0.3; c.beginPath(); c.arc(Math.cos(a) * r * 0.92, Math.sin(a) * r * 0.92, r * 0.22, 0, 7); c.fill(); } }
+    c.beginPath(); c.arc(0, 0, r, 0, 7); c.stroke();
+    c.restore();
+    if (k === 'bomb') {
+      const f = Math.max(0, b.fuse), hot = f < 3;
+      c.strokeStyle = '#8a6a3a'; c.lineWidth = 3; c.beginPath(); c.moveTo(b.x, b.y + r); c.quadraticCurveTo(b.x + 6, b.y + r + 9, b.x + 11, b.y + r + 7); c.stroke();
+      c.fillStyle = (t * (hot ? 12 : 6)) % 2 < 1 ? '#ffd84d' : '#ff5a4a'; c.beginPath(); c.arc(b.x + 11, b.y + r + 7, 4, 0, 7); c.fill();
+      c.save(); c.translate(b.x, b.y); c.scale(1, -1); c.fillStyle = hot ? '#ff8a7a' : '#fff'; c.font = "800 15px 'Archivo Black', system-ui, sans-serif"; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(Math.ceil(f), 0, 1); c.restore();
+    }
+  },
+  goals(c, S, t) {
+    const M = S.M, L = FS.W / 2;
+    c.lineCap = 'round';
+    for (const side of [-1, 1]) {
+      const kit = F_KIT[side < 0 ? 0 : 1];
+      if (M.hoop) {
+        const rx = side * (L - 74), y = 262;
+        c.strokeStyle = '#3a4258'; c.lineWidth = 7; c.beginPath(); c.moveTo(side * (L - 8), 0); c.lineTo(side * (L - 8), 346); c.stroke();
+        c.fillStyle = 'rgba(255,255,255,.9)'; c.fillRect(side * (L - 18) - 4, 228, 8, 112);
+        c.strokeStyle = 'rgba(255,255,255,.75)'; c.lineWidth = 1.5; for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(rx + i * 13, y); c.lineTo(rx + i * 8, y - 40); c.stroke(); } for (const d of [14, 28]) { c.beginPath(); c.moveTo(rx - 27 + d * 0.4, y - d); c.lineTo(rx + 27 - d * 0.4, y - d); c.stroke(); }
+        c.strokeStyle = '#ff6a2a'; c.lineWidth = 6; c.beginPath(); c.moveTo(rx - 31, y); c.lineTo(rx + 31, y); c.stroke();
+        c.strokeStyle = '#ff6a2a'; c.lineWidth = 4; c.beginPath(); c.moveTo(side * (L - 18), y); c.lineTo(rx + side * 31, y); c.stroke();
+        continue;
+      }
+      const gx = side * (L - FS.GD), y0 = fgoalY(S, side), y1 = y0 + M.goalH, back = side * (L - 4);
+      c.strokeStyle = 'rgba(255,255,255,.42)'; c.lineWidth = 1.2;
+      c.beginPath();
+      for (let y = y0; y <= y1; y += 15) { c.moveTo(gx, y); c.lineTo(back, y); }
+      for (let x = 0; x <= 1.001; x += 0.25) { const q = gx + (back - gx) * x; c.moveTo(q, y0); c.lineTo(q, y1); }
+      c.stroke();
+      c.strokeStyle = kit.a; c.lineWidth = 8; c.beginPath(); c.moveTo(back, y1); c.lineTo(gx, y1); c.lineTo(gx, y0); if (y0 > 4) { c.lineTo(back, y0); } c.stroke();
+      c.strokeStyle = '#fff'; c.lineWidth = 4; c.beginPath(); c.moveTo(back, y1); c.lineTo(gx, y1); c.lineTo(gx, y0); if (y0 > 4) c.lineTo(back, y0); c.stroke();
+    }
+    for (const q of M.bumpers || []) {
+      const on = S.bump && S.bump[q[0] + ':' + q[1]] > t;
+      c.fillStyle = on ? '#fff' : '#22e6ff'; c.beginPath(); c.arc(q[0], q[1], q[2], 0, 7); c.fill();
+      c.fillStyle = on ? '#ffd84d' : '#ff2bd6'; c.beginPath(); c.arc(q[0], q[1], q[2] * 0.62, 0, 7); c.fill();
+      c.strokeStyle = '#120a30'; c.lineWidth = 3; c.beginPath(); c.arc(q[0], q[1], q[2], 0, 7); c.stroke();
+    }
+  },
+  /* A cartoon cat footballer, drawn in world space. */
+  player(c, p, kit, cat, t, ballAt) {
+    const P = fparts(p), s = p.s, ink = '#121a33';
+    const sq = p.sq;
+    c.save();
+    /* Squash on landing, stretch on take-off, pivoting at the standing foot. */
+    c.translate(P.sx, P.sy); c.scale(1 + sq * 0.16, 1 - sq * 0.2); c.translate(-P.sx, -P.sy);
+    c.lineCap = 'round'; c.lineJoin = 'round';
+    const line = (w, col, ...pts) => { c.strokeStyle = col; c.lineWidth = w; c.beginPath(); c.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) c.lineTo(pts[i], pts[i + 1]); c.stroke(); };
+    const leg = (fx, fy) => {
+      const mx = p.x + (fx - p.x) * 0.45, my = p.y + (fy - p.y) * 0.45;
+      line(15 * s, ink, p.x, p.y, fx, fy);
+      line(11 * s, '#fff', mx, my, fx, fy);
+      line(9.5 * s, kit.a, mx + (fx - mx) * 0.35, my + (fy - my) * 0.35, mx + (fx - mx) * 0.55, my + (fy - my) * 0.55);
+      line(13 * s, kit.b, p.x, p.y, mx, my);
+    };
+    const boot = (fx, fy, ang) => {
+      c.save(); c.translate(fx, fy); c.rotate(ang);
+      c.fillStyle = ink; c.beginPath(); c.ellipse(p.face * 6 * s, 0, 13 * s, 7.5 * s, 0, 0, 7); c.fill();
+      c.fillStyle = '#ffd84d'; c.beginPath(); c.ellipse(p.face * 6 * s, 0.5 * s, 10.5 * s, 5.2 * s, 0, 0, 7); c.fill();
+      c.restore();
+    };
+    /* Arms flail with the jump. */
+    const sw = Math.sin(t * 10 + p.flail) * (p.ground ? 0.18 : 0.75), lift = Math.max(-0.5, Math.min(1.2, p.vy * 0.0024));
+    const sx = p.x + (P.tx - p.x) * 0.82, sy = p.y + (P.ty - p.y) * 0.82, al = 31 * s;
+    const arm = (a2) => { const ex = sx + Math.sin(a2 + p.a) * al, ey = sy - Math.cos(a2 + p.a) * al; line(11 * s, ink, sx, sy, ex, ey); line(7.5 * s, cat.fur, sx, sy, ex, ey); c.fillStyle = cat.fur; c.beginPath(); c.arc(ex, ey, 5.2 * s, 0, 7); c.fill(); };
+    arm(-p.face * (0.75 + lift) + sw);
+    /* Standing leg behind, then the body, then the kicking leg in front. */
+    leg(P.sx, P.sy); boot(P.sx, P.sy, -p.a);
+    line(32 * s, ink, p.x, p.y, P.tx, P.ty);
+    line(27.5 * s, kit.a, p.x, p.y, P.tx, P.ty);
+    line(9 * s, kit.c, p.x + (P.tx - p.x) * 0.25, p.y + (P.ty - p.y) * 0.25, p.x + (P.tx - p.x) * 0.72, p.y + (P.ty - p.y) * 0.72);
+    leg(P.kx, P.ky); boot(P.kx, P.ky, P.psi);
+    arm(p.face * (0.75 + lift) - sw);
+    /* The head, leaning a little after the body, eyes on the ball. */
+    const hr = P.hr, hx = P.hx, hy = P.hy;
+    c.save(); c.translate(hx, hy); c.rotate(-p.a * 0.8);
+    for (const e of [-1, 1]) { c.fillStyle = ink; c.beginPath(); c.moveTo(e * hr * 0.92, hr * 0.28); c.lineTo(e * hr * 0.86, hr * 1.42); c.lineTo(e * hr * 0.12, hr * 0.86); c.fill(); c.fillStyle = cat.fur; c.beginPath(); c.moveTo(e * hr * 0.8, hr * 0.42); c.lineTo(e * hr * 0.76, hr * 1.14); c.lineTo(e * hr * 0.28, hr * 0.8); c.fill(); c.fillStyle = cat.ear; c.beginPath(); c.moveTo(e * hr * 0.68, hr * 0.6); c.lineTo(e * hr * 0.66, hr * 0.98); c.lineTo(e * hr * 0.42, hr * 0.8); c.fill(); }
+    c.fillStyle = cat.fur; c.strokeStyle = ink; c.lineWidth = 2.6 * s; c.beginPath(); c.arc(0, 0, hr, 0, 7); c.fill(); c.stroke();
+    const lx = Math.max(-1, Math.min(1, (ballAt.x - hx) / 90)), ly = Math.max(-1, Math.min(1, (ballAt.y - hy) / 90));
+    for (const e of [-1, 1]) { c.fillStyle = '#fff'; c.beginPath(); c.arc(e * hr * 0.4 + p.face * hr * 0.1, hr * 0.14, hr * 0.3, 0, 7); c.fill(); c.fillStyle = ink; c.beginPath(); c.arc(e * hr * 0.4 + p.face * hr * 0.1 + lx * hr * 0.12, hr * 0.14 + ly * hr * 0.12, hr * 0.17, 0, 7); c.fill(); }
+    c.fillStyle = cat.nose; c.beginPath(); c.moveTo(p.face * hr * 0.1 - hr * 0.1, -hr * 0.16); c.lineTo(p.face * hr * 0.1 + hr * 0.1, -hr * 0.16); c.lineTo(p.face * hr * 0.1, -hr * 0.3); c.fill();
+    c.fillStyle = ink;
+    if (!p.ground) { c.beginPath(); c.ellipse(p.face * hr * 0.1, -hr * 0.52, hr * 0.17, hr * 0.2, 0, 0, 7); c.fill(); }
+    c.strokeStyle = kit.a; c.lineWidth = 5 * s; c.lineCap = 'butt'; c.beginPath(); c.arc(0, 0, hr * 0.96, 0.62, 2.52); c.stroke();
+    c.restore();
+    c.restore();
+  },
+  /* The hub tile. */
+  poster(w, h) {
+    const key = 'fposter' + w;
+    if (this[key]) return this[key];
+    const cv = document.createElement('canvas'), gy = Math.round(h * 0.8);
+    this.arena(cv, w, h, gy, 'day', 2);
+    const c = cv.getContext('2d'), S = w / 300;
+    c.setTransform(2 * S, 0, 0, -2 * S, w, gy * 2);
+    const p = fplayer(0, 'S', -52, F_BASE), q = fplayer(1, 'S', 72, F_BASE);
+    p.s = q.s = 1.2; p.y = 120; p.a = 0.3; p.leg = 1.8; p.kick = 1; p.ground = false; p.vy = 300;
+    q.y = 56; q.a = -0.1; q.leg = 0.1;
+    const b = { x: 40, y: 150, r: 22, rot: 0.4 };
+    this.player(c, q, F_KIT[1], fcat('neo'), 1, b);
+    this.player(c, p, F_KIT[0], fcat(Prof.P ? Prof.P.avatar : 'mochi'), 1, b);
+    this.ball(c, b, F_BASE, 0);
+    return (this[key] = cv.toDataURL('image/jpeg', 0.86));
+  }
+};
+
+const Soccer = {
+  o: null, S: null, raf: 0, state: '', acc: 0, last: 0, stateT: 0, slow: 1, fx: [], bot: { wait: 0, idle: 0 }, cx: null, shake: 0, shown: false,
+  /* o: mode ('bots' or 'duo'), skill, wager, me and foe ({n, a}). */
+  start(o) {
+    this.o = o; o.gid = 'f' + rid(8);
+    this.shown = false;
+    if (o.wager && o.wager.amt > 0 && !Prof.escrow(o.gid, o.wager.cur, o.wager.amt)) { toast('Not enough coins for that bet, so this one’s friendly.'); o.wager = { cur: o.wager.cur, amt: 0 }; }
+    this.S = fnew({});
+    go('sgame');
+  },
+  vsBot(skill, wager) {
+    const P = Prof.P, cats = FREE_CATS.filter(c => c !== P.avatar);
+    this.start({ mode: 'bots', skill, wager: botBet(wager), me: { n: P.name, a: P.avatar }, foe: { n: BOT_NAMES[Math.floor(Math.random() * BOT_NAMES.length)], a: cats[Math.floor(Math.random() * cats.length)] } });
+  },
+  duo() {
+    const P = Prof.P, cats = FREE_CATS.filter(c => c !== P.avatar);
+    this.start({ mode: 'duo', me: { n: 'Player 1', a: P.avatar }, foe: { n: 'Player 2', a: cats[0] } });
+  },
+  enter() {
+    const o = this.o;
+    if (!o) { go('soccer'); return; }
+    const duo = o.mode === 'duo';
+    $('#app').innerHTML = `<main class="fgame">
+      <header class="ftop"><button class="iconbtn" data-a="spause" aria-label="Menu">${UI_ICON.menu}</button>
+        <div class="fscore"><span class="fa"><i>${esc(o.me.n)}</i><b id="fsa">${this.S.score[0]}</b></span><span class="fm"><small>First to</small><b>${FS_TARGET}</b></span><span class="fb"><b id="fsb">${this.S.score[1]}</b><i>${esc(o.foe.n)}</i></span></div></header>
+      <div class="fstage" id="fstage"><canvas id="fbg"></canvas><canvas id="fcv"></canvas><span class="fchip" id="fchip"></span><div class="fpop" id="fpop"></div></div>
+      <div class="fpads"><button class="fpad a" id="fpa" aria-label="${duo ? 'Player 1 jump' : 'Jump'}"><b>JUMP</b>${duo ? '<small>Player 1</small>' : '<small>Tap to leap · tap again to kick</small>'}</button>${duo ? '<button class="fpad b" id="fpb" aria-label="Player 2 jump"><b>JUMP</b><small>Player 2</small></button>' : ''}</div>
+      <div class="gover" id="fend" hidden></div>
+    </main>`;
+    $('#fpa').addEventListener('pointerdown', e => { e.preventDefault(); this.press(0); });
+    if (duo) $('#fpb').addEventListener('pointerdown', e => { e.preventDefault(); this.press(1); });
+    else $('#fstage').addEventListener('pointerdown', e => { e.preventDefault(); this.press(0); });
+    this.cats = [fcat(o.me.a), fcat(o.foe.a)];
+    this.mount();
+    if (!this.state || this.state === 'over') this.nextPoint();
+    else this.paintArena();
+    cancelAnimationFrame(this.raf);
+    this.last = 0;
+    this.frameFn = now => this.frame(now);
+    this.raf = requestAnimationFrame(this.frameFn);
+  },
+  mount() {
+    const st = $('#fstage'), r = st.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.w = Math.round(r.width); this.h = Math.round(r.height); this.dpr = dpr;
+    this.gy = Math.round(this.h - clamp(this.h * 0.13, 56, 96));
+    this.sc = this.w / FS.W;
+    const cv = $('#fcv');
+    cv.width = Math.round(this.w * dpr); cv.height = Math.round(this.h * dpr);
+    this.cx = cv.getContext('2d');
+    this.S.ceil = this.gy / this.sc - 6;
+  },
+  paintArena() { FArt.arena($('#fbg'), this.w, this.h, this.gy, this.S.M.look, this.dpr); },
+  setState(s) { this.state = s; this.stateT = 0; },
+  nextPoint() {
+    const S = this.S, id = fnextMode(S);
+    S.pow = [1, this.o.mode === 'bots' ? { easy: 0.72, normal: 0.92, hard: 1.04 }[this.o.skill] : 1];
+    fsetup(S, id);
+    this.mount();
+    this.paintArena();
+    this.fx = []; this.acc = 0; this.slow = 1; this.bot = { wait: 0.5, idle: 0 };
+    this.pointN = (this.pointN || 0) + 1;
+    const c = $('#fpop');
+    c.innerHTML = `<small>${id === 'golden' ? 'Sudden death' : 'Next up'}</small><h2>${esc(S.M.name)}</h2><p>${esc(S.M.sub)}</p>`;
+    c.className = 'fpop show' + (id === 'golden' ? ' gold' : '');
+    $('#fchip').textContent = S.M.name;
+    this.setState('intro');
+    Sound.play('swhistle');
+  },
+  press(team) {
+    if (this.state !== 'play') return;
+    if (fpress(this.S, team)) { Sound.play('sjump'); vibrate(6); }
+  },
+  puff(x, y, n, col, sp) {
+    for (let i = 0; i < n && this.fx.length < 90; i++) { const a = Math.random() * 6.28, v = (sp || 120) * (0.4 + Math.random()); this.fx.push({ x, y, vx: Math.cos(a) * v, vy: Math.abs(Math.sin(a)) * v, l: 0.4 + Math.random() * 0.35, c: col, s: 2 + Math.random() * 3 }); }
+  },
+  /* The physics reports what happened; this turns it into dust, thuds and shake. */
+  events() {
+    const S = this.S, turf = (F_LOOK[S.M.look] || F_LOOK.day).turf[1];
+    for (const e of S.ev) {
+      if (e[0] === 'land') { this.puff(e[1], 2, 5, turf, 90); if (e[2] > 420) Sound.play('sland'); }
+      else if (e[0] === 'jump') this.puff(e[1], 2, 3, turf, 70);
+      else if (e[0] === 'kick') { Sound.play('skick'); this.puff(e[1], e[2], 5, '#fff', 170); if (e[3] > 500) this.shake = Math.max(this.shake, 3); }
+      else if (e[0] === 'bump') Sound.play('sbump');
+      else if (e[0] === 'post') { Sound.play('spost'); this.shake = Math.max(this.shake, 3); }
+      else if (e[0] === 'bounce') Sound.play('sbump');
+      else if (e[0] === 'bumper') { (S.bump = S.bump || {})[e[1] + ':' + e[2]] = S.t + 0.12; Sound.play('spost'); }
+      else if (e[0] === 'boom') { this.puff(e[1], e[2], 40, '#ffb347', 420); this.shake = 12; Sound.play('wboom'); }
+      else if (e[0] === 'clash') this.puff(e[1], e[2], 4, '#ffd84d', 130);
+    }
+    S.ev.length = 0;
+  },
+  goal(team) {
+    const S = this.S;
+    S.score[team]++;
+    const el = $(team ? '#fsb' : '#fsa');
+    if (el) { el.textContent = S.score[team]; el.animate([{ transform: 'scale(1.7)' }, { transform: 'scale(1)' }], { duration: 420, easing: 'ease-out' }); }
+    const b = S.bs[0], mine = team === 0 || this.o.mode === 'duo', word = S.M.fuse ? 'BOOM!' : S.M.hoop ? 'SWISH!' : S.M.water ? 'SPLASH!' : 'GOAL!';
+    this.puff(b.x, b.y, 34, F_KIT[team].a, 380); this.puff(b.x, b.y, 20, '#ffd84d', 300);
+    const c = $('#fpop');
+    c.innerHTML = `<small>${esc(team ? this.o.foe.n : this.o.me.n)}</small><h2>${word}</h2><p>${S.score[0]} - ${S.score[1]}</p>`;
+    c.className = 'fpop show goal t' + team;
+    Sound.play(mine ? 'sgoal' : 'sconcede');
+    vibrate(mine ? [20, 30, 40] : 30);
+    this.shake = Math.max(this.shake, 7);
+    this.slow = 0.28;
+    this.setState('goal');
+  },
+  frame(now) {
+    if (!this.S || app.screen !== 'sgame') return;
+    this.raf = requestAnimationFrame(this.frameFn);
+    if (this.paused) { this.last = now; return; }
+    const dt = this.last ? Math.min(0.05, (now - this.last) / 1000) : 0.016;
+    this.last = now; this.stateT += dt;
+    const S = this.S;
+    if (this.state === 'intro') {
+      if (this.stateT > 1.6) { $('#fpop').className = 'fpop'; this.setState('play'); Sound.play('swhistle'); }
+    } else if (this.state === 'play' || this.state === 'goal') {
+      this.acc += dt * this.slow;
+      while (this.acc >= FS.DT) {
+        this.acc -= FS.DT;
+        if (this.state === 'play' && this.o.mode === 'bots') fbot(S, 1, this.o.skill, this.bot, FS.DT);
+        const r = fstep(S);
+        if (r >= 0 && this.state === 'play') this.goal(r);
+      }
+      this.events();
+      if (this.state === 'play' && S.t > 40) { /* Nobody could finish this one, so on to the next mode. */ this.nextPoint(); }
+      if (this.state === 'goal' && this.stateT > 1.7) {
+        if (S.score[0] >= FS_TARGET || S.score[1] >= FS_TARGET) this.finish();
+        else this.nextPoint();
+      }
+    }
+    this.draw(now / 1000, dt);
+  },
+  draw(t, dt) {
+    const c = this.cx, S = this.S, M = S.M, k = this.sc * this.dpr;
+    if (!c) return;
+    c.setTransform(1, 0, 0, 1, 0, 0);
+    c.clearRect(0, 0, this.w * this.dpr, this.h * this.dpr);
+    this.shake = Math.max(0, this.shake - dt * 22);
+    const sx = (Math.random() - 0.5) * this.shake, sy = (Math.random() - 0.5) * this.shake;
+    c.setTransform(k, 0, 0, -k, this.w * this.dpr / 2 + sx, this.gy * this.dpr + sy);
+    /* Soft shadows on the ground. */
+    c.fillStyle = 'rgba(10,16,30,.28)';
+    for (const b of S.bs) { const f = Math.max(0.35, 1 - b.y / 500); c.beginPath(); c.ellipse(b.x, -3, b.r * f, b.r * 0.22 * f, 0, 0, 7); c.fill(); }
+    for (const p of S.ps) { const f = Math.max(0.4, 1 - p.y / 500); c.beginPath(); c.ellipse(p.x, -3, 24 * p.s * f, 5 * p.s * f, 0, 0, 7); c.fill(); }
+    FArt.goals(c, S, S.t);
+    const b0 = S.bs[0];
+    for (const p of S.ps) FArt.player(c, p, F_KIT[p.team], this.cats[p.team], t, b0);
+    for (const b of S.bs) FArt.ball(c, b, M, t);
+    for (let i = this.fx.length - 1; i >= 0; i--) {
+      const f = this.fx[i];
+      f.l -= dt; if (f.l <= 0) { this.fx.splice(i, 1); continue; }
+      f.vy -= 620 * dt; f.x += f.vx * dt; f.y += f.vy * dt;
+      c.globalAlpha = Math.min(1, f.l * 3); c.fillStyle = f.c; c.fillRect(f.x, f.y, f.s, f.s);
+    }
+    c.globalAlpha = 1;
+    if (M.water) { c.fillStyle = 'rgba(30,170,190,.58)'; c.fillRect(-FS.W / 2 - 20, -80, FS.W + 40, 80 + 4 * Math.sin(t * 2.4)); c.fillStyle = 'rgba(255,255,255,.55)'; for (let x = -FS.W / 2; x < FS.W / 2; x += 46) c.fillRect(x + 8 * Math.sin(t + x), 2 * Math.sin(t * 2 + x), 22, 2.5); }
+    if (M.wind) { c.strokeStyle = 'rgba(255,255,255,.4)'; c.lineWidth = 2; const dir = Math.sign(S.wind) || 1, u = (t * 500 * dir) % 200; for (let i = 0; i < 7; i++) { const y = 70 + i * 62, x = ((i * 137 + u) % (FS.W + 100)) - FS.W / 2 - 50; c.beginPath(); c.moveTo(x, y); c.lineTo(x + dir * Math.min(70, Math.abs(S.wind) * 0.14), y); c.stroke(); } }
+    if (M.dark) {
+      c.setTransform(1, 0, 0, 1, 0, 0);
+      const px = (b0.x * this.sc + this.w / 2) * this.dpr, py = (this.gy - b0.y * this.sc) * this.dpr, R = 150 * this.dpr, g = c.createRadialGradient(px, py, R * 0.25, px, py, R);
+      g.addColorStop(0, 'rgba(4,6,20,0)'); g.addColorStop(1, 'rgba(4,6,20,.93)');
+      c.fillStyle = g; c.fillRect(0, 0, this.w * this.dpr, this.h * this.dpr);
+    }
+  },
+  finish() {
+    const S = this.S, o = this.o, w = S.score[0] >= FS_TARGET ? 0 : 1;
+    this.setState('over'); this.shown = true;
+    let extra = '';
+    if (o.mode === 'bots') {
+      const amt = o.wager ? o.wager.amt : 0, r = Prof.settle({ game: 'soccer', gid: o.gid, w, rmode: 'bots', cur: o.wager ? o.wager.cur : 's', amt, pot: amt * 2, bonus: [0, 0] }, 0);
+      Prof.P.sstats.goals += S.score[0]; Prof.P.sstats.conceded += S.score[1];
+      Prof.save();
+      if (typeof profileChanged === 'function') profileChanged();
+      if (r) extra = `<div class="rrow">${coin('s')}<b>+${thousands(r.silver)}</b> silver</div>${r.gold ? `<div class="rrow">${coin('g')}<b>+${r.gold}</b> gold</div>` : ''}${r.pot ? `<div class="rrow">${coin(o.wager.cur)}<b>+${thousands(r.pot)}</b> the pot is yours</div>` : ''}`;
+    }
+    const won = w === 0 || o.mode === 'duo', el = $('#fend');
+    el.innerHTML = `<div class="gcard ${won ? 'win' : 'lose'}"><h2>${o.mode === 'duo' ? esc(w ? o.foe.n : o.me.n) + ' wins!' : won ? 'Victory!' : esc(o.foe.n) + ' wins'}</h2><p class="fend-s">${S.score[0]} - ${S.score[1]}</p>${extra}
+      <div class="ractions"><button class="btn big primary" data-a="fagain">Play again</button><button class="btn ghost" data-a="fback">Back</button></div></div>`;
+    el.hidden = false;
+    $('#fpop').className = 'fpop';
+    Sound.play(won ? 'win' : 'hit');
+    if (won) FX.play(Prof.P.eq.fx, 3200);
+  },
+  abandon() {
+    const o = this.o;
+    if (o && !this.shown && o.mode === 'bots') Prof.forfeit(o.gid, 'soccer');
+    this.stop();
+  },
+  stop() { cancelAnimationFrame(this.raf); this.raf = 0; this.o = null; this.S = null; this.cx = null; this.state = ''; this.paused = false; this.pointN = 0; }
+};
+
+/* ---------- menus ---------- */
+function viewSoccer() {
+  const st = Prof.P.sstats, rate = st.played ? Math.round(st.wins / st.played * 100) : 0;
+  const stat = (v, l) => `<div><b>${v}</b><small>${l}</small></div>`;
+  return `<main class="scr fhome">${topbar('Fun Soccer', 'hub')}
+    <section class="fhero" style="background-image:url(${FArt.poster(390, 236)})"><div><span>One button. Twenty modes.</span><h1>FUN SOCCER</h1><p>First to five. The rules change every goal.</p></div></section>
+    <section class="wstatrow">${stat(fmt(st.wins), 'Wins')}${stat(rate + '%', 'Win rate')}${stat(st.best, 'Best streak')}${stat(fmt(st.goals), 'Goals')}</section>
+    <nav class="menu">
+      <button class="tile t-online" data-a="fsolo"><b>Play</b><small>You against the bots</small></button>
+      <button class="tile t-friends" data-a="fduo"><b>Two players</b><small>Same phone, a thumb each</small></button>
+      <button class="tile t-board" data-a="fboard"><b>Leaderboard</b><small>Most soccer wins</small></button>
+      <button class="tile t-rules" data-a="frules"><b>How to play</b><small>All ${F_MODES.length + 1} modes</small></button>
+    </nav>
+  </main>`;
+}
+function viewSoccerSolo() {
+  const c = app.fsolo;
+  return `<main class="scr fhome">${topbar('Play', 'soccer')}
+    <section class="card-sec"><h3>Your opponent</h3><div class="form"><div class="row"><span>Skill</span>${seg('fs.skill', [['easy', 'Easy'], ['normal', 'Normal'], ['hard', 'Hard']], c.skill)}</div></div></section>
+    <section class="card-sec"><h3>Wager</h3>${wagerForm(c.wager, 'fb.', false, 2, true)}<p class="hint">Bots put house coins in the pot. Beat them to take it all. Bigger bets are for matches against real players.</p></section>
+    <div class="stickybtn"><button class="btn big primary" data-a="ffight">Kick off</button></div>
+  </main>`;
+}
+function viewSoccerRules() {
+  return `<main class="scr fhome">${topbar('How to play', 'soccer')}
+    <section class="card-sec"><h3>One button</h3><p>Tap <b>Jump</b> and both your players leap at the play. Tap again in the air to swing a kick. If the ball is above you, it’s an overhead.</p><p>Timing is everything: the kick is strongest while the leg is whipping forward. Your keeper stays near goal unless the ball comes close.</p></section>
+    <section class="card-sec"><h3>The match</h3><p>First to ${FS_TARGET} wins. Every goal shuffles the mode, and at four all it’s <b>Golden Goal</b>.</p></section>
+    <section class="card-sec"><h3>${F_MODES.length + 1} modes</h3><div class="fmodes">${F_MODES.concat([F_GOLDEN]).map(m => `<div><b>${esc(m.name)}</b><small>${esc(m.sub)}</small></div>`).join('')}</div></section>
+  </main>`;
+}
+
+/* ==========================================================================
    Wiring: taps, table lifecycle, boot.
    ========================================================================== */
 const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -15020,6 +16325,28 @@ const ACT = {
     $('#hubgrid').innerHTML = hubTiles();
     WarArt.posters($('#app'));
   },
+  /* ---------- Fun Soccer ---------- */
+  soccer() { app.game = 'soccer'; go('soccer'); },
+  fsolo() { app.fsolo = Object.assign({ skill: 'normal', wager: { cur: 's', amt: 0 } }, LS.get('mm_fsolo') || {}); app.fsolo.wager = botBet(app.fsolo.wager); go('fsolo'); },
+  ffight() {
+    const c = app.fsolo;
+    if (c.wager.amt > Prof.bal(c.wager.cur)) { toast(`You need ${c.wager.amt} ${curName(c.wager.cur)} for that bet.`, 'bad'); return; }
+    LS.set('mm_fsolo', c);
+    Sound.unlock();
+    Soccer.vsBot(c.skill, c.wager);
+  },
+  fduo() { Sound.unlock(); Soccer.duo(); },
+  frules: () => go('frules'),
+  fboard() { app.boardG = 'soccer'; loadBoard(); },
+  spause() {
+    const on = Prof.P.settings.sound;
+    Soccer.paused = true;
+    sheet(`<h3>Paused</h3><div class="menulist"><button class="btn primary" data-a="closesheet">Back to the match</button><button class="btn ghost" data-a="fsound">${on ? UI_ICON.sound + ' Sound on' : UI_ICON.mute + ' Sound off'}</button><button class="btn warn" data-a="fquit">Quit the match</button></div>`);
+  },
+  fsound() { Prof.P.settings.sound = Prof.P.settings.sound ? 0 : 1; Prof.save(); Sound.unlock(); ACT.spause(); },
+  fquit() { closeSheet(); go('soccer'); },
+  fagain() { FX.stop(); const o = Soccer.o, duo = o.mode === 'duo'; Soccer.stop(); app.screen = 'soccer'; if (duo) Soccer.duo(); else { const c = app.fsolo; if (c.wager.amt > Prof.bal(c.wager.cur)) c.wager = { cur: c.wager.cur, amt: 0 }; Soccer.vsBot(c.skill, c.wager); } },
+  fback() { FX.stop(); go('soccer'); },
   /* ---------- War ---------- */
   war() { app.game = 'war'; WarNet.reset(); go('war'); },
   wsolo() { app.wsolo = Object.assign({ skill: 'normal', wager: { cur: 's', amt: 0 } }, LS.get('mm_wsolo') || {}); app.wsolo.wager = botBet(app.wsolo.wager); go('wsolo'); },
@@ -15067,7 +16394,7 @@ const ACT = {
   shopg(el) { app.shopG = el.dataset.v === 'war' ? 'war' : 'mocho'; Sound.play('tap'); render(); },
   warmory(el) { app.shopG = 'war'; app.wtab = el.dataset.v; go('shop'); },
   wboard() { app.boardG = 'war'; loadBoard(); },
-  boardg(el) { app.boardG = el.dataset.v === 'war' ? 'war' : 'mocho'; Sound.play('tap'); render(); },
+  boardg(el) { app.boardG = el.dataset.v === 'war' || el.dataset.v === 'soccer' ? el.dataset.v : 'mocho'; Sound.play('tap'); render(); },
   wrules: () => go('wrules'),
   pcgame(el) { app.pcGame = el.dataset.v; Sound.play('tap'); PlayerCard.flipped = false; render(); },
   finvmocho(el) { closeSheet(); Friends.invite(el.dataset.v); },
@@ -15109,6 +16436,35 @@ const ACT = {
   shop() { if (app.game) app.shopG = app.game; go('shop'); },
   rules: () => go('rules'),
   crates: () => go('crates'),
+  market() { Market.tab = Prof.P.offersIn.length ? 'sell' : Market.tab; go('market'); Market.load(true); },
+  mktab(el) { Market.tab = el.dataset.v; Sound.play('tap'); render(); },
+  mkcat(el) { Market.cat = el.dataset.v; Sound.play('tap'); render(); },
+  mkreload() { Market.load(true); toast('Checking the market…'); },
+  mkopen: el => marketSheet(el.dataset.v),
+  mkbuy: el => Market.buy(el.dataset.v),
+  mkoffer(el) { const i = $('#mkamt'); Market.offer(el.dataset.v, Math.floor(+(i && i.value)) || 0); },
+  mkyes: el => Market.accept(el.dataset.v),
+  mkno: el => Market.decline(el.dataset.v),
+  mkcancel: el => Market.cancelOffer(el.dataset.v),
+  mkdown: el => Market.takeDown(el.dataset.v),
+  mksell(el) { if (!Cloud.me()) { sheet(accountHTML('The Marketplace needs an online account.')); return; } marketSell(el.dataset.v); },
+  mkcur(el) { Market.cur = el.dataset.v; $$('.mkcur button').forEach(b => b.classList.toggle('on', b.dataset.v === Market.cur)); },
+  async mklist(el) {
+    const i = $('#mkprice'), price = Math.floor(+(i && i.value)) || 0, key = el.dataset.v;
+    if (price < 1 || price > MARKET_TOP) { toast('Enter a price.', 'bad'); return; }
+    if (await Market.list(key, Market.cur, price)) { closeSheet(); toast(`${esc(itemName(ITEM[key]))} is on the Marketplace`, 'good'); Market.tab = 'sell'; if (app.screen !== 'market') go('market'); else render(); }
+  },
+  mkhouse(el) {
+    const key = el.dataset.v;
+    if (!Market.spare(key)) return;
+    delete Prof.P.spare[key];
+    Prof.P.silver += CRATE_REPEAT;
+    Market.changed();
+    closeSheet();
+    toast(`Sold for ${coin('s')}<b>${thousands(CRATE_REPEAT)}</b>`, 'good');
+    if (app.screen === 'crate') { app.crate = { id: app.crate.id, prize: null, done: false }; }
+    render();
+  },
   crateinfo: el => crateInfo(el.dataset.v),
   cratego(el) { closeSheet(); app.crate = { id: el.dataset.v, prize: null, done: false }; go('crate'); },
   crateopen() {
@@ -15363,6 +16719,8 @@ const ACT = {
     Sound.play('tap');
     if (scope === 'set') { Prof.P.settings[k] = v; Prof.save(); if (k === 'sound' && v) Sound.unlock(); render(); return; }
     if (scope === 'ws') { app.wsolo[k] = v; return render(); }
+    if (scope === 'fs') { app.fsolo[k] = v; return render(); }
+    if (scope === 'fb') { if (k === 'cur') app.fsolo.wager = { cur: v, amt: 0 }; else app.fsolo.wager.amt = v; return render(); }
     if (scope === 'wb') { if (k === 'cur') app.wsolo.wager = { cur: v, amt: 0 }; else app.wsolo.wager.amt = v; return render(); }
     if (scope === 'wr') { WarNet.wager = k === 'cur' ? { cur: v, amt: 0 } : { cur: WarNet.wager.cur, amt: v }; WarNet.push(); return render(); }
     if (scope === 'solo') { app.solo[k] = v; return render(); }
@@ -15395,7 +16753,7 @@ const ACT = {
   /* Raises the bet on top of what's there, as far as your coins go. */
   betadd(el) {
     const scope = el.dataset.k.split('.')[0], step = +el.dataset.v;
-    if (scope === 'sw' || scope === 'wb' || (scope === 'tw' && app.host && app.host.seats.some(s => s.bot))) return;
+    if (scope === 'sw' || scope === 'wb' || scope === 'fb' || (scope === 'tw' && app.host && app.host.seats.some(s => s.bot))) return;
     const w = { sw: app.solo && app.solo.wager, wb: app.wsolo && app.wsolo.wager, wr: WarNet.wager, tw: app.host && app.host.wager, tf: { cur: Tour.form.t, amt: Tour.form.amt } }[scope];
     if (!w) return;
     const have = Prof.bal(w.cur), amt = Math.min(w.amt + step, have);
@@ -15405,10 +16763,11 @@ const ACT = {
   },
   /* Shows what we have straight away, then updates if the friend's card has changed since. */
   async fview(el) {
-    const k = el.dataset.v, was = (Friends.live[k] || {}).c;
+    const k = el.dataset.v;
     app.fview = k; PlayerCard.flipped = false; Sound.play('tap'); go('fcard');
-    await Friends.refresh();
-    if (app.screen === 'fcard' && app.fview === k && (Friends.live[k] || {}).c !== was) render();
+    const [, got] = await Promise.all([Friends.refresh(), Cloud.docs(['board/' + k])]);
+    if (got && got[k]) Friends.boards[k] = got[k];
+    if (app.screen === 'fcard' && app.fview === k) render();
   },
   lpcat(el) {
     const i = +el.dataset.v;
@@ -15577,7 +16936,7 @@ document.addEventListener('input', e => {
 document.addEventListener('change', e => {
   if (e.target && e.target.id === 'emovol') { Prof.save(); Sound.unlock(); Sound.clip('jnde', true); }
 });
-addEventListener('resize', () => { Themes.fit(); if (app.screen === 'game') { GameUI.keys.hand = ''; GameUI.update(); } if (app.screen === 'wgame') WarGame.resize(); });
+addEventListener('resize', () => { Themes.fit(); if (app.screen === 'sgame' && Soccer.S) { Soccer.mount(); Soccer.paintArena(); } if (app.screen === 'game') { GameUI.keys.hand = ''; GameUI.update(); } if (app.screen === 'wgame') WarGame.resize(); });
 /* A swipe in from the left edge goes back, like the rest of iOS. */
 (() => {
   let x0 = -1, y0 = 0;
