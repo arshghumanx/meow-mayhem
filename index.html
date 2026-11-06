@@ -5444,16 +5444,6 @@ body:is([data-theme="sticker"], [data-theme="holo"], [data-theme="paper"], [data
 .fgame { position: absolute; inset: 0; display: flex; flex-direction: column; max-width: 520px; margin: 0 auto; background: #0b1225; color: #fff4d2; -webkit-user-select: none; user-select: none; touch-action: manipulation; overflow: hidden; }
 .ftop { flex: none; display: flex; align-items: center; gap: 8px; padding: calc(var(--sat) + 6px) 10px 8px; background: #0b1225; }
 .ftop .iconbtn { flex: none; width: 38px; height: 38px; color: #fff4d2; background: rgba(255,244,210,.1); }
-.fscore { flex: 1; min-width: 0; display: grid; grid-template-columns: 1fr auto 1fr; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 2px #121a33, 0 3px 0 #121a33; }
-.fscore span { display: flex; align-items: center; gap: 6px; padding: 5px 9px; min-width: 0; }
-.fscore .fa { background: #2f6bff; justify-content: space-between; }
-.fscore .fb { background: #ff5a4a; justify-content: space-between; }
-.fscore .fm { flex-direction: column; gap: 0; padding: 3px 9px; background: #fff4d2; color: #121a33; }
-.fscore .fm small { font: 800 8.5px/1 var(--f-body); text-transform: uppercase; letter-spacing: .06em; }
-.fscore .fm b { font: 900 15px/1 var(--f-display); }
-.fscore i { font: 800 12.5px/1.1 var(--f-body); font-style: normal; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-.fscore b { flex: none; font: 900 25px/1 'Archivo Black', var(--f-display); color: #fff; }
-.fscore .fm b { color: #121a33; font: 900 15px/1 var(--f-display); }
 .fstage { position: relative; flex: 1; min-height: 0; overflow: hidden; }
 .fstage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .fchip { position: absolute; left: 10px; top: 8px; padding: 3px 9px; border-radius: 8px; font: 800 11.5px var(--f-body); letter-spacing: .03em; color: #fff4d2; background: rgba(11,18,37,.72); pointer-events: none; }
@@ -5513,6 +5503,46 @@ body:is([data-theme="sticker"], [data-theme="holo"], [data-theme="paper"], [data
 
 /* These rows are always dark, so their outline buttons can't take a light theme's ink. */
 .mkrow .btn.ghost, .mkoffer .btn.ghost { color: #fff; background: transparent; box-shadow: inset 0 0 0 2px rgba(255,255,255,.3); }
+/* ---------- Fun Soccer: neon scoreboard, round clock, sideways mode ---------- */
+body[data-screen="sgame"] #app { overflow: hidden; }
+.ftop { display: grid; grid-template-columns: 46px 1fr 46px; justify-items: center; }
+.ftop .iconbtn { justify-self: start; }
+.fvs { padding: 3px 10px; gap: 6px; max-width: 100%; }
+.fvs .glove { width: 26px; height: 26px; flex: none; }
+.fvs .glove.b { transform: rotate(8deg); filter: drop-shadow(0 0 3px #1e90ff); }
+.fvs .glove.r { transform: scaleX(-1) rotate(8deg); filter: drop-shadow(0 0 3px #ff2d55); }
+/* Held still on purpose: an animated glow repaints every frame on top of the pitch. */
+.fvs.lead-b .glove.b, .fvs.lead-r .glove.r { animation: none; opacity: 1; }
+.fvs.lead-b .glove.b { filter: drop-shadow(0 0 5px #1e90ff) drop-shadow(0 0 10px #1e90ff); }
+.fvs.lead-r .glove.r { filter: drop-shadow(0 0 5px #ff2d55) drop-shadow(0 0 10px #ff2d55); }
+.fvs.lead-b .glove.r, .fvs.lead-r .glove.b { opacity: .45; filter: none; }
+.ftime { justify-self: end; min-width: 42px; text-align: right; font: 800 21px/1 "Orbitron", "Chakra Petch", var(--f-display); font-variant-numeric: tabular-nums; color: #7dffe0; text-shadow: 0 0 8px #18e6b4; }
+.ftime.low { color: #ff7d94; text-shadow: 0 0 8px #ff2d55; }
+
+#fbg { right: auto; height: 100%; will-change: transform; }
+.fstage canvas#fbg { width: auto; }
+
+.scr.fhome .menu .tile.t-rules { grid-column: 1 / -1; min-height: 72px; }
+
+/* Sideways: the pitch fills the screen and the scoreboard floats over the sky. */
+.fgame.land { max-width: none; --fl: max(10px, var(--sal)); --fr: max(10px, var(--sar)); }
+.fgame.rot { position: fixed; inset: auto; left: 0; top: 0; margin: 0; transform-origin: 0 0; --fl: max(10px, var(--sat)); --fr: max(10px, var(--sab)); }
+.fgame.land .ftop { position: absolute; left: 0; right: 0; top: 0; z-index: 5; padding: 6px var(--fr) 0 var(--fl); background: none; pointer-events: none; }
+.fgame.rot .ftop { padding-top: 6px; }
+.fgame.land .ftop > * { pointer-events: auto; }
+.fgame.land .ftop .iconbtn { background: rgba(4,4,14,.62); }
+.fgame.land .ftime { padding: 7px 8px; border-radius: 10px; text-align: center; background: rgba(4,4,14,.62); }
+.fgame.land .fchip { left: var(--fl); top: 50px; }
+.fgame.land .fpads { position: absolute; inset: 0; z-index: 4; padding: 0; gap: 0; background: none; }
+.fgame.land .fpad { height: auto; border-radius: 0; justify-content: flex-end; padding-bottom: 10px; background: none; box-shadow: none; }
+.fgame.land .fpad:active { transform: none; box-shadow: none; background: rgba(255,255,255,.05); }
+.fgame.land .fpad b { display: none; }
+.fgame.land .fpad small { padding: 3px 9px; border-radius: 8px; color: #fff4d2; background: rgba(11,18,37,.6); opacity: 1; }
+.fgame.land .fpop { top: 46%; z-index: 6; }
+.fgame .gover { z-index: 8; }
+.fgame .gcard .btn.warn { color: #fff; }
+/* The screen-entry animation owns transform while it runs, which would cancel the turn. */
+.fgame.rot, .fgame.rot.enter { animation: none !important; }
 </style>
 </head>
 <body>
@@ -6272,7 +6302,7 @@ const WAR_PAINT = Object.fromEntries(WAR_PAINTS.map(p => [p.id, p]));
 /* ==========================================================================
    Shop catalog. p = silver price, g = gold price, free when neither.
    ========================================================================== */
-const APP_VERSION = '1.1.3';
+const APP_VERSION = '1.1.4';
 const RARITY = { common: 'Common', rare: 'Rare', epic: 'Epic', legendary: 'Legendary', mythic: 'Mythic' };
 const SHOP_TABS = [
   ['card', 'Card Skins'], ['table', 'Tables'], ['avatar', 'Avatars'], ['frame', 'Frames'], ['tag', 'Name Tags'], ['font', 'Fonts'],
@@ -6352,7 +6382,8 @@ const CATALOG = {
     { id: 'legend', name: 'Legend', p: 10000, r: 'epic', desc: 'Songs are sung.' },
     { id: 'ustaad', name: 'Ustaad', p: 10000, r: 'epic', desc: 'The master of the table.' },
     { id: 'boss', name: 'Ultimate Final Boss', r: 'mythic', world: 1, desc: 'Only one exists in the whole world. Won and lost in tournaments.' },
-    { id: 'titan', name: 'Undefeated Titan', r: 'mythic', world: 1, desc: 'Only one exists in the whole world. Won and lost in tournaments.' }
+    { id: 'titan', name: 'Undefeated Titan', r: 'mythic', world: 1, desc: 'Only one exists in the whole world. Won and lost in tournaments.' },
+    { id: 'goat', name: 'Mocho G.O.A.T', r: 'mythic', world: 1, desc: 'Only one exists in the whole world. Won and lost in tournaments.' }
   ],
   fx: [
     { id: 'confetti', name: 'Confetti Pop', r: 'common', desc: 'A classic burst of confetti.' },
@@ -7516,11 +7547,30 @@ function warBot(S, side, skill, rnd) {
    A player is a balancing body on one springy standing leg, with a kicking leg
    on a hinge at the hip. A spring keeps the body upright, so players stand, wobble
    and bounce instead of collapsing. World units, y points up, the ground is y = 0.
+   Online play replays this on two phones, so nothing here may depend on the device:
+   no Math.random, and no Math.sin or Math.exp, which differ between browsers.
    ========================================================================== */
-const FS = { W: 560, DT: 1 / 120, G: 1500, GD: 46, LEG: 46, BODY: 36, HEAD: 18 };
-const FS_TARGET = 5;
+const FS = { DT: 1 / 120, G: 1500, GD: 46, LEG: 46, BODY: 36, HEAD: 18 };
+const FS_ROUND = 60, FS_TICKS = FS_ROUND * 120, FS_SNAP = 6;
+const F_GOALS = [5, 7, 10, 15, 20, 25];
+/* How far apart the goals are, and how much of that a portrait screen shows at once. */
+const F_DIST = { n: { W: 560, view: 560 }, w: { W: 780, view: 640 }, x: { W: 1000, view: 720 } };
+const ffield = set => set.view === 'h' ? { W: 1080, ceil: 430, view: 1080 } : Object.assign({ ceil: 760 }, F_DIST[set.dist] || F_DIST.n);
+
+/* Plain arithmetic gives the same answer on every phone. */
+const F_PI = 3.141592653589793, F_TAU = 6.283185307179586;
+function fsin(x) {
+  x -= F_TAU * Math.floor(x / F_TAU + 0.5);
+  if (x > F_PI / 2) x = F_PI - x; else if (x < -F_PI / 2) x = -F_PI - x;
+  const y = x * x;
+  return x * (1 + y * (-1 / 6 + y * (1 / 120 + y * (-1 / 5040 + y * (1 / 362880 + y * (-1 / 39916800))))));
+}
+const fcos = x => fsin(x + F_PI / 2);
+function frnd(S) { S.seed = (Math.imul(S.seed, 1664525) + 1013904223) | 0; return (S.seed >>> 8) / 16777216; }
 
 /* Every mode only changes numbers here, so a new one is a line, not a rewrite. */
+/* The basketball ring: how far out from the wall, how high, and how wide. */
+const F_RIM = { x: 84, y: 232, r: 46 };
 const F_BASE = { g: 1, ballR: 15, ballE: 0.74, ballDrag: 0.9996, fric: 7, playerS: 1.16, jump: 1, goalH: 118, bounce: 0.34, wind: 0, balls: 1, look: 'day', ball: 'soccer' };
 const F_MODES = [
   { id: 'kickoff', name: 'Kickoff', sub: 'Boot it into the net.' },
@@ -7543,47 +7593,54 @@ const F_MODES = [
   { id: 'lights', name: 'Lights Out', sub: 'Follow the glow.', dark: 1, look: 'night' },
   { id: 'bowling', name: 'Bowling Ball', sub: 'Heavy. Grumpy. Hard to shift.', ball: 'bowl', ballM: 2.6, ballE: 0.3, g: 1.15, look: 'night' }
 ];
-const F_GOLDEN = { id: 'golden', name: 'Golden Goal', sub: 'Four all. Next goal wins it all.', ball: 'gold', look: 'gold' };
+const F_GOLDEN = { id: 'golden', name: 'Golden Goal', sub: 'All level. Next goal wins it all.', ball: 'gold', look: 'gold' };
 const fmode = id => Object.assign({}, F_BASE, id === 'golden' ? F_GOLDEN : F_MODES.find(m => m.id === id));
 
-function fshuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function fshuffle(S, a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(frnd(S) * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
 function fnew(o) {
-  return { score: [0, 0], bag: [], last: '', M: null, t: 0, ps: [], bs: [], ev: [], ceil: o.ceil || 900, touched: 0, still: 0, wind: 0, pow: [1, 1] };
+  return { score: [0, 0], bag: [], last: '', M: null, t: 0, ps: [], bs: [], ev: [], W: o.W || 560, ceil: o.ceil || 760, target: o.target || 5, round: 0, mseed: o.seed | 0, seed: o.seed | 0, touched: 0, still: 0, wind: 0, pow: [1, 1] };
 }
-/* Modes come out of a shuffled bag, so all of them turn up before any repeats. */
+/* Modes come out of a shuffled bag, so all of them turn up before any repeats.
+   Each round's dice start from the match seed, so both phones agree whatever happened after the last whistle. */
 function fnextMode(S) {
-  if (S.score[0] === FS_TARGET - 1 && S.score[1] === FS_TARGET - 1) return 'golden';
-  if (!S.bag.length) { S.bag = fshuffle(F_MODES.map(m => m.id)); if (S.bag[S.bag.length - 1] === S.last) S.bag.unshift(S.bag.pop()); }
+  S.round++;
+  S.seed = (S.mseed ^ Math.imul(S.round, 40503)) | 0;
+  if (S.score[0] === S.target - 1 && S.score[1] === S.target - 1) return 'golden';
+  if (!S.bag.length) { S.bag = fshuffle(S, F_MODES.map(m => m.id)); if (S.bag[S.bag.length - 1] === S.last) S.bag.unshift(S.bag.pop()); }
   return (S.last = S.bag.pop());
 }
+/* First to the target wins. */
+const fdecided = S => S.score[0] >= S.target || S.score[1] >= S.target;
 function fplayer(team, role, x, M) {
   const dir = team ? -1 : 1;
-  return { team, role, dir, home: x, x, y: 0, vx: 0, vy: 0, a: 0, w: 0, s: M.playerS, leg: 0.12, lv: 0, kick: 0, face: dir, ground: true, coy: 0, cd: 0, air: 0, sq: 0, down: 0, flail: Math.random() * 6 };
+  return { team, role, dir, home: x, x, y: 0, vx: 0, vy: 0, a: 0, w: 0, s: M.playerS, leg: 0.12, lv: 0, kick: 0, face: dir, ground: true, coy: 0, cd: 0, air: 0, sq: 0, down: 0, flail: (x + 700) * 0.01 };
 }
 function fball(M, x, y) { return { x, y, vx: 0, vy: 0, r: M.ballR, rot: 0, last: -1, fuse: M.fuse || 0 }; }
 /* Sets everyone up for a point. */
 function fsetup(S, id) {
-  const M = S.M = fmode(id), L = FS.W / 2;
-  S.t = 0; S.ev = []; S.touched = 0; S.still = 0; S.wind = 0;
+  const M = S.M = fmode(id), L = S.W / 2, fx = M.fric * FS.DT;
+  M.fk = 1 - fx + fx * fx / 2 - fx * fx * fx / 6 + fx * fx * fx * fx / 24;
+  if (M.bumpers) M.bumpers = M.bumpers.map(q => [q[0] * S.W / 560, q[1], q[2]]);
+  S.t = 0; S.ev = []; S.touched = 0; S.still = 0; S.wind = 0; S.bump = null;
   /* A weak side sets up badly: the keeper comes off the line and leaves the net open behind. */
   const off = t => (1 - (S.pow[t] || 1)) * 520;
   S.ps = [fplayer(0, 'K', -L + 92 + off(0), M), fplayer(0, 'S', -92, M), fplayer(1, 'S', 92, M), fplayer(1, 'K', L - 92 - off(1), M)];
   for (const p of S.ps) p.y = FS.LEG * p.s + (M.water ? -18 : 0);
   S.bs = [];
   for (let i = 0; i < M.balls; i++) S.bs.push(fball(M, M.balls > 1 ? (i ? 60 : -60) : 0, 300 + i * 40));
-  for (const b of S.bs) b.vx = (Math.random() - 0.5) * 60;
+  for (const b of S.bs) b.vx = (frnd(S) - 0.5) * 60;
 }
 /* Where each moving goal sits right now. */
-function fgoalY(S, side) { return S.M.shift ? 95 + 95 * Math.sin(S.t * 1.05 + side * Math.PI) : 0; }
+function fgoalY(S, side) { return S.M.shift ? 95 + 95 * fsin(S.t * 1.05 + side * F_PI) : 0; }
 
 /* The body's parts, in world space. */
 function fparts(p) {
-  const s = p.s, sa = Math.sin(p.a), ca = Math.cos(p.a), L = FS.LEG * s;
+  const s = p.s, sa = fsin(p.a), ca = fcos(p.a), L = FS.LEG * s;
   const up = FS.BODY * s, hr = FS.HEAD * s;
   const psi = -p.a + p.face * p.leg;
   return {
     sx: p.x - sa * L, sy: p.y - ca * L,                                   // standing foot
-    kx: p.x + Math.sin(psi) * L, ky: p.y - Math.cos(psi) * L,              // kicking foot
+    kx: p.x + fsin(psi) * L, ky: p.y - fcos(psi) * L,                      // kicking foot
     tx: p.x + sa * up, ty: p.y + ca * up,                                  // neck
     hx: p.x + sa * (up + hr * 0.9), hy: p.y + ca * (up + hr * 0.9), hr,    // head
     psi, L
@@ -7647,7 +7704,7 @@ function fstepPlayer(S, p, dt) {
   p.vx += S.wind * 0.22 * dt;
   p.vx = Math.max(-620, Math.min(620, p.vx)); p.vy = Math.max(-1100, Math.min(860, p.vy)); p.w = Math.max(-22, Math.min(22, p.w));
   p.x += p.vx * dt; p.y += p.vy * dt;
-  const X = FS.W / 2 - FS.GD - 12;
+  const X = S.W / 2 - FS.GD - 12;
   if (p.x < -X) { p.x = -X; p.vx = Math.abs(p.vx) * 0.5; p.w += 1.5; }
   if (p.x > X) { p.x = X; p.vx = -Math.abs(p.vx) * 0.5; p.w -= 1.5; }
   /* The ground touches whatever is lowest: the foot normally, a head or hip after a bad landing. */
@@ -7661,8 +7718,8 @@ function fstepPlayer(S, p, dt) {
     const hit = -p.vy;
     if (p.vy < 0) p.vy = hit > 110 ? hit * M.bounce : 0;
     p.ground = true; p.air = 0; p.coy = 0.09;
-    p.vx *= Math.exp(-M.fric * dt);
-    if (hit > 200 && !was) { p.sq = Math.min(1, hit / 800); p.w += (Math.random() - 0.5) * 2 + p.vx * 0.006; S.ev.push(['land', p.x, hit]); }
+    p.vx *= M.fk;
+    if (hit > 200 && !was) { p.sq = Math.min(1, hit / 800); p.w += (frnd(S) - 0.5) * 2 + p.vx * 0.006; S.ev.push(['land', p.x, hit]); }
     /* Knocked flat? Bounce straight back up. Nobody crawls in this game. */
     if (Math.abs(p.a) > 0.85) { p.down += dt; if (p.down > 0.16) { p.vy = 340; p.w += -Math.sign(p.a) * 13; p.down = 0; p.sq = -0.4; } } else p.down = 0;
   }
@@ -7704,7 +7761,7 @@ function fstatic(S, b, ax, ay, bx, by, r, e) {
   return true;
 }
 function fstepBall(S, b, dt) {
-  const M = S.M, L = FS.W / 2;
+  const M = S.M, L = S.W / 2;
   b.vy -= FS.G * M.g * dt;
   b.vx += S.wind * dt;
   b.vx *= M.ballDrag; b.vy *= M.ballDrag;
@@ -7712,7 +7769,7 @@ function fstepBall(S, b, dt) {
     const d = b.r * 0.55 - b.y;
     if (d > 0) { b.vy += d * 52 * dt * 60 * 0.3; b.vy *= 1 - 3 * dt; b.vx *= 1 - 0.7 * dt; }
   }
-  const sp = Math.hypot(b.vx, b.vy), top = 960;
+  const sp = Math.sqrt(b.vx * b.vx + b.vy * b.vy), top = 960;
   if (sp > top) { b.vx *= top / sp; b.vy *= top / sp; }
   b.x += b.vx * dt; b.y += b.vy * dt;
   b.rot += b.vx * dt / b.r;
@@ -7727,10 +7784,10 @@ function fstepBall(S, b, dt) {
   /* Goals: a crossbar and roof, or a hoop on a backboard. */
   for (const side of [-1, 1]) {
     if (M.hoop) {
-      const rx = side * (L - 74), y = 262;
-      fstatic(S, b, side * (L - 18), 228, side * (L - 18), 340, 5, 0.6);
-      fstatic(S, b, rx - 31, y, rx - 31, y, 3, 0.5);
-      fstatic(S, b, rx + 31, y, rx + 31, y, 3, 0.5);
+      const rx = side * (L - F_RIM.x), y = F_RIM.y;
+      fstatic(S, b, side * (L - 18), y - 34, side * (L - 18), y + 78, 5, 0.6);
+      fstatic(S, b, rx - F_RIM.r, y, rx - F_RIM.r, y, 3, 0.5);
+      fstatic(S, b, rx + F_RIM.r, y, rx + F_RIM.r, y, 3, 0.5);
     } else {
       const gx = side * (L - FS.GD), y0 = fgoalY(S, side), y1 = y0 + M.goalH;
       fstatic(S, b, gx, y1, side * L, y1, 4, 0.5);
@@ -7762,7 +7819,7 @@ function fballHits(S, b) {
     const fwd = p.face * p.lv > 0, swing = -p.w + p.face * p.lv * (fwd ? 1 : 0.12);
     fseg(S, b, p, p.x, p.y, P.kx, P.ky, 9 * s, (x, y, t) => {
       const q = P.L * t;
-      return [p.vx + Math.cos(P.psi) * swing * q, p.vy + Math.sin(P.psi) * swing * q];
+      return [p.vx + fcos(P.psi) * swing * q, p.vy + fsin(P.psi) * swing * q];
     }, fwd && (p.kick > 0 || Math.abs(p.lv) > 7));
   }
 }
@@ -7782,12 +7839,12 @@ function fbodies(S) {
 }
 /* Returns the team that just scored, or -1. */
 function fscored(S) {
-  const M = S.M, L = FS.W / 2;
+  const M = S.M, L = S.W / 2;
   for (const b of S.bs) {
     if (M.hoop) {
       for (const side of [-1, 1]) {
-        const rx = side * (L - 74), py = b.y - b.vy * FS.DT;
-        if (py >= 262 && b.y < 262 && Math.abs(b.x - rx) < 28 && b.vy < 0) return side > 0 ? 0 : 1;
+        const rx = side * (L - F_RIM.x), py = b.y - b.vy * FS.DT;
+        if (py >= F_RIM.y && b.y < F_RIM.y && Math.abs(b.x - rx) < F_RIM.r - 3 && b.vy < 0) return side > 0 ? 0 : 1;
       }
       continue;
     }
@@ -7803,7 +7860,7 @@ function fscored(S) {
 function fstep(S) {
   const dt = FS.DT, M = S.M;
   S.t += dt;
-  if (M.wind) S.wind = M.wind * Math.sin(S.t * 0.8) * (0.6 + 0.4 * Math.sin(S.t * 2.3));
+  if (M.wind) S.wind = M.wind * fsin(S.t * 0.8) * (0.6 + 0.4 * fsin(S.t * 2.3));
   for (const p of S.ps) fstepPlayer(S, p, dt);
   fbodies(S);
   for (const b of S.bs) { fstepBall(S, b, dt); fballHits(S, b); }
@@ -7812,7 +7869,7 @@ function fstep(S) {
     b.fuse -= dt;
     if (b.fuse <= 0) {
       S.ev.push(['boom', b.x, b.y]);
-      for (const p of S.ps) { const d = Math.hypot(p.x - b.x, p.y - b.y) || 1; if (d < 260) { p.vx += (p.x - b.x) / d * 620; p.vy += 420; p.w += (p.x - b.x) / d * 16; } }
+      for (const p of S.ps) { const ax = p.x - b.x, ay = p.y - b.y, d = Math.sqrt(ax * ax + ay * ay) || 1; if (d < 260) { p.vx += (p.x - b.x) / d * 620; p.vy += 420; p.w += (p.x - b.x) / d * 16; } }
       return b.x < 0 ? 1 : 0;
     }
   }
@@ -7820,7 +7877,7 @@ function fstep(S) {
   if (sc >= 0) return sc;
   /* A ball nobody can reach gets a little help. */
   for (const b of S.bs) {
-    const stuck = (b.y > M.goalH - 4 && Math.abs(b.x) > FS.W / 2 - FS.GD - b.r) || (Math.abs(b.vx) + Math.abs(b.vy) < 8);
+    const stuck = (b.y > M.goalH - 4 && Math.abs(b.x) > S.W / 2 - FS.GD - b.r) || (Math.abs(b.vx) + Math.abs(b.vy) < 8);
     if (stuck) { S.still += dt; if (S.still > 3.5) { S.still = 0; b.vx = -Math.sign(b.x || 1) * 340; b.vy = 300; S.ev.push(['nudge', b.x, b.y]); } } else if (b === S.bs[0]) S.still = 0;
   }
   return -1;
@@ -7849,6 +7906,47 @@ function fbot(S, team, skill, bot, dt) {
   if (!press && chase && bot.idle > B.idle * (0.7 + Math.random() * 0.8)) press = true;
   if (press) { bot.idle = 0; fpress(S, team); }
 }
+
+/* ---------- one round as a replayable timeline ----------
+   Both phones run the same round from the same seed and swap only their taps, each stamped
+   with the tick it happened on. A tap that turns up late rewinds to just before it and
+   plays forward again, so what you press lands instantly on your own screen. */
+function fsnap(S) { return { t: S.t, touched: S.touched, still: S.still, wind: S.wind, seed: S.seed, ps: S.ps.map(p => Object.assign({}, p)), bs: S.bs.map(b => Object.assign({}, b)) }; }
+function frestore(S, n) {
+  S.t = n.t; S.touched = n.touched; S.still = n.still; S.wind = n.wind; S.seed = n.seed;
+  n.ps.forEach((p, i) => Object.assign(S.ps[i], p));
+  n.bs.forEach((b, i) => Object.assign(S.bs[i], b));
+}
+function fline(S, keep) { return { S, keep, tick: 0, taps: [[], []], at: [0, 0], snaps: keep ? [fsnap(S)] : [], end: null }; }
+function flineStep(L) {
+  const S = L.S, t = ++L.tick;
+  for (let k = 0; k < 2; k++) { const q = L.taps[k]; while (L.at[k] < q.length && q[L.at[k]] <= t) { fpress(S, k); L.at[k]++; } }
+  const r = fstep(S);
+  if (L.keep && t % FS_SNAP === 0) L.snaps[t / FS_SNAP] = fsnap(S);
+  if (r >= 0) L.end = { t, w: r };
+  else if (t >= FS_TICKS) L.end = { t, w: -1 };
+}
+function flineRewind(L, from) {
+  const want = L.tick, i = Math.min(Math.floor((from - 1) / FS_SNAP), L.snaps.length - 1);
+  L.snaps.length = i + 1;
+  frestore(L.S, L.snaps[i]);
+  L.tick = i * FS_SNAP; L.end = null;
+  for (let k = 0; k < 2; k++) { const q = L.taps[k]; let n = 0; while (n < q.length && q[n] <= L.tick) n++; L.at[k] = n; }
+  while (L.tick < want && !L.end) flineStep(L);
+  L.S.ev.length = 0;
+}
+/* Takes the other side's whole tap list. True if that changed the past. */
+function flineTaps(L, team, list) {
+  const had = L.taps[team].length;
+  if (list.length <= had) return false;
+  const first = list[had];
+  L.taps[team] = list;
+  if (first > L.tick || (L.end && first > L.end.t)) return false;
+  flineRewind(L, first);
+  return true;
+}
+const fpack = q => q.map((t, i) => (t - (i ? q[i - 1] : 0)).toString(36)).join(',');
+function funpack(s) { if (!s) return []; let t = 0; return String(s).split(',').map(x => (t += parseInt(x, 36))); }
 
 /* ==========================================================================
    War's 3D models, from the Tin & Timber concept pack: a tiny renderer that
@@ -10513,7 +10611,7 @@ async function p2pChannel(code, asHost, wait) {
    It's polling rather than a live link, so a move takes about a second to arrive. */
 const RELAY_STALE = 30000;
 /* How long to wait before looking again. A live War battle is worth checking more often. */
-const relayGap = changed => (WarGame.live ? 350 : Date.now() - changed < 30000 ? 700 : 1500);
+const relayGap = changed => (WarGame.live || Soccer.live ? 350 : Date.now() - changed < 30000 ? 700 : 1500);
 async function relayPut(path, p) {
   const r = await Cloud.req(path, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields: { j: { stringValue: JSON.stringify(p) }, at: { integerValue: String(Date.now()) } } }) });
   if (!r.ok) throw new Error(r.err || 'relay');
@@ -10924,7 +11022,7 @@ const Cloud = {
   },
   /* The name that identifies you across tables. Test tabs use their display name. */
   me() { return this.acct ? this.acct.name : (Net.kind === 'bc' && Prof.P ? Prof.P.name : ''); },
-  /* ---------- the two World Titles: one document each, one owner each ---------- */
+  /* ---------- the World Titles: one document each, one owner each ---------- */
   ownsWorld(id) { const w = this.world[id], me = this.me(); return !!(w && me && w.k === me.toLowerCase()); },
   parseDoc(d) {
     const out = {};
@@ -11185,7 +11283,7 @@ const Friends = {
     const el = $('#flist');
     if (el) el.innerHTML = friendRows();
     const t = $('#tblfriends');
-    if (t) t.innerHTML = friendInviteRows(app.screen === 'wroom' ? 'wfinvite' : '');
+    if (t) t.innerHTML = friendInviteRows(app.screen === 'wroom' ? 'wfinvite' : app.screen === 'sroom' ? 'sfinvite' : '');
   },
   async add(raw) {
     const id = String(raw || '').replace(/\D/g, '');
@@ -11225,11 +11323,11 @@ const Friends = {
     this.nextInvite();
   },
   nextInvite() {
-    if (!this.inbox.length || !$('#modal').hidden || app.screen === 'game' || app.screen === 'wgame' || app.screen === 'sgame' || app.screen === 'crate' || app.host || app.client || WarNet.ch) return;
+    if (!this.inbox.length || !$('#modal').hidden || app.screen === 'game' || app.screen === 'wgame' || app.screen === 'sgame' || app.screen === 'crate' || app.host || app.client || WarNet.ch || SoccerNet.ch) return;
     const m = this.inbox.shift();
     if (Date.now() - m.at > INVITE_MS) { this.nextInvite(); return; }
     app.invite = m;
-    sheet(`<div class="inv"><span class="inv-av">${avatar(CAT_BY_ID[m.a] ? m.a : 'mochi')}</span><h3>${esc(m.from)} invited you</h3><p>${m.g === 'war' ? 'They want a War battle. Ready to deploy?' : m.tour ? 'They want to play a tournament.' : 'Their Mocho table is open. Jump in?'}</p>
+    sheet(`<div class="inv"><span class="inv-av">${avatar(CAT_BY_ID[m.a] ? m.a : 'mochi')}</span><h3>${esc(m.from)} invited you</h3><p>${m.g === 'war' ? 'They want a War battle. Ready to deploy?' : m.g === 'soccer' ? 'They want a Fun Soccer match. Boots on?' : m.tour ? 'They want to play a tournament.' : 'Their Mocho table is open. Jump in?'}</p>
       <div class="row2"><button class="btn ghost" data-a="closesheet">Not now</button><button class="btn primary" data-a="finvjoin">Join</button></div></div>`);
     Sound.play('turn');
     vibrate([20, 40, 20]);
@@ -11243,6 +11341,14 @@ const Friends = {
     toast(`Invite sent to ${esc(f.n)}`, 'good');
   },
   /* A War room works the same way: opening one if needed, then a note in their mailbox. */
+  async inviteSoccer(k) {
+    const f = this.list().find(x => x.k === k);
+    if (!f) return;
+    if (!SoccerNet.ch) await SoccerNet.host();
+    if (!SoccerNet.code || !SoccerNet.isHost) return;
+    await Cloud.mailSend(k, { t: 'invite', g: 'soccer', from: Cloud.me(), a: Prof.P.avatar, code: SoccerNet.code, at: Date.now() });
+    toast(`Invite sent to ${esc(f.n)}`, 'good');
+  },
   async inviteWar(k) {
     const f = this.list().find(x => x.k === k);
     if (!f) return;
@@ -12917,7 +13023,7 @@ function sheet(html, cls) {
   m.innerHTML = `<div class="scrim" data-a="closesheet"></div><div class="sheet ${cls || ''}" role="dialog" aria-modal="true">${html}</div>`;
   m.hidden = false;
 }
-function closeSheet() { const m = $('#modal'); m.hidden = true; m.innerHTML = ''; if (app.screen === 'wgame') WarGame.pause(false); if (app.screen === 'sgame') Soccer.paused = false; }
+function closeSheet() { const m = $('#modal'); m.hidden = true; m.innerHTML = ''; if (app.screen === 'wgame') WarGame.pause(false); }
 
 /* ---------- screens ---------- */
 function go(screen, opt) {
@@ -12946,7 +13052,7 @@ function render() {
   if (s === 'wgame') return WarGame.enter();
   if (s === 'sgame') return Soccer.enter();
   const strip = $('.tabs', root), stripX = strip ? strip.scrollLeft : 0;
-  const fn = { hub: viewHub, war: viewWar, wsolo: viewWarSolo, wonline: viewWarOnline, wroom: viewWarRoom, wrules: viewWarRules, splash: viewSplash, setup: viewSetup, edit: viewSetup, home: viewHome, solo: viewSolo, local: viewLocal, online: viewOnline, table: viewTable, shop: viewShop, soccer: viewSoccer, fsolo: viewSoccerSolo, frules: viewSoccerRules, market: viewMarket, fcard: viewFriendCard, wheel: viewWheel, rules: viewRules, profile: viewProfile, season: viewSeason, board: viewBoard, tour: viewTour, crates: viewCrates, crate: viewCrate, friends: viewFriends }[s] || viewHome;
+  const fn = { hub: viewHub, war: viewWar, wsolo: viewWarSolo, wonline: viewWarOnline, wroom: viewWarRoom, wrules: viewWarRules, splash: viewSplash, setup: viewSetup, edit: viewSetup, home: viewHome, solo: viewSolo, local: viewLocal, online: viewOnline, table: viewTable, shop: viewShop, soccer: viewSoccer, fsolo: viewSoccerSolo, sduo: viewSoccerDuo, sonline: viewSoccerOnline, sroom: viewSoccerRoom, frules: viewSoccerRules, market: viewMarket, fcard: viewFriendCard, wheel: viewWheel, rules: viewRules, profile: viewProfile, season: viewSeason, board: viewBoard, tour: viewTour, crates: viewCrates, crate: viewCrate, friends: viewFriends }[s] || viewHome;
   root.innerHTML = fn();
   /* Redrawing a screen keeps the tab strip where you left it, and the Season track on your level. */
   const strip2 = $('.tabs', root);
@@ -13949,7 +14055,7 @@ function spBuySheet() {
 function viewBoard() {
   const b = app.board, me = (Cloud.me() || '').toLowerCase(), bg = app.boardG === 'war' || app.boardG === 'soccer' ? app.boardG : 'mocho', wk = { mocho: 'w', war: 'ww', soccer: 'sw' }[bg], pk = { mocho: 'p', war: 'wp', soccer: 'sp' }[bg];
   const sorted = b && b.rows ? b.rows.slice().sort((x, y) => (y[wk] || 0) - (x[wk] || 0) || (x[pk] || 0) - (y[pk] || 0) || x.n.localeCompare(y.n)) : [];
-  const holder = n => Object.entries(Cloud.world).filter(([, w]) => w.k === n.toLowerCase()).map(([id]) => ITEM['title:' + id].name)[0];
+  const holder = n => Object.entries(Cloud.world).filter(([id, w]) => w.k === n.toLowerCase() && ITEM['title:' + id]).map(([id]) => ITEM['title:' + id].name)[0];
   const row = (r, i) => {
     const av = CAT_BY_ID[r.a] ? r.a : 'mochi', t = holder(r.n) || titleName(r.t) || 'Rookie';
     return `<div class="lb-row ${i < 3 ? 'top t' + i : ''} ${r.n.toLowerCase() === me ? 'me' : ''}"><b class="lb-r">${i + 1}</b>${avatar(av)}<span class="lb-n"><b>${esc(r.n)}</b><small>${esc(t)}</small></span><span class="ldw"><b>${fmt(r[wk] || 0)}</b><small>wins</small></span></div>`;
@@ -13976,7 +14082,7 @@ async function loadBoard() {
 /* ---------- Tournament ---------- */
 function viewTour() {
   const t = Tour.active(), f = Tour.form, P = Prof.P, me = Cloud.me();
-  const mine = Object.keys(Cloud.world).filter(id => Cloud.ownsWorld(id));
+  const mine = Object.keys(Cloud.world).filter(id => ITEM['title:' + id] && Cloud.ownsWorld(id));
   if (f.t === 'w' && !mine.includes(f.id)) f.id = mine[0] || '';
   const paused = t && `<section class="card-sec tcard">
       <h3>Your tournament</h3>${Tour.bar(t)}
@@ -15760,7 +15866,7 @@ const FArt = {
       /* Ad boards along the touchline. */
       c.fillStyle = L.board; c.fillRect(0, gy - 20, w, 20);
       c.font = "800 11px 'Archivo Black', system-ui, sans-serif"; c.textBaseline = 'middle'; c.textAlign = 'center';
-      ['FUN SOCCER', 'MEOW MAYHEM', 'FIRST TO 5', 'NO HANDS'].forEach((t, i) => { c.fillStyle = ['#ffd84d', '#fff4d2', '#69e3c2', '#ff8a7a'][i]; c.fillText(t, w * (i + 0.5) / 4, gy - 10); });
+      ['FUN SOCCER', 'MEOW MAYHEM', 'BIG KICKS', 'NO HANDS'].forEach((t, i) => { c.fillStyle = ['#ffd84d', '#fff4d2', '#69e3c2', '#ff8a7a'][i]; c.fillText(t, w * (i + 0.5) / 4, gy - 10); });
     }
     if (L.flags) { c.strokeStyle = 'rgba(255,255,255,.5)'; c.lineWidth = 1; c.beginPath(); c.moveTo(0, st - 26); c.quadraticCurveTo(w / 2, st + 2, w, st - 26); c.stroke(); const fc = ['#ff6a5a', '#ffd84d', '#69e3c2', '#5b8cff']; for (let i = 1; i < 18; i++) { const u = i / 18, x = u * w, y = st - 26 + 28 * 4 * u * (1 - u) * 0.5; c.fillStyle = fc[i % 4]; c.beginPath(); c.moveTo(x - 5, y); c.lineTo(x + 5, y); c.lineTo(x, y + 10); c.fill(); } }
     if (L.sea) { g = c.createLinearGradient(0, gy - 70, 0, gy); g.addColorStop(0, '#ff9e8a'); g.addColorStop(1, '#2fa8b8'); c.fillStyle = g; c.fillRect(0, gy - 70, w, 70); c.fillStyle = '#1f3a4a'; for (const x of [w * 0.06, w * 0.9]) { c.fillRect(x, gy - 96, 4, 40); c.beginPath(); c.ellipse(x + 2, gy - 98, 20, 7, 0.2, 0, 7); c.fill(); } }
@@ -15799,17 +15905,17 @@ const FArt = {
     }
   },
   goals(c, S, t) {
-    const M = S.M, L = FS.W / 2;
+    const M = S.M, L = S.W / 2;
     c.lineCap = 'round';
     for (const side of [-1, 1]) {
       const kit = F_KIT[side < 0 ? 0 : 1];
       if (M.hoop) {
-        const rx = side * (L - 74), y = 262;
-        c.strokeStyle = '#3a4258'; c.lineWidth = 7; c.beginPath(); c.moveTo(side * (L - 8), 0); c.lineTo(side * (L - 8), 346); c.stroke();
-        c.fillStyle = 'rgba(255,255,255,.9)'; c.fillRect(side * (L - 18) - 4, 228, 8, 112);
-        c.strokeStyle = 'rgba(255,255,255,.75)'; c.lineWidth = 1.5; for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(rx + i * 13, y); c.lineTo(rx + i * 8, y - 40); c.stroke(); } for (const d of [14, 28]) { c.beginPath(); c.moveTo(rx - 27 + d * 0.4, y - d); c.lineTo(rx + 27 - d * 0.4, y - d); c.stroke(); }
-        c.strokeStyle = '#ff6a2a'; c.lineWidth = 6; c.beginPath(); c.moveTo(rx - 31, y); c.lineTo(rx + 31, y); c.stroke();
-        c.strokeStyle = '#ff6a2a'; c.lineWidth = 4; c.beginPath(); c.moveTo(side * (L - 18), y); c.lineTo(rx + side * 31, y); c.stroke();
+        const R = F_RIM.r, y = F_RIM.y, rx = side * (L - F_RIM.x);
+        c.strokeStyle = '#3a4258'; c.lineWidth = 7; c.beginPath(); c.moveTo(side * (L - 8), 0); c.lineTo(side * (L - 8), y + 84); c.stroke();
+        c.fillStyle = 'rgba(255,255,255,.9)'; c.fillRect(side * (L - 18) - 4, y - 34, 8, 112);
+        c.strokeStyle = 'rgba(255,255,255,.75)'; c.lineWidth = 1.5; for (let i = -2; i <= 2; i++) { c.beginPath(); c.moveTo(rx + i * R * 0.42, y); c.lineTo(rx + i * R * 0.26, y - 40); c.stroke(); } for (const d of [14, 28]) { c.beginPath(); c.moveTo(rx - R * 0.87 + d * 0.4, y - d); c.lineTo(rx + R * 0.87 - d * 0.4, y - d); c.stroke(); }
+        c.strokeStyle = '#ff6a2a'; c.lineWidth = 6; c.beginPath(); c.moveTo(rx - R, y); c.lineTo(rx + R, y); c.stroke();
+        c.strokeStyle = '#ff6a2a'; c.lineWidth = 4; c.beginPath(); c.moveTo(side * (L - 18), y); c.lineTo(rx + side * R, y); c.stroke();
         continue;
       }
       const gx = side * (L - FS.GD), y0 = fgoalY(S, side), y1 = y0 + M.goalH, back = side * (L - 4);
@@ -15896,76 +16002,118 @@ const FArt = {
 };
 
 const Soccer = {
-  o: null, S: null, raf: 0, state: '', acc: 0, last: 0, stateT: 0, slow: 1, fx: [], bot: { wait: 0, idle: 0 }, cx: null, shake: 0, shown: false,
-  /* o: mode ('bots' or 'duo'), skill, wager, me and foe ({n, a}). */
+  o: null, S: null, L: null, raf: 0, state: '', acc: 0, last: 0, stateT: 0, slow: 1, fx: [], bot: { wait: 0, idle: 0 }, cx: null, shake: 0, shown: false, cam: 0, live: false, gone: 0, sm: null, shownT: -1, waitT: 0,
+  /* o: mode ('bots', 'duo' or 'online'), set ({view, dist, goals}), skill, wager, me and foe ({n, a}). Online also: side, seed, gid. */
   start(o) {
-    this.o = o; o.gid = 'f' + rid(8);
-    this.shown = false;
+    this.o = o; o.gid = o.gid || 'f' + rid(8); o.side = o.side || 0;
+    this.shown = false; this.gone = 0; this.state = ''; this.L = null; this.paused = false; this.live = o.mode === 'online';
     if (o.wager && o.wager.amt > 0 && !Prof.escrow(o.gid, o.wager.cur, o.wager.amt)) { toast('Not enough coins for that bet, so this one’s friendly.'); o.wager = { cur: o.wager.cur, amt: 0 }; }
-    this.S = fnew({});
+    const f = ffield(o.set);
+    this.S = fnew({ W: f.W, ceil: f.ceil, target: o.set.goals, seed: o.seed == null ? (Math.random() * 2147483647) | 0 : o.seed });
     go('sgame');
   },
   vsBot(skill, wager) {
     const P = Prof.P, cats = FREE_CATS.filter(c => c !== P.avatar);
-    this.start({ mode: 'bots', skill, wager: botBet(wager), me: { n: P.name, a: P.avatar }, foe: { n: BOT_NAMES[Math.floor(Math.random() * BOT_NAMES.length)], a: cats[Math.floor(Math.random() * cats.length)] } });
+    this.start({ mode: 'bots', set: fsettings(), skill, wager: botBet(wager), me: { n: P.name, a: P.avatar }, foe: { n: BOT_NAMES[Math.floor(Math.random() * BOT_NAMES.length)], a: cats[Math.floor(Math.random() * cats.length)] } });
   },
   duo() {
     const P = Prof.P, cats = FREE_CATS.filter(c => c !== P.avatar);
-    this.start({ mode: 'duo', me: { n: 'Player 1', a: P.avatar }, foe: { n: 'Player 2', a: cats[0] } });
+    this.start({ mode: 'duo', set: fsettings(), me: { n: 'Player 1', a: P.avatar }, foe: { n: 'Player 2', a: cats[0] } });
   },
+  /* Left of the scoreboard is always the blue side. */
+  board() {
+    const S = this.S, [a, b] = S.score, gold = S.M && S.M.id === 'golden';
+    return `<span class="glove b">${GLOVE}</span><b class="vs-n b" id="fsa">${a}</b><span class="vs-m"><i>VS</i><small id="fround">${gold ? 'Golden Goal' : `First to ${S.target}`}</small></span><b class="vs-n r" id="fsb">${b}</b><span class="glove r">${GLOVE}</span>`;
+  },
+  lead() { const [a, b] = this.S.score; return a > b ? 'lead-b' : b > a ? 'lead-r' : ''; },
   enter() {
     const o = this.o;
     if (!o) { go('soccer'); return; }
-    const duo = o.mode === 'duo';
-    $('#app').innerHTML = `<main class="fgame">
+    const duo = o.mode === 'duo', land = o.set.view === 'h', S = this.S;
+    $('#app').innerHTML = `<main class="fgame${land ? ' land' : ''}">
       <header class="ftop"><button class="iconbtn" data-a="spause" aria-label="Menu">${UI_ICON.menu}</button>
-        <div class="fscore"><span class="fa"><i>${esc(o.me.n)}</i><b id="fsa">${this.S.score[0]}</b></span><span class="fm"><small>First to</small><b>${FS_TARGET}</b></span><span class="fb"><b id="fsb">${this.S.score[1]}</b><i>${esc(o.foe.n)}</i></span></div></header>
+        <div class="vsbar fvs ${this.lead()}" id="fvs" aria-label="Score">${this.board()}</div>
+        <div class="ftime" id="ftime" aria-label="Time left in this round">${FS_ROUND}</div></header>
       <div class="fstage" id="fstage"><canvas id="fbg"></canvas><canvas id="fcv"></canvas><span class="fchip" id="fchip"></span><div class="fpop" id="fpop"></div></div>
-      <div class="fpads"><button class="fpad a" id="fpa" aria-label="${duo ? 'Player 1 jump' : 'Jump'}"><b>JUMP</b>${duo ? '<small>Player 1</small>' : '<small>Tap to leap · tap again to kick</small>'}</button>${duo ? '<button class="fpad b" id="fpb" aria-label="Player 2 jump"><b>JUMP</b><small>Player 2</small></button>' : ''}</div>
+      <div class="fpads"><button class="fpad a" id="fpa" aria-label="${duo ? 'Player 1 jump' : 'Jump'}"><b>JUMP</b>${duo ? '<small>Player 1</small>' : `<small>${land ? 'Tap anywhere' : 'Tap to leap · tap again to kick'}</small>`}</button>${duo ? '<button class="fpad b" id="fpb" aria-label="Player 2 jump"><b>JUMP</b><small>Player 2</small></button>' : ''}</div>
+      <div class="gover" id="fpause" hidden></div>
       <div class="gover" id="fend" hidden></div>
     </main>`;
-    $('#fpa').addEventListener('pointerdown', e => { e.preventDefault(); this.press(0); });
+    $('#fpa').addEventListener('pointerdown', e => { e.preventDefault(); this.press(o.side); });
     if (duo) $('#fpb').addEventListener('pointerdown', e => { e.preventDefault(); this.press(1); });
-    else $('#fstage').addEventListener('pointerdown', e => { e.preventDefault(); this.press(0); });
-    this.cats = [fcat(o.me.a), fcat(o.foe.a)];
+    else $('#fstage').addEventListener('pointerdown', e => { e.preventDefault(); this.press(o.side); });
+    this.cats = [fcat(o.side ? o.foe.a : o.me.a), fcat(o.side ? o.me.a : o.foe.a)];
     this.mount();
-    if (!this.state || this.state === 'over') this.nextPoint();
-    else this.paintArena();
+    if (!this.state || this.state === 'over') {
+      if (o.mode === 'online') { this.waitPop(); this.setState('sync'); }
+      else this.nextPoint();
+    } else if (S.M) this.paintArena();
+    if (this.paused) this.menu(true);
     cancelAnimationFrame(this.raf);
     this.last = 0;
     this.frameFn = now => this.frame(now);
     this.raf = requestAnimationFrame(this.frameFn);
   },
+  waitPop() { const c = $('#fpop'); c.innerHTML = `<small>Online</small><h2>Connecting</h2><p>Waiting for ${esc(this.o.foe.n)}…</p>`; c.className = 'fpop show'; },
+  /* Sideways mode turns the game itself, so it works in a portrait-only app and with rotation lock on. */
   mount() {
-    const st = $('#fstage'), r = st.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
-    this.w = Math.round(r.width); this.h = Math.round(r.height); this.dpr = dpr;
-    this.gy = Math.round(this.h - clamp(this.h * 0.13, 56, 96));
-    this.sc = this.w / FS.W;
-    const cv = $('#fcv');
+    const root = $('.fgame'), S = this.S, land = this.o.set.view === 'h', vw = innerWidth, vh = innerHeight, rot = land && vh > vw;
+    root.classList.toggle('rot', rot);
+    root.style.cssText = rot ? `width:${vh}px;height:${vw}px;transform:translateX(${vw}px) rotate(90deg)` : '';
+    const st = $('#fstage'), dpr = Math.min(window.devicePixelRatio || 1, 2), F = ffield(this.o.set);
+    /* Sizes from the layout, not the screen box, which swaps width and height when turned. */
+    this.w = st.offsetWidth; this.h = st.offsetHeight; this.dpr = dpr;
+    this.gy = Math.round(this.h - clamp(this.h * 0.13, land ? 38 : 56, 96));
+    this.sc = land ? Math.min(this.w / S.W, this.gy / S.ceil) : this.w / F.view;
+    this.camMax = Math.max(0, (S.W - this.w / this.sc) / 2);
+    this.cam = clamp(this.cam, -this.camMax, this.camMax);
+    this.bw = Math.max(this.w, Math.ceil(S.W * this.sc) + 2);
+    const cv = $('#fcv'), bg = this.bg = $('#fbg');
     cv.width = Math.round(this.w * dpr); cv.height = Math.round(this.h * dpr);
     this.cx = cv.getContext('2d');
-    this.S.ceil = this.gy / this.sc - 6;
+    bg.style.width = this.bw + 'px'; bg.style.left = (this.w - this.bw) / 2 + 'px';
+    this.bgAt = null;
   },
-  paintArena() { FArt.arena($('#fbg'), this.w, this.h, this.gy, this.S.M.look, this.dpr); },
+  paintArena() { if (this.S.M) FArt.arena(this.bg, this.bw, this.h, this.gy, this.S.M.look, this.dpr); },
   setState(s) { this.state = s; this.stateT = 0; },
   nextPoint() {
-    const S = this.S, id = fnextMode(S);
-    S.pow = [1, this.o.mode === 'bots' ? { easy: 0.72, normal: 0.92, hard: 1.04 }[this.o.skill] : 1];
+    const S = this.S, o = this.o, net = o.mode === 'online', id = fnextMode(S);
+    S.pow = [1, o.mode === 'bots' ? { easy: 0.72, normal: 0.92, hard: 1.04 }[o.skill] : 1];
     fsetup(S, id);
-    this.mount();
+    if (net) SoccerNet.closeRound();
+    this.L = fline(S, net);
+    this.cam = 0; this.waitT = 0; this.mount();
     this.paintArena();
-    this.fx = []; this.acc = 0; this.slow = 1; this.bot = { wait: 0.5, idle: 0 };
-    this.pointN = (this.pointN || 0) + 1;
-    const c = $('#fpop');
-    c.innerHTML = `<small>${id === 'golden' ? 'Sudden death' : 'Next up'}</small><h2>${esc(S.M.name)}</h2><p>${esc(S.M.sub)}</p>`;
-    c.className = 'fpop show' + (id === 'golden' ? ' gold' : '');
+    this.fx = []; this.acc = 0; this.slow = 1; this.bot = { wait: 0.5, idle: 0 }; this.sm = null; this.shownT = -1;
+    const golden = id === 'golden', c = $('#fpop');
+    c.innerHTML = `<small>${golden ? 'Sudden death' : `Round ${S.round} · First to ${S.target}`}</small><h2>${esc(S.M.name)}</h2><p>${esc(S.M.sub)}</p>`;
+    c.className = 'fpop show' + (golden ? ' gold' : '');
     $('#fchip').textContent = S.M.name;
+    $('#fround').textContent = golden ? 'Golden Goal' : `First to ${S.target}`;
     this.setState('intro');
     Sound.play('swhistle');
+    if (net) { SoccerNet.feed(); SoccerNet.push(); }
   },
   press(team) {
-    if (this.state !== 'play') return;
-    if (fpress(this.S, team)) { Sound.play('sjump'); vibrate(6); }
+    if (this.state !== 'play' || this.paused) return;
+    const L = this.L;
+    if (this.o.mode === 'online') {
+      if (L.end) return;
+      const q = L.taps[team], last = q.length ? q[q.length - 1] : 0;
+      q.push(Math.max(last, L.tick) + 1);
+      SoccerNet.push();
+      Sound.play('sjump'); vibrate(6);
+    } else if (fpress(this.S, team)) { Sound.play('sjump'); vibrate(6); }
+  },
+  /* The other phone's taps. A late one rewrites the last moment, and the difference melts away on screen. */
+  peer(list) {
+    const L = this.L, S = this.S;
+    if (!L) return;
+    const pos = a => a.map(e => [e.x, e.y]), ps = pos(S.ps), bs = pos(S.bs);
+    if (!flineTaps(L, 1 - this.o.side, list)) return;
+    const sm = this.sm || (this.sm = { p: S.ps.map(() => [0, 0]), b: S.bs.map(() => [0, 0]) });
+    S.ps.forEach((e, i) => { sm.p[i][0] += ps[i][0] - e.x; sm.p[i][1] += ps[i][1] - e.y; });
+    S.bs.forEach((e, i) => { sm.b[i][0] += bs[i][0] - e.x; sm.b[i][1] += bs[i][1] - e.y; });
   },
   puff(x, y, n, col, sp) {
     for (let i = 0; i < n && this.fx.length < 90; i++) { const a = Math.random() * 6.28, v = (sp || 120) * (0.4 + Math.random()); this.fx.push({ x, y, vx: Math.cos(a) * v, vy: Math.abs(Math.sin(a)) * v, l: 0.4 + Math.random() * 0.35, c: col, s: 2 + Math.random() * 3 }); }
@@ -15987,14 +16135,15 @@ const Soccer = {
     S.ev.length = 0;
   },
   goal(team) {
-    const S = this.S;
+    const S = this.S, o = this.o;
     S.score[team]++;
-    const el = $(team ? '#fsb' : '#fsa');
+    const el = $(team ? '#fsb' : '#fsa'), bar = $('#fvs');
     if (el) { el.textContent = S.score[team]; el.animate([{ transform: 'scale(1.7)' }, { transform: 'scale(1)' }], { duration: 420, easing: 'ease-out' }); }
-    const b = S.bs[0], mine = team === 0 || this.o.mode === 'duo', word = S.M.fuse ? 'BOOM!' : S.M.hoop ? 'SWISH!' : S.M.water ? 'SPLASH!' : 'GOAL!';
+    if (bar) bar.className = 'vsbar fvs ' + this.lead();
+    const b = S.bs[0], mine = team === o.side || o.mode === 'duo', word = S.M.fuse ? 'BOOM!' : S.M.hoop ? 'SWISH!' : S.M.water ? 'SPLASH!' : 'GOAL!';
     this.puff(b.x, b.y, 34, F_KIT[team].a, 380); this.puff(b.x, b.y, 20, '#ffd84d', 300);
     const c = $('#fpop');
-    c.innerHTML = `<small>${esc(team ? this.o.foe.n : this.o.me.n)}</small><h2>${word}</h2><p>${S.score[0]} - ${S.score[1]}</p>`;
+    c.innerHTML = `<small>${esc(team === o.side ? o.me.n : o.foe.n)}</small><h2>${word}</h2><p>${S.score[0]} - ${S.score[1]}</p>`;
     c.className = 'fpop show goal t' + team;
     Sound.play(mine ? 'sgoal' : 'sconcede');
     vibrate(mine ? [20, 30, 40] : 30);
@@ -16002,48 +16151,99 @@ const Soccer = {
     this.slow = 0.28;
     this.setState('goal');
   },
+  /* Sixty seconds with no goal: the round is gone and the next mode comes up. */
+  timeUp() {
+    const c = $('#fpop');
+    c.innerHTML = '<small>No goal</small><h2>TIME!</h2><p>On to the next mode.</p>';
+    c.className = 'fpop show';
+    Sound.play('swhistle');
+    this.slow = 0.28;
+    this.setState('goal');
+  },
+  ended(w) { if (w >= 0) this.goal(w); else this.timeUp(); },
+  run(dt) {
+    const S = this.S, L = this.L, o = this.o, net = o.mode === 'online';
+    this.acc += dt * (this.state === 'play' && L.end ? 0.28 : this.slow);
+    /* Fallen behind the other phone? Run a little faster until level. */
+    if (net && this.state === 'play' && !L.end) { const lag = SoccerNet.foeTick() - L.tick; if (lag > 30) this.acc += Math.min(lag, 120) * FS.DT * 0.12; }
+    let n = 0;
+    while (this.acc >= FS.DT && n++ < 240) {
+      this.acc -= FS.DT;
+      if (this.state === 'play' && !L.end) {
+        if (o.mode === 'bots') fbot(S, 1, o.skill, this.bot, FS.DT);
+        flineStep(L);
+      } else fstep(S);
+    }
+    if (n >= 240) this.acc = 0;
+    this.events();
+    if (this.state === 'play' && L.end) {
+      if (!net) this.ended(L.end.w);
+      else if (SoccerNet.agreed(L, this.waitT += dt)) this.ended(L.end.w);
+    }
+  },
   frame(now) {
     if (!this.S || app.screen !== 'sgame') return;
     this.raf = requestAnimationFrame(this.frameFn);
-    if (this.paused) { this.last = now; return; }
-    const dt = this.last ? Math.min(0.05, (now - this.last) / 1000) : 0.016;
+    const net = this.o.mode === 'online';
+    if (this.paused && !net) { this.last = now; return; }
+    const dt = this.last ? clamp((now - this.last) / 1000, 0, net ? 0.5 : 0.05) : 0.016;
     this.last = now; this.stateT += dt;
     const S = this.S;
+    if (this.state === 'sync') {
+      if (SoccerNet.foeIn()) this.nextPoint();
+      else if (this.stateT > 20) this.foeLeft();
+      return;
+    }
     if (this.state === 'intro') {
       if (this.stateT > 1.6) { $('#fpop').className = 'fpop'; this.setState('play'); Sound.play('swhistle'); }
     } else if (this.state === 'play' || this.state === 'goal') {
-      this.acc += dt * this.slow;
-      while (this.acc >= FS.DT) {
-        this.acc -= FS.DT;
-        if (this.state === 'play' && this.o.mode === 'bots') fbot(S, 1, this.o.skill, this.bot, FS.DT);
-        const r = fstep(S);
-        if (r >= 0 && this.state === 'play') this.goal(r);
-      }
-      this.events();
-      if (this.state === 'play' && S.t > 40) { /* Nobody could finish this one, so on to the next mode. */ this.nextPoint(); }
+      this.run(dt);
       if (this.state === 'goal' && this.stateT > 1.7) {
-        if (S.score[0] >= FS_TARGET || S.score[1] >= FS_TARGET) this.finish();
+        if (fdecided(S)) this.finish();
         else this.nextPoint();
       }
     }
+    this.clock();
     this.draw(now / 1000, dt);
   },
+  /* The round clock. Only touches the page when the number changes. */
+  clock() {
+    const L = this.L, left = L ? Math.max(0, Math.ceil(FS_ROUND - L.tick * FS.DT)) : FS_ROUND;
+    if (left === this.shownT) return;
+    this.shownT = left;
+    const el = $('#ftime');
+    if (el) { el.textContent = left; el.className = 'ftime' + (left <= 10 ? ' low' : ''); }
+  },
+  /* The view slides with the ball on a pitch too long for the screen. */
+  follow(dt) {
+    if (!this.camMax) { this.cam = 0; } else {
+      let x = 0; for (const b of this.S.bs) x += b.x;
+      const to = clamp(x / this.S.bs.length, -this.camMax, this.camMax);
+      this.cam += (to - this.cam) * Math.min(1, dt * 3.6);
+    }
+    const px = Math.round(-this.cam * this.sc);
+    if (px !== this.bgAt) { this.bgAt = px; this.bg.style.transform = `translate3d(${px}px,0,0)`; }
+  },
   draw(t, dt) {
-    const c = this.cx, S = this.S, M = S.M, k = this.sc * this.dpr;
-    if (!c) return;
+    const c = this.cx, S = this.S, M = S.M, k = this.sc * this.dpr, sm = this.sm;
+    if (!c || !M) return;
+    this.follow(dt);
     c.setTransform(1, 0, 0, 1, 0, 0);
     c.clearRect(0, 0, this.w * this.dpr, this.h * this.dpr);
     this.shake = Math.max(0, this.shake - dt * 22);
     const sx = (Math.random() - 0.5) * this.shake, sy = (Math.random() - 0.5) * this.shake;
-    c.setTransform(k, 0, 0, -k, this.w * this.dpr / 2 + sx, this.gy * this.dpr + sy);
+    c.setTransform(k, 0, 0, -k, (this.w / 2 - this.cam * this.sc) * this.dpr + sx, this.gy * this.dpr + sy);
+    if (sm) { const f = Math.exp(-dt * 13); let on = 0; for (const a of [sm.p, sm.b]) for (const q of a) { q[0] *= f; q[1] *= f; on += Math.abs(q[0]) + Math.abs(q[1]); } if (on < 0.5) this.sm = null; }
     /* Soft shadows on the ground. */
     c.fillStyle = 'rgba(10,16,30,.28)';
     for (const b of S.bs) { const f = Math.max(0.35, 1 - b.y / 500); c.beginPath(); c.ellipse(b.x, -3, b.r * f, b.r * 0.22 * f, 0, 0, 7); c.fill(); }
     for (const p of S.ps) { const f = Math.max(0.4, 1 - p.y / 500); c.beginPath(); c.ellipse(p.x, -3, 24 * p.s * f, 5 * p.s * f, 0, 0, 7); c.fill(); }
     FArt.goals(c, S, S.t);
-    const b0 = S.bs[0];
-    for (const p of S.ps) FArt.player(c, p, F_KIT[p.team], this.cats[p.team], t, b0);
-    for (const b of S.bs) FArt.ball(c, b, M, t);
+    const b0 = S.bs[0], shifted = (q, fn) => { if (!q) return fn(); c.save(); c.translate(q[0], q[1]); fn(); c.restore(); };
+    S.ps.forEach((p, i) => shifted(sm && this.sm && sm.p[i], () => FArt.player(c, p, F_KIT[p.team], this.cats[p.team], t, b0)));
+    S.bs.forEach((b, i) => shifted(sm && this.sm && sm.b[i], () => FArt.ball(c, b, M, t)));
+    /* So you know which side you are in an online match. */
+    if (this.o.mode === 'online' && this.state === 'intro') for (const p of S.ps) if (p.team === this.o.side) { const y = p.y + 116 * p.s + 8 * Math.sin(t * 6); c.fillStyle = '#ffd84d'; c.beginPath(); c.moveTo(p.x - 13, y + 16); c.lineTo(p.x + 13, y + 16); c.lineTo(p.x, y); c.fill(); }
     for (let i = this.fx.length - 1; i >= 0; i--) {
       const f = this.fx[i];
       f.l -= dt; if (f.l <= 0) { this.fx.splice(i, 1); continue; }
@@ -16051,51 +16251,245 @@ const Soccer = {
       c.globalAlpha = Math.min(1, f.l * 3); c.fillStyle = f.c; c.fillRect(f.x, f.y, f.s, f.s);
     }
     c.globalAlpha = 1;
-    if (M.water) { c.fillStyle = 'rgba(30,170,190,.58)'; c.fillRect(-FS.W / 2 - 20, -80, FS.W + 40, 80 + 4 * Math.sin(t * 2.4)); c.fillStyle = 'rgba(255,255,255,.55)'; for (let x = -FS.W / 2; x < FS.W / 2; x += 46) c.fillRect(x + 8 * Math.sin(t + x), 2 * Math.sin(t * 2 + x), 22, 2.5); }
-    if (M.wind) { c.strokeStyle = 'rgba(255,255,255,.4)'; c.lineWidth = 2; const dir = Math.sign(S.wind) || 1, u = (t * 500 * dir) % 200; for (let i = 0; i < 7; i++) { const y = 70 + i * 62, x = ((i * 137 + u) % (FS.W + 100)) - FS.W / 2 - 50; c.beginPath(); c.moveTo(x, y); c.lineTo(x + dir * Math.min(70, Math.abs(S.wind) * 0.14), y); c.stroke(); } }
+    if (M.water) { c.fillStyle = 'rgba(30,170,190,.58)'; c.fillRect(-S.W / 2 - 400, -80, S.W + 800, 80 + 4 * Math.sin(t * 2.4)); c.fillStyle = 'rgba(255,255,255,.55)'; for (let x = -S.W / 2; x < S.W / 2; x += 46) c.fillRect(x + 8 * Math.sin(t + x), 2 * Math.sin(t * 2 + x), 22, 2.5); }
+    if (M.wind) { c.strokeStyle = 'rgba(255,255,255,.4)'; c.lineWidth = 2; const dir = Math.sign(S.wind) || 1, u = (t * 500 * dir) % 200; for (let i = 0; i < 7; i++) { const y = 70 + i * 62, x = ((i * 137 + u) % (S.W + 100)) - S.W / 2 - 50; c.beginPath(); c.moveTo(x, y); c.lineTo(x + dir * Math.min(70, Math.abs(S.wind) * 0.14), y); c.stroke(); } }
+    /* A ball above the top of the screen still shows where it is. */
+    const topY = this.gy / this.sc;
+    for (const b of S.bs) if (b.y - b.r > topY) { c.fillStyle = '#ffd84d'; c.beginPath(); c.moveTo(b.x, topY - 4); c.lineTo(b.x - 11, topY - 22); c.lineTo(b.x + 11, topY - 22); c.fill(); }
     if (M.dark) {
       c.setTransform(1, 0, 0, 1, 0, 0);
-      const px = (b0.x * this.sc + this.w / 2) * this.dpr, py = (this.gy - b0.y * this.sc) * this.dpr, R = 150 * this.dpr, g = c.createRadialGradient(px, py, R * 0.25, px, py, R);
+      const px = ((b0.x - this.cam) * this.sc + this.w / 2) * this.dpr, py = (this.gy - b0.y * this.sc) * this.dpr, R = 150 * this.dpr, g = c.createRadialGradient(px, py, R * 0.25, px, py, R);
       g.addColorStop(0, 'rgba(4,6,20,0)'); g.addColorStop(1, 'rgba(4,6,20,.93)');
       c.fillStyle = g; c.fillRect(0, 0, this.w * this.dpr, this.h * this.dpr);
     }
   },
-  finish() {
-    const S = this.S, o = this.o, w = S.score[0] >= FS_TARGET ? 0 : 1;
-    this.setState('over'); this.shown = true;
+  /* The pause menu lives inside the game, so it turns with it in sideways mode. */
+  menu(on) {
+    const el = $('#fpause'), o = this.o;
+    if (!el) return;
+    const net = o.mode === 'online';
+    if (!net) this.paused = on;
+    el.hidden = !on;
+    if (!on) { el.innerHTML = ''; return; }
+    const snd = Prof.P.settings.sound;
+    el.innerHTML = `<div class="gcard"><h2>${net ? 'Menu' : 'Paused'}</h2>${net ? '<p class="fend-s">The match keeps going.</p>' : ''}<div class="ractions"><button class="btn big primary" data-a="fresume">Back to the match</button><button class="btn ghost" data-a="fsound">${snd ? UI_ICON.sound + ' Sound on' : UI_ICON.mute + ' Sound off'}</button><button class="btn warn" data-a="fquit">${net ? 'Forfeit' : 'Quit the match'}</button></div></div>`;
+  },
+  /* The other phone went quiet or walked away, so the match is yours. */
+  foeLeft() {
+    if (!this.S || this.state === 'over') return;
+    this.gone = 1;
+    SoccerNet.fw = this.o.gid; SoccerNet.push();
+    this.finish(this.o.side);
+  },
+  /* We dropped off for too long and the other phone called it. */
+  conceded() { if (this.S && this.state !== 'over') this.finish(1 - this.o.side); },
+  finish(wIn) {
+    const S = this.S, o = this.o, side = o.side, w = wIn == null ? (S.score[0] > S.score[1] ? 0 : 1) : wIn, net = o.mode === 'online';
+    this.setState('over'); this.shown = true; this.live = false;
     let extra = '';
-    if (o.mode === 'bots') {
-      const amt = o.wager ? o.wager.amt : 0, r = Prof.settle({ game: 'soccer', gid: o.gid, w, rmode: 'bots', cur: o.wager ? o.wager.cur : 's', amt, pot: amt * 2, bonus: [0, 0] }, 0);
-      Prof.P.sstats.goals += S.score[0]; Prof.P.sstats.conceded += S.score[1];
+    if (o.mode !== 'duo') {
+      const amt = o.wager ? o.wager.amt : 0, r = Prof.settle({ game: 'soccer', gid: o.gid, w, rmode: net ? 'online' : 'bots', cur: o.wager ? o.wager.cur : 's', amt, pot: amt * 2, bonus: [0, 0] }, side);
+      Prof.P.sstats.goals += S.score[side]; Prof.P.sstats.conceded += S.score[1 - side];
       Prof.save();
       if (typeof profileChanged === 'function') profileChanged();
       if (r) extra = `<div class="rrow">${coin('s')}<b>+${thousands(r.silver)}</b> silver</div>${r.gold ? `<div class="rrow">${coin('g')}<b>+${r.gold}</b> gold</div>` : ''}${r.pot ? `<div class="rrow">${coin(o.wager.cur)}<b>+${thousands(r.pot)}</b> the pot is yours</div>` : ''}`;
     }
-    const won = w === 0 || o.mode === 'duo', el = $('#fend');
-    el.innerHTML = `<div class="gcard ${won ? 'win' : 'lose'}"><h2>${o.mode === 'duo' ? esc(w ? o.foe.n : o.me.n) + ' wins!' : won ? 'Victory!' : esc(o.foe.n) + ' wins'}</h2><p class="fend-s">${S.score[0]} - ${S.score[1]}</p>${extra}
-      <div class="ractions"><button class="btn big primary" data-a="fagain">Play again</button><button class="btn ghost" data-a="fback">Back</button></div></div>`;
+    const won = w === side || o.mode === 'duo', el = $('#fend'), head = o.mode === 'duo' ? esc(w ? o.foe.n : o.me.n) + ' wins!' : this.gone ? `${esc(o.foe.n)} left` : won ? 'Victory!' : esc(o.foe.n) + ' wins';
+    const again = !net ? '<button class="btn big primary" data-a="fagain">Play again</button>' : SoccerNet.ch && !this.gone ? '<button class="btn big primary" data-a="srematch">Back to the room</button>' : '';
+    el.innerHTML = `<div class="gcard ${won ? 'win' : 'lose'}"><h2>${head}</h2><p class="fend-s">${S.score[0]} - ${S.score[1]}</p>${extra}
+      <div class="ractions">${again}<button class="btn ghost" data-a="fback">${net ? 'Leave' : 'Back'}</button></div></div>`;
     el.hidden = false;
+    this.menu(false);
     $('#fpop').className = 'fpop';
     Sound.play(won ? 'win' : 'hit');
     if (won) FX.play(Prof.P.eq.fx, 3200);
   },
   abandon() {
     const o = this.o;
-    if (o && !this.shown && o.mode === 'bots') Prof.forfeit(o.gid, 'soccer');
+    if (o && !this.shown && o.mode !== 'duo') {
+      Prof.forfeit(o.gid, 'soccer');
+      if (o.mode === 'online') { SoccerNet.lv = o.gid; SoccerNet.push(); }
+    }
     this.stop();
   },
-  stop() { cancelAnimationFrame(this.raf); this.raf = 0; this.o = null; this.S = null; this.cx = null; this.state = ''; this.paused = false; this.pointN = 0; }
+  stop() { cancelAnimationFrame(this.raf); this.raf = 0; this.o = null; this.S = null; this.L = null; this.cx = null; this.state = ''; this.paused = false; this.live = false; this.sm = null; this.cam = 0; }
+};
+
+/* ---------- online: two phones, same match ----------
+   Rooms work like War rooms. In a match each phone publishes its taps for this round and
+   how far it has played. A goal only counts once the other phone has reached the same
+   tick with the same result, so a late tap can never take back a goal you've celebrated. */
+const SOC_PROTO = 2;
+const SoccerNet = {
+  ch: null, code: null, isHost: false, foe: null, foeAt: 0, rdy: 0, wager: { cur: 's', amt: 0 }, set: null, go: null, seen: null, lv: 0, fw: 0, beat: 0, joinT: 0, q: null, qAt: 0, pv: 0, last: null,
+  prof() { const P = Prof.P; return { n: P.name, a: P.avatar, o: cosStr(P.eq), u: Cloud.me() }; },
+  msg() {
+    const G = Soccer, on = G.o && G.o.mode === 'online', L = on && G.L;
+    return { sv: SOC_PROTO, code: this.code, cid: Prof.cid, host: this.isHost ? 1 : 0, pr: this.prof(), rdy: this.rdy, wg: this.isHost ? this.wager : 0, st: this.isHost ? this.set : 0, foe: this.foe ? this.foe.cid : '', go: this.go, ig: on ? G.o.gid : '', r: L ? G.S.round : 0, tk: L ? L.tick : 0, in: L ? fpack(L.taps[G.o.side]) : '', e: L && L.end ? [L.end.t, L.end.w] : 0, ak: this.q && L && this.q.r === G.S.round ? this.q.tk : 0, pv: this.pv, lv: this.lv, fw: this.fw };
+  },
+  push() { if (this.ch) this.ch.set(this.msg()); },
+  async host() {
+    await Net.init();
+    if (!Net.kind) { toast(esc(Net.err), 'bad'); return; }
+    this.reset();
+    this.isHost = true;
+    this.set = fsettings();
+    go('sroom');
+    for (let i = 0; i < 4; i++) {
+      const code = makeCode();
+      try {
+        const ch = await Net.table('soc' + code, true);
+        this.code = code; this.ch = ch;
+        ch.onPeers(l => this.onPeers(l));
+        this.push();
+        if (app.screen === 'sroom') render();
+        return;
+      } catch (e) {
+        if (e && e.message === 'code-taken') continue;
+        toast(esc((e && e.message) || 'Could not open a room.'), 'bad');
+        break;
+      }
+    }
+    go('sonline');
+  },
+  async join(raw) {
+    const code = String(raw || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+    if (code.length !== 4) { toast('Room codes are 4 letters or numbers.', 'bad'); return; }
+    await Net.init();
+    if (!Net.kind) { toast(esc(Net.err), 'bad'); return; }
+    this.reset();
+    this.code = code;
+    go('sroom');
+    try {
+      const ch = await Net.table('soc' + code, false);
+      if (this.code !== code) { ch.leave(); return; }
+      this.ch = ch;
+      ch.onPeers(l => this.onPeers(l));
+      this.push();
+      render();
+      this.joinT = setTimeout(() => { if (this.code === code && !this.foe) { toast(`Couldn’t reach room ${code}. Check the code, and that the host still has it open.`, 'bad'); this.leave(); go('sonline'); } }, 12000);
+    } catch (e) {
+      toast(esc((e && e.message) || 'Could not join.'), 'bad');
+      this.leave(); go('sonline');
+    }
+  },
+  onPeers(list) {
+    let f = null;
+    for (const x of list) {
+      const p = x.p;
+      if (x.me || !p || p.sv !== SOC_PROTO || p.code !== this.code || p.cid === Prof.cid) continue;
+      if (this.isHost) { if (!p.host && (!f || (this.foe && p.cid === this.foe.cid))) f = p; }
+      else if (p.host) f = p;
+    }
+    const G = Soccer, wasFoe = this.foe, inGame = G.o && G.o.mode === 'online';
+    if (!this.isHost && f && f.foe && f.foe !== Prof.cid) { toast('That room is already full.', 'bad'); this.leave(); go('sonline'); return; }
+    if (f) { this.foe = f; this.foeAt = Date.now(); clearTimeout(this.joinT); } else if (wasFoe && !inGame) this.foe = null;
+    if (f && !this.isHost) {
+      const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+      if ((f.wg && !same(f.wg, this.wager)) || (f.st && !same(f.st, this.set))) { this.wager = f.wg || this.wager; this.set = f.st || this.set; this.rdy = 0; setTimeout(() => this.push(), 0); }
+      if (f.go && f.go.g !== this.seen) { this.seen = f.go.g; this.begin(f.go, 1); return; }
+    }
+    if (f && inGame) {
+      if (f.lv === G.o.gid) G.foeLeft();
+      else if (f.fw === G.o.gid) G.conceded();
+      else if (f.ig === G.o.gid) { this.last = f; this.feed(); }
+    }
+    if (app.screen === 'sroom' && JSON.stringify(wasFoe && [wasFoe.pr, wasFoe.rdy, wasFoe.wg, wasFoe.st]) !== JSON.stringify(f && [f.pr, f.rdy, f.wg, f.st])) render();
+    /* Some channels report a change from inside set(), so a reply waits for the next tick. */
+    if (this.isHost && !!wasFoe !== !!this.foe) setTimeout(() => this.push(), 0);
+  },
+  /* Reads this round out of the other phone's latest message, which may be a round ahead of us. */
+  feed() {
+    const G = Soccer, f = this.last, L = G.L;
+    if (!f || !L || !G.S) return;
+    const r = G.S.round, q = f.r === r ? { r, tk: f.tk, in: f.in, e: f.e, ak: f.ak } : f.pv && f.pv[0] === r ? { r, tk: f.pv[1], in: f.pv[2], e: f.pv[3], ak: f.pv[1] } : null;
+    if (!q) return;
+    if (!this.q || this.q.r !== r || q.tk !== this.q.tk) this.qAt = Date.now();
+    this.q = q;
+    G.peer(funpack(q.in));
+  },
+  /* My last round stays in the message for a while, in case the other phone hasn't finished it yet. */
+  closeRound() {
+    const G = Soccer, L = G.L;
+    this.pv = L ? [G.S.round - 1, L.tick, fpack(L.taps[G.o.side]), L.end ? [L.end.t, L.end.w] : 0] : 0;
+    this.q = null;
+  },
+  foeIn() { return !!(this.last && this.last.ig === Soccer.o.gid); },
+  foeTick() {
+    const q = this.q;
+    if (!q || q.r !== Soccer.S.round) return 0;
+    return q.e ? q.e[0] : q.tk + Math.min(60, (Date.now() - this.qAt) * 0.12);
+  },
+  /* True once both phones hold the same result for this round. */
+  agreed(L, waited) {
+    const q = this.q, e = q && q.e, mine = L.end;
+    if (e && e[0] === mine.t && e[1] === mine.w && q.tk >= mine.t) return true;
+    /* Should never happen, but a disagreement must not freeze the match: the host's result stands. */
+    if (waited > 3 && !this.isHost && e) { L.end = { t: e[0], w: e[1] }; L.tick = Math.max(L.tick, e[0]); this.push(); return true; }
+    return waited > 8 && this.isHost;
+  },
+  /* The host names the seed and the match; each phone waits to hear the other before kick-off. */
+  start() {
+    if (!this.isHost || !this.foe || !this.foe.rdy) return;
+    if (this.wager.amt > Prof.bal(this.wager.cur)) { toast(`You need ${this.wager.amt} ${curName(this.wager.cur)} for that bet.`, 'bad'); return; }
+    this.go = { g: 'f' + rid(8), s: (Math.random() * 2147483647) | 0, st: this.set };
+    this.seen = this.go.g;
+    this.lv = 0;
+    this.begin(this.go, 0);
+  },
+  begin(gg, side) {
+    const P = Prof.P, f = this.foe.pr;
+    this.rdy = 0; this.lv = 0; this.fw = 0; this.q = null; this.pv = 0; this.last = null;
+    this.foeAt = Date.now();
+    Soccer.start({ mode: 'online', side, seed: gg.s, gid: gg.g, set: gg.st, wager: Object.assign({}, this.wager), me: { n: P.name, a: P.avatar }, foe: { n: f.n, a: CAT_BY_ID[f.a] ? f.a : 'mochi' } });
+    this.push();
+    clearInterval(this.beat);
+    /* A steady pulse says how far we've played, which is what makes a goal final. */
+    this.beat = setInterval(() => {
+      if (!Soccer.o) { clearInterval(this.beat); return; }
+      this.push();
+      if (Date.now() - this.foeAt > 20000 && Soccer.state !== 'over') Soccer.foeLeft();
+    }, this.ch && this.ch.kind === 'relay' ? 350 : 100);
+  },
+  reset() {
+    if (this.ch) this.leave();
+    Object.assign(this, { ch: null, code: null, isHost: false, foe: null, rdy: 0, wager: { cur: 's', amt: 0 }, set: null, go: null, seen: null, lv: 0, fw: 0, q: null, pv: 0, last: null });
+  },
+  leave() {
+    clearInterval(this.beat); clearTimeout(this.joinT);
+    const ch = this.ch;
+    this.ch = null; this.foe = null; this.code = null;
+    if (!ch) return;
+    /* Closing replaces my relay record, and the other phone only polls it, so a forfeit stays up long enough to be read. */
+    ch.onPeers(() => {});
+    setTimeout(() => ch.leave(), this.lv ? 3000 : 350);
+  }
 };
 
 /* ---------- menus ---------- */
+function fsettings() {
+  const c = app.fset || (app.fset = Object.assign({ view: 'v', dist: 'n', goals: 5 }, LS.get('mm_fset') || {}));
+  return { view: c.view, dist: c.dist, goals: c.goals };
+}
+function fruleLine(n) { return `First to ${n} goals wins. Each round ends on a goal or after ${FS_ROUND} seconds, then the mode changes. At ${n - 1} all it’s Golden Goal.`; }
+function fsetForm(c, readonly) {
+  const V = [['v', 'Vertical'], ['h', 'Horizontal']], D = [['n', 'Normal'], ['w', 'Wide'], ['x', 'Wider']], R = F_GOALS.map(n => [n, String(n)]);
+  const s = (k, opts, v) => readonly ? `<b class="ro">${(opts.find(o => String(o[0]) === String(v)) || [0, ''])[1]}</b>` : seg('ft.' + k, opts, v);
+  return `<div class="form">
+    <div class="row"><span>Screen</span>${s('view', V, c.view)}</div>
+    ${c.view === 'v' ? `<div class="row"><span>Distance</span>${s('dist', D, c.dist)}</div>` : ''}
+    <div class="row"><span>First to</span>${s('goals', R, c.goals)}</div>
+  </div><p class="hint">${c.view === 'h' ? 'Turn your phone sideways for the longest pitch. ' : c.dist !== 'n' ? 'The camera follows the ball on longer pitches. ' : ''}${fruleLine(c.goals)}</p>`;
+}
 function viewSoccer() {
   const st = Prof.P.sstats, rate = st.played ? Math.round(st.wins / st.played * 100) : 0;
   const stat = (v, l) => `<div><b>${v}</b><small>${l}</small></div>`;
   return `<main class="scr fhome">${topbar('Fun Soccer', 'hub')}
-    <section class="fhero" style="background-image:url(${FArt.poster(390, 236)})"><div><span>One button. Twenty modes.</span><h1>FUN SOCCER</h1><p>First to five. The rules change every goal.</p></div></section>
+    <section class="fhero" style="background-image:url(${FArt.poster(390, 236)})"><div><span>One button. Twenty modes.</span><h1>FUN SOCCER</h1><p>Pick your target. The rules change every goal.</p></div></section>
     <section class="wstatrow">${stat(fmt(st.wins), 'Wins')}${stat(rate + '%', 'Win rate')}${stat(st.best, 'Best streak')}${stat(fmt(st.goals), 'Goals')}</section>
     <nav class="menu">
       <button class="tile t-online" data-a="fsolo"><b>Play</b><small>You against the bots</small></button>
+      <button class="tile t-tour" data-a="sonline"><b>Play a friend</b><small>Online, one on one</small></button>
       <button class="tile t-friends" data-a="fduo"><b>Two players</b><small>Same phone, a thumb each</small></button>
       <button class="tile t-board" data-a="fboard"><b>Leaderboard</b><small>Most soccer wins</small></button>
       <button class="tile t-rules" data-a="frules"><b>How to play</b><small>All ${F_MODES.length + 1} modes</small></button>
@@ -16105,15 +16499,48 @@ function viewSoccer() {
 function viewSoccerSolo() {
   const c = app.fsolo;
   return `<main class="scr fhome">${topbar('Play', 'soccer')}
+    <section class="card-sec"><h3>Match</h3>${fsetForm(fsettings())}</section>
     <section class="card-sec"><h3>Your opponent</h3><div class="form"><div class="row"><span>Skill</span>${seg('fs.skill', [['easy', 'Easy'], ['normal', 'Normal'], ['hard', 'Hard']], c.skill)}</div></div></section>
     <section class="card-sec"><h3>Wager</h3>${wagerForm(c.wager, 'fb.', false, 2, true)}<p class="hint">Bots put house coins in the pot. Beat them to take it all. Bigger bets are for matches against real players.</p></section>
     <div class="stickybtn"><button class="btn big primary" data-a="ffight">Kick off</button></div>
   </main>`;
 }
+function viewSoccerDuo() {
+  return `<main class="scr fhome">${topbar('Two players', 'soccer')}
+    <section class="card-sec"><h3>Match</h3>${fsetForm(fsettings())}</section>
+    <div class="stickybtn"><button class="btn big primary" data-a="fduogo">Kick off</button></div>
+  </main>`;
+}
+function viewSoccerOnline() {
+  const off = !Net.kind && Net.err;
+  return `<main class="scr online">${topbar('Play a friend', 'soccer')}
+    ${off ? `<section class="card-sec warn"><h3>Online play is off here</h3><p>${esc(Net.err)}</p></section>` : ''}
+    <section class="card-sec"><h3>Open a room</h3><p class="hint">You’ll get a code to send a friend, or invite them right from the room. Two players, one each side.</p><button class="btn big primary" data-a="screate"${off ? ' disabled' : ''}>Create room</button></section>
+    <section class="card-sec"><h3>Join with a code</h3><div class="joinrow"><input id="sjcode" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="CODE" aria-label="Room code"><button class="btn primary" data-a="sjoin"${off ? ' disabled' : ''}>Join</button></div></section>
+  </main>`;
+}
+function viewSoccerRoom() {
+  const N = SoccerNet, host = N.isHost, foe = N.foe;
+  if (!N.ch) return `<main class="scr table">${topbar('Room', 'sleave')}<section class="card-sec center"><div class="spin"></div><p>${host ? 'Opening room…' : 'Looking for the room…'}</p></section></main>`;
+  const mine = myPlateObj(), w = N.wager, canAfford = !w.amt || Prof.bal(w.cur) >= w.amt;
+  const seat = (o, badge) => `<div class="seat">${plate(o, 'sm', badge)}</div>`;
+  const ok = `<em class="b ok">${UI_ICON.check}Ready</em>`, wait = '<em class="b wait">Not ready</em>';
+  return `<main class="scr table">${topbar('Room', 'sleave')}
+    <section class="codebox"><span class="lbl2">Room code</span><b class="code">${esc(N.code)}</b><button class="btn sm ghost" data-a="scopy">${UI_ICON.copy}Copy</button></section>
+    <section class="seats">${seat(mine, host ? '<em class="b host">Host</em>' : N.rdy ? ok : wait)}${foe ? seat({ name: foe.pr.n, av: foe.pr.a, cos: cosParse(foe.pr.o) }, foe.host ? '<em class="b host">Host</em>' : foe.rdy ? ok : wait) : '<div class="seat empty"><span class="muted">Waiting for a player…</span></div>'}</section>
+    ${host ? (Cloud.me() ? `<section class="card-sec"><h3>Invite friends</h3><div class="fr-list" id="tblfriends">${friendInviteRows('sfinvite')}</div></section>` : '') : ''}
+    <section class="card-sec"><h3>Match${host ? '' : ' <small>(host decides)</small>'}</h3>${N.set ? fsetForm(N.set, !host) : '<p class="hint">Waiting for the host…</p>'}</section>
+    <section class="card-sec"><h3>Wager${host ? '' : ' <small>(host decides)</small>'}</h3>${wagerForm(w, 'fr.', !host, 2)}${!canAfford ? `<p class="warnline">You need ${coin(w.cur)}<b>${w.amt}</b> to join this bet.</p>` : ''}</section>
+    <div class="stickybtn">${host
+      ? `<button class="btn big primary" data-a="sstart"${foe && foe.rdy ? '' : ' disabled'}>${!foe ? 'Waiting for a player' : foe.rdy ? 'Kick off' : 'Waiting for ready'}</button>`
+      : `<button class="btn big ${N.rdy ? 'ghost' : 'primary'}" data-a="sready"${canAfford || N.rdy ? '' : ' disabled'}>${N.rdy ? 'Not ready' : w.amt ? `Ready · bet ${thousands(w.amt)} ${curName(w.cur)}` : 'Ready'}</button>`}</div>
+  </main>`;
+}
 function viewSoccerRules() {
   return `<main class="scr fhome">${topbar('How to play', 'soccer')}
     <section class="card-sec"><h3>One button</h3><p>Tap <b>Jump</b> and both your players leap at the play. Tap again in the air to swing a kick. If the ball is above you, it’s an overhead.</p><p>Timing is everything: the kick is strongest while the leg is whipping forward. Your keeper stays near goal unless the ball comes close.</p></section>
-    <section class="card-sec"><h3>The match</h3><p>First to ${FS_TARGET} wins. Every goal shuffles the mode, and at four all it’s <b>Golden Goal</b>.</p></section>
+    <section class="card-sec"><h3>The match</h3><p>Before kick-off, choose how many goals wins it, from 5 to 25. Each round is one mode with a ${FS_ROUND} second clock. It ends on a goal or when the clock runs out, then the mode changes. One goal short each? That’s <b>Golden Goal</b>.</p></section>
+    <section class="card-sec"><h3>Your pitch</h3><p><b>Vertical</b> keeps the phone upright, with Normal, Wide and Wider distances between the goals. <b>Horizontal</b> turns the game sideways for the longest pitch.</p></section>
     <section class="card-sec"><h3>${F_MODES.length + 1} modes</h3><div class="fmodes">${F_MODES.concat([F_GOLDEN]).map(m => `<div><b>${esc(m.name)}</b><small>${esc(m.sub)}</small></div>`).join('')}</div></section>
   </main>`;
 }
@@ -16326,7 +16753,7 @@ const ACT = {
     WarArt.posters($('#app'));
   },
   /* ---------- Fun Soccer ---------- */
-  soccer() { app.game = 'soccer'; go('soccer'); },
+  soccer() { app.game = 'soccer'; SoccerNet.reset(); go('soccer'); },
   fsolo() { app.fsolo = Object.assign({ skill: 'normal', wager: { cur: 's', amt: 0 } }, LS.get('mm_fsolo') || {}); app.fsolo.wager = botBet(app.fsolo.wager); go('fsolo'); },
   ffight() {
     const c = app.fsolo;
@@ -16335,18 +16762,25 @@ const ACT = {
     Sound.unlock();
     Soccer.vsBot(c.skill, c.wager);
   },
-  fduo() { Sound.unlock(); Soccer.duo(); },
+  fduo: () => go('sduo'),
+  fduogo() { Sound.unlock(); Soccer.duo(); },
+  async sonline() { go('sonline'); await Net.init(); if (app.screen === 'sonline' && !Net.kind) render(); },
+  screate() { Sound.unlock(); SoccerNet.host(); },
+  sjoin() { Sound.unlock(); SoccerNet.join($('#sjcode').value); },
+  async scopy() { const ok = await copyText(SoccerNet.code); toast(ok ? 'Code copied' : `Code: ${esc(SoccerNet.code)}`, 'good'); },
+  sfinvite(el) { Friends.inviteSoccer(el.dataset.v); },
+  sready() { const N = SoccerNet; N.rdy = N.rdy ? 0 : 1; Sound.play('tap'); N.push(); render(); },
+  sstart() { Sound.unlock(); SoccerNet.start(); },
+  sleave() { SoccerNet.leave(); SoccerNet.reset(); go('sonline'); },
+  srematch() { FX.stop(); go('sroom'); },
   frules: () => go('frules'),
   fboard() { app.boardG = 'soccer'; loadBoard(); },
-  spause() {
-    const on = Prof.P.settings.sound;
-    Soccer.paused = true;
-    sheet(`<h3>Paused</h3><div class="menulist"><button class="btn primary" data-a="closesheet">Back to the match</button><button class="btn ghost" data-a="fsound">${on ? UI_ICON.sound + ' Sound on' : UI_ICON.mute + ' Sound off'}</button><button class="btn warn" data-a="fquit">Quit the match</button></div>`);
-  },
-  fsound() { Prof.P.settings.sound = Prof.P.settings.sound ? 0 : 1; Prof.save(); Sound.unlock(); ACT.spause(); },
-  fquit() { closeSheet(); go('soccer'); },
+  spause() { Soccer.menu(true); },
+  fresume() { Soccer.menu(false); },
+  fsound() { Prof.P.settings.sound = Prof.P.settings.sound ? 0 : 1; Prof.save(); Sound.unlock(); Soccer.menu(true); },
+  fquit() { const net = Soccer.o && Soccer.o.mode === 'online'; if (net) { Soccer.abandon(); SoccerNet.leave(); SoccerNet.reset(); go('sonline'); } else go('soccer'); },
   fagain() { FX.stop(); const o = Soccer.o, duo = o.mode === 'duo'; Soccer.stop(); app.screen = 'soccer'; if (duo) Soccer.duo(); else { const c = app.fsolo; if (c.wager.amt > Prof.bal(c.wager.cur)) c.wager = { cur: c.wager.cur, amt: 0 }; Soccer.vsBot(c.skill, c.wager); } },
-  fback() { FX.stop(); go('soccer'); },
+  fback() { const net = Soccer.o && Soccer.o.mode === 'online'; FX.stop(); go('soccer'); if (net) { SoccerNet.leave(); SoccerNet.reset(); } },
   /* ---------- War ---------- */
   war() { app.game = 'war'; WarNet.reset(); go('war'); },
   wsolo() { app.wsolo = Object.assign({ skill: 'normal', wager: { cur: 's', amt: 0 } }, LS.get('mm_wsolo') || {}); app.wsolo.wager = botBet(app.wsolo.wager); go('wsolo'); },
@@ -16576,7 +17010,7 @@ const ACT = {
     closeSheet();
     if (!m) return;
     app.game = m.g === 'war' ? 'war' : 'mocho';
-    if (m.g === 'war') WarNet.join(m.code); else joinTable(m.code);
+    if (m.g === 'war') WarNet.join(m.code); else if (m.g === 'soccer') SoccerNet.join(m.code); else joinTable(m.code);
   },
   themeset(el) {
     Prof.P.settings.theme = el.dataset.v;
@@ -16720,6 +17154,12 @@ const ACT = {
     if (scope === 'set') { Prof.P.settings[k] = v; Prof.save(); if (k === 'sound' && v) Sound.unlock(); render(); return; }
     if (scope === 'ws') { app.wsolo[k] = v; return render(); }
     if (scope === 'fs') { app.fsolo[k] = v; return render(); }
+    if (scope === 'ft') {
+      fsettings(); app.fset[k] = v; LS.set('mm_fset', app.fset);
+      if (SoccerNet.isHost && SoccerNet.ch) { SoccerNet.set = fsettings(); SoccerNet.push(); }
+      return render();
+    }
+    if (scope === 'fr') { SoccerNet.wager = k === 'cur' ? { cur: v, amt: 0 } : { cur: SoccerNet.wager.cur, amt: v }; SoccerNet.push(); return render(); }
     if (scope === 'fb') { if (k === 'cur') app.fsolo.wager = { cur: v, amt: 0 }; else app.fsolo.wager.amt = v; return render(); }
     if (scope === 'wb') { if (k === 'cur') app.wsolo.wager = { cur: v, amt: 0 }; else app.wsolo.wager.amt = v; return render(); }
     if (scope === 'wr') { WarNet.wager = k === 'cur' ? { cur: v, amt: 0 } : { cur: WarNet.wager.cur, amt: v }; WarNet.push(); return render(); }
@@ -16754,7 +17194,7 @@ const ACT = {
   betadd(el) {
     const scope = el.dataset.k.split('.')[0], step = +el.dataset.v;
     if (scope === 'sw' || scope === 'wb' || scope === 'fb' || (scope === 'tw' && app.host && app.host.seats.some(s => s.bot))) return;
-    const w = { sw: app.solo && app.solo.wager, wb: app.wsolo && app.wsolo.wager, wr: WarNet.wager, tw: app.host && app.host.wager, tf: { cur: Tour.form.t, amt: Tour.form.amt } }[scope];
+    const w = { sw: app.solo && app.solo.wager, wb: app.wsolo && app.wsolo.wager, wr: WarNet.wager, fr: SoccerNet.wager, tw: app.host && app.host.wager, tf: { cur: Tour.form.t, amt: Tour.form.amt } }[scope];
     if (!w) return;
     const have = Prof.bal(w.cur), amt = Math.min(w.amt + step, have);
     if (amt <= w.amt) { Sound.play('error'); toast(`That’s all your ${curName(w.cur)}: ${coin(w.cur)}<b>${thousands(have)}</b>`, 'bad'); return; }
